@@ -31,7 +31,6 @@ public class GraBBTDataInitSessionBean {
 
     @EJB
     private ListingSessionBeanLocal listingSessionBean;
-
     @EJB
     private RetailerSessionBeanLocal retailerSessionBean;
     @EJB

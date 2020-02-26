@@ -39,7 +39,8 @@ public class ViewAllOutletsManagedBean {
     public void postConstruct(){
         
         System.err.println("HELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLO");
-        RetailerEntity currentRetailer = (RetailerEntity) FacesContext.getCurrentInstance().getAttributes().get("currentRetailerEntity");
+        RetailerEntity currentRetailer = (RetailerEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentRetailerEntity");
+                
         currentRetailerId = currentRetailer.getRetailerId();
         System.out.println("*****************************************" +currentRetailerId);
         setOutletEntities(outletSessionBeanLocal.retrieveAllOutletsByRetailerId(currentRetailerId)); //can be empty
