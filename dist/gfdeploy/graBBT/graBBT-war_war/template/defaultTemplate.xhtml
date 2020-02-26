@@ -2,31 +2,36 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
-
+    
     <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <h:outputStylesheet name="css/default.css"/>
-        <h:outputStylesheet name="css/cssLayout.css"/>
         <title>graBBT</title>
+        <h:outputStylesheet library="css" name="default.css"/>
     </h:head>
 
     <h:body>
-
-        <div id="top">
-            <ui:insert name="top">Merchant Dashboard</ui:insert>
-        </div>
-        <div>
-            <div id="left">
-                <ui:insert name="left">Siebar</ui:insert>
-            </div>
-            <div id="content" class="left_content">
-                <ui:insert name="content">Content</ui:insert>
-            </div>
-        </div>
-        <div id="bottom">
-            <ui:insert name="bottom">Footer</ui:insert>
-        </div>
+        <h2>graBBT Retailer Management System</h2>
+        
+        <ui:insert name="header">
+            <ui:include src="/header.xhtml" />
+        </ui:insert>
+        
+        <ui:insert name="mainmenu">
+            <ui:include src="/mainmenu.xhtml" />
+        </ui:insert>
+        
+        <section id="content" class="content">
+            <ui:insert name="content">Content</ui:insert>
+        </section>
+        
+        <ui:insert name="sidebar">
+            <ui:include src="/sidebar.xhtml" />
+        </ui:insert>
+        
+        <ui:insert name="footer">
+            <ui:include src="/footer.xhtml" />
+        </ui:insert>
 
     </h:body>
 
