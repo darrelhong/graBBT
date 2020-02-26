@@ -50,8 +50,6 @@ public class GraBBTDataInitSessionBean {
 
     private void initialiseData() {
         try {
-            retailerSessionBean.createNewRetailer(new RetailerEntity("KOI Thé", "manager", "password"));
-
             Map<String, BigDecimal> sizeOptions = new HashMap<>();
             sizeOptions.put("Medium", new BigDecimal(0.00));
             sizeOptions.put("Large", new BigDecimal(1.10));
