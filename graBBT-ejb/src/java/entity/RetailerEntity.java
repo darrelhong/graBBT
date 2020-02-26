@@ -1,11 +1,14 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import util.security.CryptographicHelper;
@@ -35,8 +38,12 @@ public class RetailerEntity implements Serializable {
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     private String salt;
 
+    @OneToMany(mappedBy = "retailerEntity")
+    private List<OutletEntity> outletEntities;
+    
     public RetailerEntity() {
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
+        outletEntities = new ArrayList<OutletEntity>();
     }
 
     public RetailerEntity(String retailerName, String username, String password) {
@@ -140,4 +147,19 @@ public class RetailerEntity implements Serializable {
         this.retailerName = retailerName;
     }
 
+    /**
+     * @return the outletEntities
+     */
+    public List<OutletEntity> getOutletEntities() {
+        return outletEntities;
+    }
+
+    /**
+     * @param outletEntities the outletEntities to set
+     */
+    public void setOutletEntities(List<OutletEntity> outletEntities) {
+        this.outletEntities = outletEntities;
+    }
+
+    
 }
