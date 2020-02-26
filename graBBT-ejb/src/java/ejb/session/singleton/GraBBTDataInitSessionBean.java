@@ -1,12 +1,16 @@
 package ejb.session.singleton;
 
 import ejb.session.stateless.ListingSessionBeanLocal;
-import ejb.session.stateless.RetailerSessionBeanLocal;
 import entity.Listing;
-import entity.RetailerEntity;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import ejb.session.stateless.OutletSessionBeanLocal;
+import ejb.session.stateless.RetailerSessionBeanLocal;
+import entity.OutletEntity;
+import entity.RetailerEntity;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -15,6 +19,7 @@ import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import util.exception.InputDataValidationException;
+import util.exception.OutletNameExistsException;
 import util.exception.RetailerNotFoundException;
 import util.exception.RetailerUsernameExistsException;
 import util.exception.UnknownPersistenceException;
@@ -29,6 +34,8 @@ public class GraBBTDataInitSessionBean {
 
     @EJB
     private RetailerSessionBeanLocal retailerSessionBean;
+    @EJB
+    private OutletSessionBeanLocal outletSessionBean;
 
     @PersistenceContext(unitName = "graBBT-ejbPU")
     private EntityManager em;
@@ -68,8 +75,13 @@ public class GraBBTDataInitSessionBean {
             listingSessionBean.createNewListing(new Listing("Golden Oolong Tea", new BigDecimal(2.70), "koigoldenoolongtea.jpeg"));
 
         } catch (InputDataValidationException | RetailerUsernameExistsException | UnknownPersistenceException ex) {
+            System.out.println("test");
+            Long retailerId = retailerSessionBean.createNewRetailer(new RetailerEntity("KOI Thé", "manager", "password"));
+            outletSessionBean.createNewOutlet(new OutletEntity("KOI Paya Lebar", 9, 20, 1.3178, 103.8924), retailerId);
+            outletSessionBean.createNewOutlet(new OutletEntity("KOI Jurong", 9, 20, 1.3329, 103.7436), retailerId);
+
+        } catch (InputDataValidationException | RetailerUsernameExistsException | UnknownPersistenceException | OutletNameExistsException ex) {
             ex.printStackTrace();
         }
     }
-
 }

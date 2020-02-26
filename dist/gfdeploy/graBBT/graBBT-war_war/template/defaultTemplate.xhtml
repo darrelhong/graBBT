@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+<<<<<<< HEAD
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <h:head>
@@ -27,6 +28,38 @@
         <div id="bottom">
             <ui:insert name="bottom">Footer</ui:insert>
         </div>
+=======
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    
+    <h:head>
+        <title>graBBT</title>
+        <h:outputStylesheet library="css" name="default.css"/>
+    </h:head>
+
+    <h:body>
+        <h2>graBBT Retailer Management System</h2>
+        
+        <ui:insert name="header">
+            <ui:include src="/header.xhtml" />
+        </ui:insert>
+        
+        <ui:insert name="mainmenu">
+            <ui:include src="/mainmenu.xhtml" />
+        </ui:insert>
+        
+        <section id="content" class="content">
+            <ui:insert name="content">Content</ui:insert>
+        </section>
+        
+        <ui:insert name="sidebar">
+            <ui:include src="/sidebar.xhtml" />
+        </ui:insert>
+        
+        <ui:insert name="footer">
+            <ui:include src="/footer.xhtml" />
+        </ui:insert>
+>>>>>>> origin/chloeBranch
 
     </h:body>
 
