@@ -26,6 +26,10 @@ public class RetailerEntity implements Serializable {
     @Size(max = 64)
     private String retailerName;
 
+    @Column(length = 100)
+    @Size(max = 100)
+    private String imageSrc;
+
     @Column(nullable = false, unique = true, length = 32)
     @NotNull
     @Size(min = 4, max = 32)
@@ -40,10 +44,10 @@ public class RetailerEntity implements Serializable {
 
     @OneToMany(mappedBy = "retailerEntity")
     private List<OutletEntity> outletEntities;
-    
+
     public RetailerEntity() {
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
-        outletEntities = new ArrayList<OutletEntity>();
+        outletEntities = new ArrayList<>();
     }
 
     public RetailerEntity(String retailerName, String username, String password) {
@@ -53,8 +57,17 @@ public class RetailerEntity implements Serializable {
 
         setPassword(password);
     }
-    
-      /**
+
+    public RetailerEntity(String retailerName, String imageSrc, String username, String password) {
+        this();
+        this.retailerName = retailerName;
+        this.imageSrc = imageSrc;
+        this.username = username;
+
+        setPassword(password);
+    }
+
+    /**
      * @param password the password to set
      */
     public void setPassword(String password) {
@@ -161,5 +174,18 @@ public class RetailerEntity implements Serializable {
         this.outletEntities = outletEntities;
     }
 
-    
+    /**
+     * @return the imageSrc
+     */
+    public String getImageSrc() {
+        return imageSrc;
+    }
+
+    /**
+     * @param imageSrc the imageSrc to set
+     */
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
+    }
+
 }

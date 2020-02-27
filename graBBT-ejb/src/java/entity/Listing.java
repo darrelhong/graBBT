@@ -71,6 +71,10 @@ public class Listing implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private OutletEntity outletEntity;
+    
+    @ManyToOne(optional = true)
+    @JoinColumn(nullable = false)
+    private CategoryEntity category;
 
     public Listing() {
         this.toppingOptions = new HashMap<>();
@@ -284,6 +288,20 @@ public class Listing implements Serializable {
      */
     public void setOutletEntity(OutletEntity outletEntity) {
         this.outletEntity = outletEntity;
+    }
+
+    /**
+     * @return the category
+     */
+    public CategoryEntity getCategory() {
+        return category;
+    }
+
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
     }
 
 }

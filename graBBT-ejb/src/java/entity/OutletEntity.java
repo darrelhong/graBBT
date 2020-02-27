@@ -76,9 +76,13 @@ public class OutletEntity implements Serializable {
     
     @OneToMany(mappedBy = "outletEntity")
     private List<Listing> listings;
+    
+    @OneToMany(mappedBy = "outlet")
+    private List<CategoryEntity> categories;
 
     public OutletEntity() {
         this.listings = new ArrayList<>();
+        this.categories = new ArrayList<>();
     }
 
     public OutletEntity(String outletName, Integer openingHour, Integer closingHour, Double locationLatitude, Double locationLongitude) {
@@ -289,6 +293,20 @@ public class OutletEntity implements Serializable {
      */
     public void setListings(List<Listing> listings) {
         this.listings = listings;
+    }
+
+    /**
+     * @return the categories
+     */
+    public List<CategoryEntity> getCategories() {
+        return categories;
+    }
+
+    /**
+     * @param categories the categories to set
+     */
+    public void setCategories(List<CategoryEntity> categories) {
+        this.categories = categories;
     }
 
 }
