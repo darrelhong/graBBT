@@ -36,7 +36,7 @@ public class CategoryEntity implements Serializable {
     private OutletEntity outlet;
     
     @OneToMany(mappedBy = "category")
-    private List listings;
+    private List<Listing> listings;
 
     public CategoryEntity() {
         this.listings = new ArrayList<>();

@@ -73,7 +73,7 @@ public class Listing implements Serializable {
     private OutletEntity outletEntity;
     
     @ManyToOne(optional = true)
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = true)
     private CategoryEntity category;
 
     public Listing() {
