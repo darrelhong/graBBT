@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
@@ -66,6 +68,10 @@ public class Listing implements Serializable {
     @Column(name = "topping_price")
     private Map<String, BigDecimal> toppingOptions;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private OutletEntity outletEntity;
+
     public Listing() {
         this.toppingOptions = new HashMap<>();
         this.sugarOptions = new HashMap<>();
@@ -73,31 +79,35 @@ public class Listing implements Serializable {
         this.iceOptions = new HashMap<>();
     }
 
-    public Listing(String name, BigDecimal basePrice) {
+    public Listing(String name, BigDecimal basePrice, OutletEntity outletEntity) {
         this();
         this.name = name;
         this.basePrice = basePrice;
+        this.outletEntity = outletEntity;
     }
 
-    public Listing(String name, BigDecimal basePrice, String description, String imageSrc) {
+    public Listing(String name, BigDecimal basePrice, OutletEntity outletEntity, String description, String imageSrc) {
         this();
         this.name = name;
         this.basePrice = basePrice;
+        this.outletEntity = outletEntity;
         this.description = description;
         this.imageSrc = imageSrc;
     }
 
-    public Listing(String name, BigDecimal basePrice, String imageSrc) {
+    public Listing(String name, BigDecimal basePrice, OutletEntity outletEntity, String imageSrc) {
         this();
         this.name = name;
         this.basePrice = basePrice;
+        this.outletEntity = outletEntity;
         this.imageSrc = imageSrc;
     }
 
-    public Listing(String name, BigDecimal basePrice, String imageSrc, Map<String, BigDecimal> sizeOptions, Map<String, BigDecimal> sugarOptions, Map<String, BigDecimal> iceOptions, Map<String, BigDecimal> toppingOptions) {
+    public Listing(String name, BigDecimal basePrice, OutletEntity outletEntity, String imageSrc, Map<String, BigDecimal> sizeOptions, Map<String, BigDecimal> sugarOptions, Map<String, BigDecimal> iceOptions, Map<String, BigDecimal> toppingOptions) {
         this();
         this.name = name;
         this.basePrice = basePrice;
+        this.outletEntity = outletEntity;
         this.imageSrc = imageSrc;
         this.sizeOptions = sizeOptions;
         this.sugarOptions = sugarOptions;
@@ -105,9 +115,10 @@ public class Listing implements Serializable {
         this.toppingOptions = toppingOptions;
     }
 
-    public Listing(String name, BigDecimal basePrice, String description, String imageSrc, Map<String, BigDecimal> sizeOptions, Map<String, BigDecimal> sugarOptions, Map<String, BigDecimal> iceOptions, Map<String, BigDecimal> toppingOptions) {
+    public Listing(String name, BigDecimal basePrice, OutletEntity outletEntity, String description, String imageSrc, Map<String, BigDecimal> sizeOptions, Map<String, BigDecimal> sugarOptions, Map<String, BigDecimal> iceOptions, Map<String, BigDecimal> toppingOptions) {
         this.name = name;
         this.basePrice = basePrice;
+        this.outletEntity = outletEntity;
         this.description = description;
         this.imageSrc = imageSrc;
         this.sizeOptions = sizeOptions;
@@ -259,6 +270,20 @@ public class Listing implements Serializable {
      */
     public void setIceOptions(Map<String, BigDecimal> iceOptions) {
         this.iceOptions = iceOptions;
+    }
+
+    /**
+     * @return the outletEntity
+     */
+    public OutletEntity getOutletEntity() {
+        return outletEntity;
+    }
+
+    /**
+     * @param outletEntity the outletEntity to set
+     */
+    public void setOutletEntity(OutletEntity outletEntity) {
+        this.outletEntity = outletEntity;
     }
 
 }

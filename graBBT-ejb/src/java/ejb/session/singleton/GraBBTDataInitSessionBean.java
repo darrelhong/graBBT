@@ -20,6 +20,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import util.exception.InputDataValidationException;
 import util.exception.OutletNameExistsException;
+import util.exception.OutletNotFoundException;
 import util.exception.RetailerNotFoundException;
 import util.exception.RetailerUsernameExistsException;
 import util.exception.UnknownPersistenceException;
@@ -50,6 +51,11 @@ public class GraBBTDataInitSessionBean {
 
     private void initialiseData() {
         try {
+            Long retailerId = retailerSessionBean.createNewRetailer(new RetailerEntity("KOI Thé", "manager", "password"));
+            Long koiPayaOutletId = outletSessionBean.createNewOutlet(new OutletEntity("KOI Paya Lebar", 9, 20, 1.3178, 103.8924), retailerId);
+            Long koiJurongOutletId = outletSessionBean.createNewOutlet(new OutletEntity("KOI Jurong", 9, 20, 1.3329, 103.7436), retailerId);
+
+            // Creating options hashmaps
             Map<String, BigDecimal> sizeOptions = new HashMap<>();
             sizeOptions.put("Medium", new BigDecimal(0.00));
             sizeOptions.put("Large", new BigDecimal(1.10));
@@ -66,16 +72,25 @@ public class GraBBTDataInitSessionBean {
             toppingOptions.put("Konjac Jelly", new BigDecimal(1.20));
             toppingOptions.put("Aloe Vera", new BigDecimal(1.20));
 
-            listingSessionBean.createNewListing(new Listing("Milk Tea", new BigDecimal(3.40), "koimilktea.jpeg", sizeOptions, sugarOptions, iceOptions, toppingOptions));
-            listingSessionBean.createNewListing(new Listing("Cacao Barry", new BigDecimal(4.00), "Made with 100% pure Cacao Powder", "koicacaobarry.jpeg", sizeOptions, sugarOptions, iceOptions, toppingOptions));
-            listingSessionBean.createNewListing(new Listing("Black Tea Macchiato", new BigDecimal(3.30), "koiblackteamacchiato.jpeg"));
-            listingSessionBean.createNewListing(new Listing("Golden Oolong Tea", new BigDecimal(2.70), "koigoldenoolongtea.jpeg"));
-            System.out.println("test");
-            Long retailerId = retailerSessionBean.createNewRetailer(new RetailerEntity("KOI Thé", "manager", "password"));
-            outletSessionBean.createNewOutlet(new OutletEntity("KOI Paya Lebar", 9, 20, 1.3178, 103.8924), retailerId);
-            outletSessionBean.createNewOutlet(new OutletEntity("KOI Jurong", 9, 20, 1.3329, 103.7436), retailerId);
+            //just creating some BBTs and associating them with outlets
+            OutletEntity koiPaya = outletSessionBean.retrieveOutletByOutletId(koiPayaOutletId);
+            OutletEntity koiJurong = outletSessionBean.retrieveOutletByOutletId(koiJurongOutletId);
+            Listing koiMilkTea = new Listing("Milk Tea", new BigDecimal(3.40), koiPaya, "koimilktea.jpeg", sizeOptions, sugarOptions, iceOptions, toppingOptions);
+            listingSessionBean.createNewListing(koiMilkTea);
+            koiPaya.getListings().add(koiMilkTea);
+            Listing koiCacaoBarry = new Listing("Cacao Barry", new BigDecimal(4.00), koiPaya, "Made with 100% pure Cacao Powder", "koicacaobarry.jpeg", sizeOptions, sugarOptions, iceOptions, toppingOptions);
+            listingSessionBean.createNewListing(koiCacaoBarry);
+            koiPaya.getListings().add(koiCacaoBarry);
+            Listing koiBlackTeaMacchiato = new Listing("Black Tea Macchiato", new BigDecimal(3.30), koiJurong, "koiblackteamacchiato.jpeg", sizeOptions, sugarOptions, iceOptions, toppingOptions);
+            listingSessionBean.createNewListing(koiBlackTeaMacchiato);
+            koiJurong.getListings().add(koiBlackTeaMacchiato);
+            Listing koiGoldenOolong = new Listing("Golden Oolong Tea", new BigDecimal(2.70), koiJurong, "koigoldenoolongtea.jpeg", sizeOptions, sugarOptions, iceOptions, toppingOptions);
+            listingSessionBean.createNewListing(koiGoldenOolong);
+            koiJurong.getListings().add(koiGoldenOolong);
 
-        } catch (InputDataValidationException | RetailerUsernameExistsException | UnknownPersistenceException | OutletNameExistsException ex) {
+        } catch (InputDataValidationException | RetailerUsernameExistsException
+                | UnknownPersistenceException | OutletNameExistsException
+                | RetailerNotFoundException | OutletNotFoundException ex) {
             ex.printStackTrace();
         }
     }

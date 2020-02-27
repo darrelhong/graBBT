@@ -6,6 +6,8 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -29,29 +32,29 @@ public class OutletEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long outletId;
-    
+
     @Column(nullable = false, unique = true, length = 64)
     @NotNull
     @Size(max = 64)
     private String outletName;
-    
+
     @Column(nullable = false)
     @NotNull
     @Min(0000)
     @Max(2359)
     private Integer openingHour; //store in 24-hr format
-    
+
     @Column(nullable = false)
     @NotNull
     @Min(0000)
     @Max(2359)
     private Integer closingHour; //store in 24-hr format
-    
+
     @Column(nullable = false)
     @Max(5)
     @Min(0)
-    private Double outletRating = 5.0; 
-    
+    private Double outletRating = 5.0;
+
     @Column(nullable = false)
     @Min(0)
     private Integer ratingCount = 0; //stores total number of ratings made for this outlet
@@ -60,29 +63,33 @@ public class OutletEntity implements Serializable {
     private Double locationLatitude;
     //constraints to be added
     private Double locationLongitude;
-    
+
     //constraints to be added; to confirm format of storing revenue reports
     private Double outletRevenueDaily = 0.0;
     private Double outletRevenueMonthly = 0.0;
     private Double outletRevenueOverall = 0.0;
-    
-    
-    @ManyToOne(optional = true)
-    @JoinColumn(nullable = true)
+
+    //changed optional to false
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
     private RetailerEntity retailerEntity;
     
-    public OutletEntity(){
+    @OneToMany(mappedBy = "outletEntity")
+    private List<Listing> listings;
+
+    public OutletEntity() {
+        this.listings = new ArrayList<>();
     }
 
     public OutletEntity(String outletName, Integer openingHour, Integer closingHour, Double locationLatitude, Double locationLongitude) {
+        this();
         this.outletName = outletName;
         this.openingHour = openingHour;
         this.closingHour = closingHour;
         this.locationLatitude = locationLatitude;
         this.locationLongitude = locationLongitude;
     }
-   
-    
+
     public Long getOutletId() {
         return outletId;
     }
@@ -90,8 +97,6 @@ public class OutletEntity implements Serializable {
     public void setOutletId(Long outletId) {
         this.outletId = outletId;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -271,5 +276,19 @@ public class OutletEntity implements Serializable {
     public void setRetailerEntity(RetailerEntity retailerEntity) {
         this.retailerEntity = retailerEntity;
     }
-    
+
+    /**
+     * @return the listings
+     */
+    public List<Listing> getListings() {
+        return listings;
+    }
+
+    /**
+     * @param listings the listings to set
+     */
+    public void setListings(List<Listing> listings) {
+        this.listings = listings;
+    }
+
 }

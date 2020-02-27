@@ -11,6 +11,7 @@ import javax.ejb.Local;
 import util.exception.InputDataValidationException;
 import util.exception.OutletNameExistsException;
 import util.exception.OutletNotFoundException;
+import util.exception.RetailerNotFoundException;
 import util.exception.UnknownPersistenceException;
 
 /**
@@ -22,5 +23,7 @@ public interface OutletSessionBeanLocal {
     
     public List<OutletEntity> retrieveAllOutletsByRetailerId(Long retailerId);
     
-    public Long createNewOutlet(OutletEntity newOutletEntity, Long retailerId) throws OutletNameExistsException, UnknownPersistenceException, InputDataValidationException;
+    public Long createNewOutlet(OutletEntity newOutletEntity, Long retailerId) throws OutletNameExistsException, RetailerNotFoundException, UnknownPersistenceException, InputDataValidationException;
+
+    public OutletEntity retrieveOutletByOutletId(Long outletId) throws OutletNotFoundException;
 }

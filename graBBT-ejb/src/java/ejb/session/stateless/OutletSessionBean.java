@@ -45,14 +45,16 @@ public class OutletSessionBean implements OutletSessionBeanLocal {
     }
     
     @Override
-    public Long createNewOutlet(OutletEntity newOutletEntity, Long retailerId) throws OutletNameExistsException, UnknownPersistenceException, InputDataValidationException {
+    public Long createNewOutlet(OutletEntity newOutletEntity, Long retailerId) throws OutletNameExistsException, RetailerNotFoundException, UnknownPersistenceException, InputDataValidationException {
         try {
             Set<ConstraintViolation<OutletEntity>> constraintViolations = validator.validate(newOutletEntity);
 
             if(retailerId != null)
                 {
                     RetailerEntity retailerEntity = em.find(RetailerEntity.class, retailerId);
-
+                    if (retailerEntity == null) {
+                        throw new RetailerNotFoundException("Retailer with ID " + retailerId + " does not exist!");
+                    }
                     retailerEntity.getOutletEntities().add(newOutletEntity);
                     newOutletEntity.setRetailerEntity(retailerEntity);
                 }
@@ -84,7 +86,17 @@ public class OutletSessionBean implements OutletSessionBeanLocal {
         q.setParameter("inRetailerId", retailerId);
 
         return q.getResultList();
+    }
+    
+    @Override
+    public OutletEntity retrieveOutletByOutletId(Long outletId) throws OutletNotFoundException {
+        OutletEntity outletEntity = em.find(OutletEntity.class, outletId);
         
+        if (outletEntity != null) {
+            return outletEntity;
+        } else {
+            throw new OutletNotFoundException("Outlet with ID " + outletId + " does not exist!");
+        }
     }
     
     private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<OutletEntity>> constraintViolations) {

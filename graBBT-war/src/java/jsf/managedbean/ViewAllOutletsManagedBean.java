@@ -29,34 +29,39 @@ public class ViewAllOutletsManagedBean {
     @EJB
     private OutletSessionBeanLocal outletSessionBeanLocal;
     private List<OutletEntity> outletEntities;
-    
+
     private Long currentRetailerId;
-    
+
     public ViewAllOutletsManagedBean() {
     }
-    
+
     @PostConstruct
-    public void postConstruct(){
-        
+    public void postConstruct() {
+
         System.err.println("HELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLO");
         RetailerEntity currentRetailer = (RetailerEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentRetailerEntity");
-                
+
         currentRetailerId = currentRetailer.getRetailerId();
-        System.out.println("*****************************************" +currentRetailerId);
+        System.out.println("*****************************************" + currentRetailerId);
         setOutletEntities(outletSessionBeanLocal.retrieveAllOutletsByRetailerId(currentRetailerId)); //can be empty
-        
+
     }
-    
-    public void viewOutletDetails(ActionEvent event) throws IOException
-    {
-        Long outletIdToView = (Long)event.getComponent().getAttributes().get("outletId");
+
+    public void viewOutletDetails(ActionEvent event) throws IOException {
+        Long outletIdToView = (Long) event.getComponent().getAttributes().get("outletId");
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("outletIdToView", outletIdToView);
         FacesContext.getCurrentInstance().getExternalContext().redirect("viewOutletDetails.xhtml");
     }
 
-    /**
-     * @return the outletEntities
-     */
+    public void viewOutletListings(ActionEvent event) throws IOException {
+        Long outletId = (Long) event.getComponent().getAttributes().get("outletId");
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("outletId", outletId);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("viewListingsByOutlet.xhtml");
+    }
+        
+        /**
+         * @return the outletEntities
+         */
     public List<OutletEntity> getOutletEntities() {
         return outletEntities;
     }

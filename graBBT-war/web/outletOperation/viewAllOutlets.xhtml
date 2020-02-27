@@ -29,7 +29,13 @@
                             <f:attribute name="outletId" value="#{outletEntity.outletId}" />
                         </h:commandLink>
                     </h:column>
-
+                    
+                     <h:column>    				
+                        <f:facet name="header">View listings</f:facet>
+                        <h:commandLink value="View" actionListener="#{viewAllOutletsManagedBean.viewOutletListings}">
+                            <f:attribute name="outletId" value="#{outletEntity.outletId}" />
+                        </h:commandLink>
+                    </h:column>
                 </h:dataTable>
             </h:form>
         </div>   
