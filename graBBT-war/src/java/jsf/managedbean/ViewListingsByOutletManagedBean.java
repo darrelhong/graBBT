@@ -21,6 +21,7 @@ public class ViewListingsByOutletManagedBean implements Serializable {
 
     private Long outletId;
     private List<Listing> outletListings;
+    private Listing selectedListing;
 
     public ViewListingsByOutletManagedBean() {
     }
@@ -62,6 +63,20 @@ public class ViewListingsByOutletManagedBean implements Serializable {
      */
     public void setOutletListings(List<Listing> outletListings) {
         this.outletListings = outletListings;
+    }
+
+    /**
+     * @return the selectedListing
+     */
+    public Listing getSelectedListing() {
+        return selectedListing;
+    }
+
+    /**
+     * @param selectedListing the selectedListing to set
+     */
+    public void setSelectedListing(Listing selectedListing) {
+        this.selectedListing = selectedListing;
     }
 
 }
