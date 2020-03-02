@@ -5,7 +5,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns="http://www.w3.org/1999/xhtml">
-
+    
     <header style="text-align: right;">
         <h:panelGroup rendered="#{sessionScope.isLogin == false}">
             <h:form id="loginForm">
@@ -25,13 +25,17 @@
                 <p:growl>
                     <p:autoUpdate />
                 </p:growl>
+               
             </h:form>
         </h:panelGroup>
 
         <h:panelGroup rendered="#{sessionScope.isLogin == true}">
             <h:form id="logoutForm">
                 <h:outputText value="You are logged in as #{sessionScope.currentRetailerEntity.retailerName}."/>&nbsp;
-                <p:commandButton value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" />
+                <p:menuButton value="Options">
+                    <p:menuitem value="My Profile" icon="fa fa-user-o" />
+                    <p:menuitem value="Logout" action="#{loginManagedBean.logout}" icon="fa fa-sign-out" />
+                </p:menuButton>
             </h:form>
         </h:panelGroup>
     </header>

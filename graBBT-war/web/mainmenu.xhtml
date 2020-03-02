@@ -11,19 +11,19 @@
         <nav>
             <h:form>
                     
-                <p:menu style="width:200px;">
+                <p:panelMenu style="width:200px;">
 
-                    <p:submenu label="System">
-                        <p:menuitem value="Home" outcome="/index" icon="fa fa-home" />
+                    <p:submenu label="System" expanded="true">
+                        <p:menuitem value="Home" outcome="/index" icon="fa fa-home"/>
                         <p:menuitem value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" rendered="#{sessionScope.isLogin == true}" />
                     </p:submenu>
 
-                    <p:submenu label="Outlet Management" rendered="#{sessionScope.isLogin == true}">
-                        <p:menuitem value="Create New Outlet" outcome="/outletOperation/createNewOutlet.xhtml" icon="fa fa-shopping-cart" />
-                        <p:menuitem value="View All Outlets" outcome="/outletOperation/viewAllOutlets.xhmtl" icon="fa fa-arrow-circle-right" />
+                    <p:submenu label="Outlet Management" rendered="#{sessionScope.isLogin == true}" expanded="true">
+                        <p:menuitem value="Create New Outlet" outcome="/outletOperation/createNewOutlet.xhtml" icon="fa fa-plus" />
+                        <p:menuitem value="View All Outlets" outcome="/outletOperation/viewAllOutlets.xhmtl" icon="fa fa-th-list" />
                     </p:submenu>                   
 
-                </p:menu>
+                </p:panelMenu>
 
             </h:form>
         </nav>
