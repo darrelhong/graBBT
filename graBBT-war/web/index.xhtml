@@ -5,9 +5,9 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="/template/defaultTemplate.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml">
-    
+
     <ui:define name="content">
-        
+
         <h:panelGroup rendered="#{sessionScope.isLogin == false}">
             <article>
                 <h3>Welcome to GRABBT Retailer Management System</h3>
@@ -19,7 +19,7 @@
                 <h3>Welcome, #{sessionScope.currentRetailerEntity.retailerName} </h3>
             </article>
         </h:panelGroup>
-        
+
     </ui:define>
 
 </ui:composition>
