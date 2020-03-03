@@ -52,7 +52,7 @@
         <hr></hr>
         
         <h2>View listings</h2>
-        <h:form id="form">
+        <h:form id="viewListingForm">
             <p:dataView var="listing" value="#{listingManagedBean.listings}"
                         gridIcon="pi pi-th-large" listIcon="pi pi-bars">
                 <p:dataViewGridItem>
@@ -65,7 +65,7 @@
                                 <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
                             </h:outputText>     
 
-                            <p:commandLink update=":form:listingDetails" oncomplete="PF('listingDialog').show()" title="View details">
+                            <p:commandLink update=":viewListingForm:listingDetails" oncomplete="PF('listingDialog').show()" title="View details">
                                 <h:outputText styleClass="ui-icon pi pi-info-circle" style="margin: 0 auto;" />
                                 <f:setPropertyActionListener value="#{listing}" target="${listingManagedBean.selectedListing}" />
                             </p:commandLink>
@@ -92,7 +92,7 @@
                             </h:panelGrid>
                         </p:outputPanel>
 
-                        <p:commandLink update=":form:listingDetails" oncomplete="PF('listingDialog').show()" title="View details">
+                        <p:commandLink update=":viewListingForm:listingDetails" oncomplete="PF('listingDialog').show()" title="View details">
                             <h:outputText styleClass="ui-icon pi pi-info-circle" style="margin: 0 auto;" />
                             <f:setPropertyActionListener value="#{listing}" target="${listingManagedBean.selectedListing}" />
                         </p:commandLink>

@@ -34,7 +34,7 @@
                 <h:outputText value="You are logged in as #{sessionScope.currentRetailerEntity.retailerName}."/>&nbsp;
                 <p:menuButton value="Options">
                     <p:menuitem value="My Profile" icon="fa fa-user-o" />
-                    <p:menuitem value="Logout" action="#{loginManagedBean.logout}" icon="fa fa-sign-out" />
+                    <p:menuitem value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" />
                 </p:menuButton>
             </h:form>
         </h:panelGroup>
