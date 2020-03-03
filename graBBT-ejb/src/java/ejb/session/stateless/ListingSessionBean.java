@@ -1,6 +1,7 @@
 package ejb.session.stateless;
 
 import entity.Listing;
+import entity.OutletEntity;
 import java.util.List;
 import java.util.Set;
 import javax.ejb.Stateless;
@@ -14,6 +15,7 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import util.exception.InputDataValidationException;
 import util.exception.ListingNotFoundException;
+import util.exception.OutletNotFoundException;
 import util.exception.UnknownPersistenceException;
 
 @Stateless
@@ -66,8 +68,13 @@ public class ListingSessionBean implements ListingSessionBeanLocal {
     }
     
     @Override
-    public List retrieveListingByOutlet() {
-        throw new UnsupportedOperationException();
+    public List retrieveListingsByOutletId(Long outletId) throws OutletNotFoundException {
+        OutletEntity outletEntity = em.find(OutletEntity.class, outletId);
+        if (outletEntity != null) {
+            return outletEntity.getListings();
+        } else {
+            throw new OutletNotFoundException("Outlet with ID " + outletId + " does not exists!");
+        }
     }
     
     public void updateListing(Listing listing) throws InputDataValidationException, ListingNotFoundException {

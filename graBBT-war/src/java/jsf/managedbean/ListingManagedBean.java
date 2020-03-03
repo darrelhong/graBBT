@@ -16,6 +16,7 @@ public class ListingManagedBean {
     private ListingSessionBeanLocal listingSessionBean;
 
     private List<Listing> listings;
+    private Listing selectedListing;
     
     public ListingManagedBean() {}
     
@@ -36,5 +37,19 @@ public class ListingManagedBean {
      */
     public void setListings(List<Listing> listings) {
         this.listings = listings;
+    }
+
+    /**
+     * @return the selectedListing
+     */
+    public Listing getSelectedListing() {
+        return selectedListing;
+    }
+
+    /**
+     * @param selectedListing the selectedListing to set
+     */
+    public void setSelectedListing(Listing selectedListing) {
+        this.selectedListing = selectedListing;
     }
 }
