@@ -11,7 +11,7 @@ import util.exception.UnknownPersistenceException;
 @Local
 public interface ListingSessionBeanLocal {
 
-    public Long createNewListing(Listing newListing) throws UnknownPersistenceException, InputDataValidationException;
+    public Listing createNewListing(Listing newListing) throws UnknownPersistenceException, InputDataValidationException;
 
     public List retrieveAllListings();
 
@@ -20,5 +20,7 @@ public interface ListingSessionBeanLocal {
     public void deleteListing(Long listingId) throws ListingNotFoundException;
 
     public List retrieveListingsByOutletId(Long outletId) throws OutletNotFoundException;
+
+    public Listing createNewListing(Listing newListing, Long outletId) throws UnknownPersistenceException, InputDataValidationException;
     
 }
