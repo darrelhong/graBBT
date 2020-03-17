@@ -8,6 +8,8 @@ package entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import static javax.persistence.CascadeType.PERSIST;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -78,11 +80,11 @@ public class OutletEntity implements Serializable {
     @JoinColumn(nullable = false)
     private RetailerEntity retailerEntity;
     
-    @OneToMany(mappedBy = "outletEntity")
+    @OneToMany(mappedBy = "outletEntity", cascade=CascadeType.PERSIST)
     private List<Listing> listings;
     
-    @OneToMany(mappedBy = "outlet")
-    private List<CategoryEntity> categories;
+//    @OneToMany(mappedBy = "outlet", cascade=CascadeType.PERSIST)
+//    private List<CategoryEntity> categories;
 
     public OutletEntity() {
         this.outletRating = 5.0;
@@ -92,7 +94,7 @@ public class OutletEntity implements Serializable {
         this.outletRevenueOverall = 0.0;
         
         this.listings = new ArrayList<>();
-        this.categories = new ArrayList<>();
+//        this.categories = new ArrayList<>();
     }
 
     public OutletEntity(String outletName, Integer openingHour, Integer closingHour, Double locationLatitude, Double locationLongitude) {
@@ -316,18 +318,18 @@ public class OutletEntity implements Serializable {
         this.listings = listings;
     }
 
-    /**
-     * @return the categories
-     */
-    public List<CategoryEntity> getCategories() {
-        return categories;
-    }
-
-    /**
-     * @param categories the categories to set
-     */
-    public void setCategories(List<CategoryEntity> categories) {
-        this.categories = categories;
-    }
+//    /**
+//     * @return the categories
+//     */
+//    public List<CategoryEntity> getCategories() {
+//        return categories;
+//    }
+//
+//    /**
+//     * @param categories the categories to set
+//     */
+//    public void setCategories(List<CategoryEntity> categories) {
+//        this.categories = categories;
+//    }
 
 }

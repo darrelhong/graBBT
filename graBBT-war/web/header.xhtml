@@ -5,37 +5,42 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns="http://www.w3.org/1999/xhtml">
-    
-    <header style="text-align: right;">
+  
+    <header class="ui-widget-header" style="overflow: hidden; padding: 5px 0px 12px 0px">
         <h:panelGroup rendered="#{sessionScope.isLogin == false}">
             <h:form id="loginForm">
-                <p:outputLabel for="username" value="Username" />&nbsp;
-                <p:inputText id="username" value="#{loginManagedBean.username}" size="16" required="true" requiredMessage="Username is required" maxlength="32">
-                    <f:validateLength minimum="4" />
-                </p:inputText>
-                &nbsp;
-                <p:outputLabel for="password" value="Password" />&nbsp;
-                <p:password id="password" value="#{loginManagedBean.password}" size="16" required="true" requiredMessage="Password is required" maxlength="32">
-                    <f:validateLength minimum="4" />
-                </p:password>
-                &nbsp;
-                <h:commandButton type="reset" value="Clear" />&nbsp;
-                <h:commandButton type="submit" value="Login" actionListener="#{loginManagedBean.login}" />
+                <p:outputLabel style="float: left; font-size: x-large" value="graBBT Retailer Management System" />
+                <span style="float:right">
+                    <p:outputLabel for="username" value="Username" />&nbsp;
+                    <p:inputText id="username" value="#{loginManagedBean.username}" size="16" required="true" requiredMessage="Username is required" maxlength="32">
+                        <f:validateLength minimum="4" />
+                    </p:inputText>
+                    &nbsp;
+                    <p:outputLabel for="password" value="Password" />&nbsp;
+                    <p:password id="password" value="#{loginManagedBean.password}" size="16" required="true" requiredMessage="Password is required" maxlength="32">
+                        <f:validateLength minimum="4" />
+                    </p:password>
+                    &nbsp;
+                    <h:commandButton type="reset" value="Clear" />&nbsp;
+                    <h:commandButton type="submit" value="Login" actionListener="#{loginManagedBean.login}" />
 
-                <p:growl>
-                    <p:autoUpdate />
-                </p:growl>
-               
+                    <p:growl>
+                        <p:autoUpdate />
+                    </p:growl>
+                </span>
             </h:form>
         </h:panelGroup>
 
         <h:panelGroup rendered="#{sessionScope.isLogin == true}">
             <h:form id="logoutForm">
-                <h:outputText value="You are logged in as #{sessionScope.currentRetailerEntity.retailerName}."/>&nbsp;
-                <p:menuButton value="Options">
-                    <p:menuitem value="My Profile" icon="fa fa-user-o" />
-                    <p:menuitem value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" />
-                </p:menuButton>
+                <p:outputLabel style="float: left; font-size: x-large" value="graBBT Retailer Management System" />
+                <span style="float:right">
+                    <h:outputText value="You are logged in as #{sessionScope.currentRetailerEntity.retailerName}."/>&nbsp;
+                    <p:menuButton value="Options">
+                        <p:menuitem value="My Profile" icon="fa fa-user-o" />
+                        <p:menuitem value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" />
+                    </p:menuButton>
+                </span>
             </h:form>
         </h:panelGroup>
     </header>
