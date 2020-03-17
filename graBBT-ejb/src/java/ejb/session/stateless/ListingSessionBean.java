@@ -33,14 +33,34 @@ public class ListingSessionBean implements ListingSessionBeanLocal {
     }
 
     @Override
-    public Long createNewListing(Listing newListing) throws UnknownPersistenceException, InputDataValidationException {
+    public Listing createNewListing(Listing newListing) throws UnknownPersistenceException, InputDataValidationException {
         try {
             Set<ConstraintViolation<Listing>> constraintViolations = validator.validate(newListing);
 
             if (constraintViolations.isEmpty()) {
                 em.persist(newListing);
                 em.flush();
-                return newListing.getListingId();
+                return newListing;
+            } else {
+                throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+            }
+        } catch (PersistenceException ex) {
+            throw new UnknownPersistenceException(ex.getMessage());
+        }
+    }
+    
+     @Override
+    public Listing createNewListing(Listing newListing, Long outletId) throws UnknownPersistenceException, InputDataValidationException {
+        try {
+            Set<ConstraintViolation<Listing>> constraintViolations = validator.validate(newListing);
+
+            if (constraintViolations.isEmpty()) {
+                OutletEntity outlet = em.find(OutletEntity.class, outletId);
+                em.persist(newListing);
+                newListing.setOutletEntity(outlet);
+                outlet.getListings().add(newListing);
+                em.flush();
+                return newListing;
             } else {
                 throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
             }
