@@ -7,11 +7,16 @@ package entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -25,14 +30,33 @@ public class OrderLineItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderLineItemId;
     
-    @Col
+    @Column(nullable = false, length = 64)
+    @NotNull
+    @Size(max = 64)
     private String itemName;
     
+    @Column(nullable = false, precision = 11, scale = 2)
+    @NotNull
+    @DecimalMin("0.00")
     private BigDecimal price;
     
+    @Column(nullable = false)
+    @NotNull
+    @Min(0)
     private Integer quantity;
     
-    private ArrayList<String> itemOptions;
+    private List<String> itemOptions;
+
+    public OrderLineItem() {
+    }
+
+    public OrderLineItem(String itemName, BigDecimal price, Integer quantity, List<String> itemOptions) {
+        this();
+        this.itemName = itemName;
+        this.price = price;
+        this.quantity = quantity;
+        this.itemOptions = itemOptions;
+    }
 
     public Long getOrderLineItemId() {
         return orderLineItemId;
@@ -65,6 +89,62 @@ public class OrderLineItem implements Serializable {
     @Override
     public String toString() {
         return "entity.OrderLineItem[ id=" + orderLineItemId + " ]";
+    }
+
+    /**
+     * @return the itemName
+     */
+    public String getItemName() {
+        return itemName;
+    }
+
+    /**
+     * @param itemName the itemName to set
+     */
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
+    /**
+     * @return the price
+     */
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    /**
+     * @param price the price to set
+     */
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    /**
+     * @return the quantity
+     */
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * @param quantity the quantity to set
+     */
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    /**
+     * @return the itemOptions
+     */
+    public List<String> getItemOptions() {
+        return itemOptions;
+    }
+
+    /**
+     * @param itemOptions the itemOptions to set
+     */
+    public void setItemOptions(List<String> itemOptions) {
+        this.itemOptions = itemOptions;
     }
     
 }
