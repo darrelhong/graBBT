@@ -8,6 +8,7 @@ package ejb.session.stateless;
 import entity.OutletEntity;
 import java.util.List;
 import javax.ejb.Local;
+import util.exception.DeactivateOutletException;
 import util.exception.InputDataValidationException;
 import util.exception.OutletNameExistsException;
 import util.exception.OutletNotFoundException;
@@ -26,4 +27,6 @@ public interface OutletSessionBeanLocal {
     public Long createNewOutlet(OutletEntity newOutletEntity, Long retailerId) throws OutletNameExistsException, RetailerNotFoundException, UnknownPersistenceException, InputDataValidationException;
 
     public OutletEntity retrieveOutletByOutletId(Long outletId) throws OutletNotFoundException;
+
+    public void deactivateOutlet(Long outletId) throws OutletNotFoundException, DeactivateOutletException;
 }

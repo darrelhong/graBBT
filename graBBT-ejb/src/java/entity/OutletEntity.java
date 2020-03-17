@@ -37,6 +37,10 @@ public class OutletEntity implements Serializable {
     @NotNull
     @Size(max = 64)
     private String outletName;
+    
+    @Column(nullable = false)
+    @NotNull
+    private Boolean isActive;
 
     @Column(nullable = false)
     @NotNull
@@ -44,7 +48,7 @@ public class OutletEntity implements Serializable {
     @Max(2359)
     private Integer openingHour; //store in 24-hr format
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 4)
     @NotNull
     @Min(0000)
     @Max(2359)
@@ -53,11 +57,11 @@ public class OutletEntity implements Serializable {
     @Column(nullable = false)
     @Max(5)
     @Min(0)
-    private Double outletRating = 5.0;
+    private Double outletRating;
 
     @Column(nullable = false)
     @Min(0)
-    private Integer ratingCount = 0; //stores total number of ratings made for this outlet
+    private Integer ratingCount; //stores total number of ratings made for this outlet
 
     //constraints to be added
     private Double locationLatitude;
@@ -65,9 +69,9 @@ public class OutletEntity implements Serializable {
     private Double locationLongitude;
 
     //constraints to be added; to confirm format of storing revenue reports
-    private Double outletRevenueDaily = 0.0;
-    private Double outletRevenueMonthly = 0.0;
-    private Double outletRevenueOverall = 0.0;
+    private Double outletRevenueDaily;
+    private Double outletRevenueMonthly;
+    private Double outletRevenueOverall;
 
     //changed optional to false
     @ManyToOne(optional = false)
@@ -81,12 +85,19 @@ public class OutletEntity implements Serializable {
     private List<CategoryEntity> categories;
 
     public OutletEntity() {
+        this.outletRating = 5.0;
+        this.ratingCount = 0; 
+        this.outletRevenueDaily = 0.0;
+        this.outletRevenueMonthly = 0.0;
+        this.outletRevenueOverall = 0.0;
+        
         this.listings = new ArrayList<>();
         this.categories = new ArrayList<>();
     }
 
     public OutletEntity(String outletName, Integer openingHour, Integer closingHour, Double locationLatitude, Double locationLongitude) {
         this();
+        this.isActive = true; //by default
         this.outletName = outletName;
         this.openingHour = openingHour;
         this.closingHour = closingHour;
@@ -127,6 +138,16 @@ public class OutletEntity implements Serializable {
         return "entity.OutletEntity[ id=" + outletId + " ]";
     }
 
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+    
+    
+    
     /**
      * @return the outletName
      */

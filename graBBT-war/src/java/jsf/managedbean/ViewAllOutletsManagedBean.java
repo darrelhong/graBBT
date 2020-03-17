@@ -38,11 +38,11 @@ public class ViewAllOutletsManagedBean {
     @PostConstruct
     public void postConstruct() {
 
-        System.err.println("HELLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLO");
         RetailerEntity currentRetailer = (RetailerEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentRetailerEntity");
-
         currentRetailerId = currentRetailer.getRetailerId();
-        System.out.println("*****************************************" + currentRetailerId);
+        System.out.println("*********************POST CONSTRUCT********************" + currentRetailerId);
+        
+        //populate local list of outlets
         setOutletEntities(outletSessionBeanLocal.retrieveAllOutletsByRetailerId(currentRetailerId)); //can be empty
 
     }

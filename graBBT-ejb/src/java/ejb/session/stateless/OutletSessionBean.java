@@ -5,10 +5,12 @@
  */
 package ejb.session.stateless;
 
+import entity.Listing;
 import entity.OutletEntity;
 import entity.RetailerEntity;
 import java.util.List;
 import java.util.Set;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -20,6 +22,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import util.exception.DeactivateOutletException;
 import util.exception.InputDataValidationException;
 import util.exception.OutletNameExistsException;
 import util.exception.OutletNotFoundException;
@@ -36,6 +39,9 @@ public class OutletSessionBean implements OutletSessionBeanLocal {
     @PersistenceContext(unitName = "graBBT-ejbPU")
     private EntityManager em;
 
+    @EJB
+    private ListingSessionBeanLocal listingSessionBeanLocal;
+    
     private final ValidatorFactory validatorFactory;
     private final Validator validator;
 
@@ -55,6 +61,7 @@ public class OutletSessionBean implements OutletSessionBeanLocal {
                     if (retailerEntity == null) {
                         throw new RetailerNotFoundException("Retailer with ID " + retailerId + " does not exist!");
                     }
+                    //setting bidirectional rs
                     retailerEntity.getOutletEntities().add(newOutletEntity);
                     newOutletEntity.setRetailerEntity(retailerEntity);
                 }
@@ -82,7 +89,7 @@ public class OutletSessionBean implements OutletSessionBeanLocal {
     
     @Override
     public List<OutletEntity> retrieveAllOutletsByRetailerId(Long retailerId) {
-        Query q = em.createQuery("SELECT o FROM OutletEntity o WHERE o.retailerEntity.retailerId = :inRetailerId");
+        Query q = em.createQuery("SELECT o FROM OutletEntity o WHERE o.retailerEntity.retailerId = :inRetailerId ORDER BY o.isActive");
         q.setParameter("inRetailerId", retailerId);
 
         return q.getResultList();
@@ -107,5 +114,23 @@ public class OutletSessionBean implements OutletSessionBeanLocal {
         }
 
         return msg;
+    }
+    
+    @Override
+    public void deactivateOutlet(Long outletId) throws OutletNotFoundException, DeactivateOutletException
+    {
+        OutletEntity outletEntityToDeactivate = retrieveOutletByOutletId(outletId);
+
+        List<Listing> listings = listingSessionBeanLocal.retrieveListingsByOutletId(outletId);
+        //if no listings left, can delete
+        if (listings.isEmpty())
+        {
+            outletEntityToDeactivate.setIsActive(false); 
+        }
+        else 
+        {
+            throw new DeactivateOutletException("Outlet ID " + outletId + "is associated with existing listing item(s) and cannot be deleted!" );
+        }
+
     }
 }
