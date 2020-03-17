@@ -8,6 +8,6 @@
 - Still figuring out categories
 
 ## Chloe
-- Create new outlet still doesnt work; Also looking to allow panel/list view
+- Create new outlet to allow panel/list view
 - Want to work on building a navbar
 - Want to work on retailer profile details
