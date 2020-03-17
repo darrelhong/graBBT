@@ -45,7 +45,7 @@ public class CreateNewOutletManagedBean implements Serializable {
     {
         RetailerEntity currentRetailer = (RetailerEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentRetailerEntity");
         currentRetailerId = currentRetailer.getRetailerId();
-        System.out.println("*********************POST CONSTRUCT********************" + currentRetailerId);
+        System.out.println("*********************CreateNewOutletManagedBean POST CONSTRUCT********************" + currentRetailerId);
     }
     
     public void createNewOutlet(ActionEvent event)
@@ -64,6 +64,7 @@ public class CreateNewOutletManagedBean implements Serializable {
         catch (OutletNameExistsException | RetailerNotFoundException | UnknownPersistenceException | InputDataValidationException | OpeningAndClosingHoursOverlapException ex)
         {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while creating the new outlet: " + ex.getMessage(), null));
+            System.out.println(ex.getMessage());
         }
         
         newOutletEntity = new OutletEntity(); //reset

@@ -93,13 +93,14 @@ public class OutletEntity implements Serializable {
         this.outletRevenueMonthly = 0.0;
         this.outletRevenueOverall = 0.0;
         
+        this.isActive = true; //by default
+        
         this.listings = new ArrayList<>();
 //        this.categories = new ArrayList<>();
     }
 
     public OutletEntity(String outletName, Integer openingHour, Integer closingHour, Double locationLatitude, Double locationLongitude) {
         this();
-        this.isActive = true; //by default
         this.outletName = outletName;
         this.openingHour = openingHour;
         this.closingHour = closingHour;
