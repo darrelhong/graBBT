@@ -40,11 +40,9 @@ public class Customer implements Serializable {
     
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     @NotNull
-    // The following bean validation constraint is not applicable since we are only storing the password hashsum which is always 128 bit represented as 32 characters (16 hexadecimal digits)
-    //@Size(min = 8, max = 32)
     private String password;
     
-    @Column(nullable = false, length = 9)
+    @Column(nullable = false, length = 9, unique = true)
     @NotNull
     @Size(max = 9)
     private String phoneNumber;
