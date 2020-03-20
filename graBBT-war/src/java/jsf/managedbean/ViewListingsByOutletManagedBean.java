@@ -3,6 +3,10 @@ package jsf.managedbean;
 import ejb.session.stateless.ListingSessionBeanLocal;
 import entity.CategoryEntity;
 import entity.Listing;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,6 +16,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 import util.exception.InputDataValidationException;
 import util.exception.OutletNotFoundException;
 import util.exception.UnknownPersistenceException;
@@ -40,6 +46,7 @@ public class ViewListingsByOutletManagedBean implements Serializable {
     private BigDecimal icePriceInput;
     private String toppingNameInput;
     private BigDecimal toppingPriceInput;
+    private UploadedFile upImage;
 
     public ViewListingsByOutletManagedBean() {
     }
@@ -112,6 +119,42 @@ public class ViewListingsByOutletManagedBean implements Serializable {
         toppingPriceInput = new BigDecimal(0);
     }
 
+    public void handleFileUpload(FileUploadEvent event) {
+        try {
+            String newFilePath = FacesContext.getCurrentInstance().getExternalContext().getInitParameter("alternatedocroot_1") + System.getProperty("file.separator") + event.getFile().getFileName();
+
+            System.err.println("********** createNewListing.handleFileUpload(): File name: " + event.getFile().getFileName());
+            System.err.println("********** createNewListing.handleFileUpload(): newFilePath: " + newFilePath);
+            newListing.setImageSrc(event.getFile().getFileName());
+
+            File file = new File(newFilePath);
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+
+            int a;
+            int BUFFER_SIZE = 8192;
+            byte[] buffer = new byte[BUFFER_SIZE];
+
+            InputStream inputStream = event.getFile().getInputstream();
+
+            while (true) {
+                a = inputStream.read(buffer);
+
+                if (a < 0) {
+                    break;
+                }
+
+                fileOutputStream.write(buffer, 0, a);
+                fileOutputStream.flush();
+            }
+
+            fileOutputStream.close();
+            inputStream.close();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "File uploaded successfully", ""));
+        } catch (IOException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "File upload error: " + ex.getMessage(), ""));
+        }
+    }
+
     public void createNewListing() {
 
         try {
@@ -125,7 +168,7 @@ public class ViewListingsByOutletManagedBean implements Serializable {
 
         }
     }
-    
+
     /**
      * @return the outletId
      */
@@ -334,6 +377,14 @@ public class ViewListingsByOutletManagedBean implements Serializable {
      */
     public void setToppingPriceInput(BigDecimal toppingPriceInput) {
         this.toppingPriceInput = toppingPriceInput;
+    }
+
+    public UploadedFile getUpImage() {
+        return upImage;
+    }
+
+    public void setUpImage(UploadedFile upImage) {
+        this.upImage = upImage;
     }
 
 }

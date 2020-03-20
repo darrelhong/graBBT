@@ -9,22 +9,23 @@ import ejb.session.stateless.OutletSessionBeanLocal;
 import entity.OutletEntity;
 import entity.RetailerEntity;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author Chloe Tanny
  */
 @Named(value = "viewAllOutletsManagedBean")
-@RequestScoped
+@ViewScoped
 
-public class ViewAllOutletsManagedBean {
+public class ViewAllOutletsManagedBean implements Serializable {
 
     @EJB
     private OutletSessionBeanLocal outletSessionBeanLocal;
