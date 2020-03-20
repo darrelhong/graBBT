@@ -1,0 +1,281 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/template/defaultTemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+        <h3>View listings for outlet</h3>
+        <p:panel header="Create new listing" toggleable="true" toggleOrientation="vertical" collapsed="true">
+            <h:form id="createListingForm"  enctype="multipart/form-data">
+                <p:messages id="messagesCreateNewListing" redisplay="false" />
+                <h:panelGrid columns="4" cellpadding="5">
+                    <p:outputLabel for="name" value="Name:" />
+                    <p:inputText id="name" value="#{viewListingsByOutletManagedBean.newListing.name}" required="true" requiredMessage="Listing name required"/>
+                    <p:message for="name" />
+                    &nbsp;
+                    <p:outputLabel for="basePrice" value="Base Price:" />
+                    <p:inputNumber id="basePrice" value="#{viewListingsByOutletManagedBean.newListing.basePrice}" decimalPlaces="2" minValue="0" required="true" requiredMessage="Listing price required"/>
+                    <p:message for="basePrice" />
+                    &nbsp;
+                    <p:outputLabel for="description" value="Description:" />
+                    <p:inputText id="description" value="#{viewListingsByOutletManagedBean.newListing.description}" />
+                    <p:message for="description" />
+                    &nbsp;
+                    <p:outputLabel value="Image:" />
+                    <p:fileUpload id="image" update="messagesCreateNewListing" fileUploadListener="#{viewListingsByOutletManagedBean.handleFileUpload}" multiple="false" skinSimple="true"/>
+                    <p:message for="image" />
+                    &nbsp;
+                    <p:outputLabel for="categoryEntity" value="Category:" />
+                    <p:selectOneMenu id="categoryEntity" value="#{viewListingsByOutletManagedBean.categoryIdNew}">
+                        <f:selectItem itemValue="0" itemLabel="[Select One]" noSelectionOption="true" />
+                        <f:selectItems value="#{viewListingsByOutletManagedBean.categoryEntities}" var="categoryEntity" itemValue="#{categoryEntity.categoryId}" itemLabel="#{categoryEntity.categoryName}"/>
+                    </p:selectOneMenu>
+                    <p:message for="categoryEntity" />
+                    &nbsp;
+
+                    <p:outputLabel value="Size Options:" />
+                    <h:panelGrid id="sizeOptionsForm" columns="3">
+                        <p:outputLabel for="sizeNameInput" value="Name:" />
+                        <p:inputText id="sizeNameInput" value="#{viewListingsByOutletManagedBean.sizeNameInput}" />
+                        <p:message for="sizeNameInput"/>
+                        <p:outputLabel for="sizePriceInput" value="Price" />
+                        <p:inputNumber id="sizePriceInput" value="#{viewListingsByOutletManagedBean.sizePriceInput}" required="true" requiredMessage="Size price required" decimalPlaces="2" minValue="0" />
+                        <p:message for="sizePriceInput"/>
+                    </h:panelGrid>
+                    <p:commandButton icon="pi pi-plus">
+                        <p:ajax event="click" update="sizeOptionsForm sizeOptionsTable" process="@this sizeOptionsForm" listener="#{viewListingsByOutletManagedBean.addSizeOption}"/>
+                    </p:commandButton>
+                    <p:outputPanel>
+                        <h:outputText value="Size options" style="font-weight: bold"/>
+                        <p:dataTable id="sizeOptionsTable" style="width:400px" var="options" value="#{viewListingsByOutletManagedBean.newListing.sizeOptions.entrySet().toArray()}">
+                            <p:column headerText="Option" >
+                                <h:outputText value="#{options.key}"/>
+                            </p:column>
+                            <p:column headerText="Price" >
+                                <h:outputText value="#{options.value}">
+                                    <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
+                                </h:outputText> 
+                            </p:column>
+                        </p:dataTable>
+                    </p:outputPanel>
+
+                    <p:outputLabel value="Sugar Options:" />
+                    <h:panelGrid id="sugarOptionsForm" columns="3">
+                        <p:outputLabel for="sugarNameInput" value="Name:" />
+                        <p:inputText id="sugarNameInput" styleClass="exclude" value="#{viewListingsByOutletManagedBean.sugarNameInput}" />
+                        <p:message for="sugarNameInput"/>
+                        <p:outputLabel for="sugarPriceInput" value="Price" />
+                        <p:inputNumber id="sugarPriceInput" value="#{viewListingsByOutletManagedBean.sugarPriceInput}" required="true" requiredMessage="Sugar price required" decimalPlaces="2" minValue="0" />
+                        <p:message for="sugarPriceInput"/>
+                    </h:panelGrid>
+                    <p:commandButton icon="pi pi-plus">
+                        <p:ajax event="click" update="sugarOptionsForm sugarOptionsTable" process="@this sugarOptionsForm" listener="#{viewListingsByOutletManagedBean.addSugarOption}"/>
+                    </p:commandButton>
+                    <p:outputPanel>
+                        <h:outputText value="Sugar options" style="font-weight: bold"/>
+                        <p:dataTable id="sugarOptionsTable" style="width:400px" var="options" value="#{viewListingsByOutletManagedBean.newListing.sugarOptions.entrySet().toArray()}">
+                            <p:column headerText="Option" >
+                                <h:outputText value="#{options.key}"/>
+                            </p:column>
+                            <p:column headerText="Price" >
+                                <h:outputText value="#{options.value}">
+                                    <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
+                                </h:outputText> 
+                            </p:column>
+                        </p:dataTable>
+                    </p:outputPanel>
+
+                    <p:outputLabel value="Ice Options:" />
+                    <h:panelGrid id="iceOptionsForm" columns="3">
+                        <p:outputLabel for="iceNameInput" value="Name:" />
+                        <p:inputText id="iceNameInput" value="#{viewListingsByOutletManagedBean.iceNameInput}" />
+                        <p:message for="iceNameInput"/>
+                        <p:outputLabel for="icePriceInput" value="Price" />
+                        <p:inputNumber id="icePriceInput" value="#{viewListingsByOutletManagedBean.icePriceInput}" required="true" requiredMessage="Ice price required" decimalPlaces="2" minValue="0" />
+                        <p:message for="icePriceInput"/>
+                    </h:panelGrid>
+                    <p:commandButton icon="pi pi-plus">
+                        <p:ajax event="click" update="iceOptionsForm iceOptionsTable" process="@this iceOptionsForm" listener="#{viewListingsByOutletManagedBean.addIceOption}"/>
+                    </p:commandButton>
+                    <p:outputPanel>
+                        <h:outputText value="Ice options" style="font-weight: bold"/>
+                        <p:dataTable id="iceOptionsTable" style="width:400px" var="options" value="#{viewListingsByOutletManagedBean.newListing.iceOptions.entrySet().toArray()}">
+                            <p:column headerText="Option" >
+                                <h:outputText value="#{options.key}"/>
+                            </p:column>
+                            <p:column headerText="Price" >
+                                <h:outputText value="#{options.value}">
+                                    <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
+                                </h:outputText> 
+                            </p:column>
+                        </p:dataTable>
+                    </p:outputPanel>
+
+                    <p:outputLabel value="Topping Options:" />
+                    <h:panelGrid id="toppingOptionsForm" columns="3">
+                        <p:outputLabel for="toppingNameInput" value="Name:" />
+                        <p:inputText id="toppingNameInput" value="#{viewListingsByOutletManagedBean.toppingNameInput}"/>
+                        <p:message for="toppingNameInput"/>
+                        <p:outputLabel for="toppingPriceInput" value="Price" />
+                        <p:inputNumber id="toppingPriceInput" value="#{viewListingsByOutletManagedBean.toppingPriceInput}" required="true" requiredMessage="Topping price required" decimalPlaces="2" minValue="0" />
+                        <p:message for="toppingPriceInput"/>
+                    </h:panelGrid>
+                    <p:commandButton icon="pi pi-plus">
+                        <p:ajax event="click" update="toppingOptionsForm toppingOptionsTable" process="@this toppingOptionsForm" listener="#{viewListingsByOutletManagedBean.addToppingOption}"/>
+                    </p:commandButton>
+                    <p:outputPanel>
+                        <h:outputText value="Topping options" style="font-weight: bold"/>
+                        <p:dataTable id="toppingOptionsTable" style="width:400px" var="options" value="#{viewListingsByOutletManagedBean.newListing.toppingOptions.entrySet().toArray()}">
+                            <p:column headerText="Option" >
+                                <h:outputText value="#{options.key}"/>
+                            </p:column>
+                            <p:column headerText="Price" >
+                                <h:outputText value="#{options.value}">
+                                    <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
+                                </h:outputText> 
+                            </p:column>
+                        </p:dataTable>
+                    </p:outputPanel>
+
+                    <p:commandButton type="reset" value="Clear" />
+                    <p:commandButton  value="Create" update="@form viewListingForm" process="@form" actionListener="#{viewListingsByOutletManagedBean.createNewListing}" />
+
+                </h:panelGrid>
+
+            </h:form>
+        </p:panel>
+        <br></br>
+        <h:form id="viewListingForm">
+            <p:dataView var="listing" value="#{viewListingsByOutletManagedBean.outletListings}"
+                        gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+                <p:dataViewGridItem>
+                    <p:panel header="#{listing.name}" style="text-align: center">
+                        <h:panelGrid columns="1" style="width: 100%">
+
+                            <p:graphicImage library="image" name="#{listing.imageSrc}" rendered="#{not empty listing.imageSrc}" width="100px"/>
+                            <p:graphicImage library="image" name="defaultimage.jpg" rendered="#{empty listing.imageSrc}" width="100px"/>
+
+                            <h:outputText value="#{listing.basePrice}" >
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
+                            </h:outputText>     
+
+                            <p:commandLink update=":viewListingForm:listingDetails" oncomplete="PF('listingDialog').show()" title="View details">
+                                <h:outputText styleClass="ui-icon pi pi-info-circle" style="margin: 0 auto;" />
+                                <f:setPropertyActionListener value="#{listing}" target="${viewListingsByOutletManagedBean.selectedListing}" />
+                            </p:commandLink>
+                        </h:panelGrid>
+                    </p:panel>
+                </p:dataViewGridItem>
+
+                <p:dataViewListItem>
+                    <h:panelGrid columns="3" style="width: 100%" columnClasses="logo,detail">
+                        <p:graphicImage library="image" name="#{listing.imageSrc}" rendered="#{not empty listing.imageSrc}" width="75px"/>
+                        <p:graphicImage library="image" name="defaultimage.jpg" rendered="#{empty listing.imageSrc}" width="100px"/>
+
+                        <p:outputPanel>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputText value="Name" />
+                                <h:outputText value="#{listing.name}" />
+
+                                <h:outputText value="Description" />
+                                <h:outputText value="#{listing.description}" />
+
+                                <h:outputText value="Price" />
+                                <h:outputText value="#{listing.basePrice}" >
+                                    <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
+                                </h:outputText> 
+
+                            </h:panelGrid>
+                        </p:outputPanel>
+
+                        <p:commandLink update=":viewListingForm:listingDetails" oncomplete="PF('listingDialog').show()" title="View details">
+                            <h:outputText styleClass="ui-icon pi pi-info-circle" style="margin: 0 auto;" />
+                            <f:setPropertyActionListener value="#{listing}" target="${viewListingsByOutletManagedBean.selectedListing}" />
+                        </p:commandLink>
+                    </h:panelGrid>
+                </p:dataViewListItem>
+            </p:dataView>
+
+            <p:dialog header="Listing Details" widgetVar="listingDialog" id="listingDialog" resizable="false" draggable="false" position="top">
+                <p:scrollPanel mode="native" style="height: 600px">
+                    <p:outputPanel id="listingDetails" style="text-align:center">
+                        <p:panelGrid columns="2" style="margin: auto">
+                            <f:facet name="header">
+                                <h:graphicImage library="image" name="#{viewListingsByOutletManagedBean.selectedListing.imageSrc}" rendered="#{not empty viewListingsByOutletManagedBean.selectedListing.imageSrc}" width="250px"/>
+                                <p:graphicImage library="image" name="defaultimage.jpg" rendered="#{empty viewListingsByOutletManagedBean.selectedListing.imageSrc}" width="100px"/>
+                            </f:facet>
+
+                            <h:outputText value="Name" />
+                            <h:outputText value="#{viewListingsByOutletManagedBean.selectedListing.name}" />
+
+                            <h:outputText value="Description" />
+                            <h:outputText value="#{viewListingsByOutletManagedBean.selectedListing.description}" />
+
+                            <h:outputText value="Base Price" />
+                            <h:outputText value="#{viewListingsByOutletManagedBean.selectedListing.basePrice}" >
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
+                            </h:outputText>
+                        </p:panelGrid>
+
+                        <br/>
+                        <h:outputText value="Size options" style="font-weight: bold"/>
+                        <p:dataTable style="width:400px" var="options" value="#{viewListingsByOutletManagedBean.selectedListing.sizeOptions.entrySet().toArray()}">
+                            <p:column headerText="Option" >
+                                <h:outputText value="#{options.key}"/>
+                            </p:column>
+                            <p:column headerText="Price" >
+                                <h:outputText value="#{options.value}">
+                                    <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
+                                </h:outputText> 
+                            </p:column>
+                        </p:dataTable>
+
+                        <br/>
+                        <h:outputText value="Sugar options" style="font-weight: bold"/>
+                        <p:dataTable style="width:400px" var="options" value="#{viewListingsByOutletManagedBean.selectedListing.sugarOptions.entrySet().toArray()}">
+                            <p:column headerText="Option" >
+                                <h:outputText value="#{options.key}"/>
+                            </p:column>
+                            <p:column headerText="Price" >
+                                <h:outputText value="#{options.value}">
+                                    <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
+                                </h:outputText> 
+                            </p:column>
+                        </p:dataTable>
+
+                        <br/>
+                        <h:outputText value="Ice options" style="font-weight: bold"/>
+                        <p:dataTable style="width:400px" var="options" value="#{viewListingsByOutletManagedBean.selectedListing.iceOptions.entrySet().toArray()}">
+                            <p:column headerText="Option" >
+                                <h:outputText value="#{options.key}"/>
+                            </p:column>
+                            <p:column headerText="Price" >
+                                <h:outputText value="#{options.value}">
+                                    <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
+                                </h:outputText> 
+                            </p:column>
+                        </p:dataTable>
+
+                        <br/>
+                        <h:outputText value="Topping options" style="font-weight: bold"/>
+                        <p:dataTable style="width:400px" var="options" value="#{viewListingsByOutletManagedBean.selectedListing.toppingOptions.entrySet().toArray()}">
+                            <p:column headerText="Option" >
+                                <h:outputText value="#{options.key}"/>
+                            </p:column>
+                            <p:column headerText="Price" >
+                                <h:outputText value="#{options.value}"> 
+                                    <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
+                                </h:outputText> 
+                            </p:column>
+                        </p:dataTable>
+                    </p:outputPanel>
+                </p:scrollPanel>
+            </p:dialog>
+        </h:form>
+
+    </ui:define>
+</ui:composition>

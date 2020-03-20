@@ -6,6 +6,10 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import static javax.persistence.CascadeType.PERSIST;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -29,7 +34,7 @@ public class OutletEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long outletId;
-    
+
     @Column(nullable = false, unique = true, length = 64)
     @NotNull
     @Size(max = 64)
@@ -37,52 +42,72 @@ public class OutletEntity implements Serializable {
     
     @Column(nullable = false)
     @NotNull
-    @Min(0000)
-    @Max(2359)
-    private Integer openingHour; //store in 24-hr format
-    
+    private Boolean isActive;
+
     @Column(nullable = false)
     @NotNull
     @Min(0000)
     @Max(2359)
+    private Integer openingHour; //store in 24-hr format
+
+    @Column(nullable = false, length = 4)
+    @NotNull
+    @Min(0000)
+    @Max(2359)
     private Integer closingHour; //store in 24-hr format
-    
+
     @Column(nullable = false)
     @Max(5)
     @Min(0)
-    private Double outletRating = 5.0; 
-    
+    private Double outletRating;
+
     @Column(nullable = false)
     @Min(0)
-    private Integer ratingCount = 0; //stores total number of ratings made for this outlet
+    private Integer ratingCount; //stores total number of ratings made for this outlet
 
     //constraints to be added
     private Double locationLatitude;
     //constraints to be added
     private Double locationLongitude;
-    
+
     //constraints to be added; to confirm format of storing revenue reports
-    private Double outletRevenueDaily = 0.0;
-    private Double outletRevenueMonthly = 0.0;
-    private Double outletRevenueOverall = 0.0;
-    
-    
-    @ManyToOne(optional = true)
-    @JoinColumn(nullable = true)
+    private Double outletRevenueDaily;
+    private Double outletRevenueMonthly;
+    private Double outletRevenueOverall;
+
+    //changed optional to false
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
     private RetailerEntity retailerEntity;
     
-    public OutletEntity(){
+    @OneToMany(mappedBy = "outletEntity", cascade=CascadeType.PERSIST)
+    private List<Listing> listings;
+    
+//    @OneToMany(mappedBy = "outlet", cascade=CascadeType.PERSIST)
+//    private List<CategoryEntity> categories;
+
+    public OutletEntity() {
+        this.outletRating = 5.0;
+        this.ratingCount = 0; 
+        this.outletRevenueDaily = 0.0;
+        this.outletRevenueMonthly = 0.0;
+        this.outletRevenueOverall = 0.0;
+        
+        this.isActive = true; //by default
+        
+        this.listings = new ArrayList<>();
+//        this.categories = new ArrayList<>();
     }
 
     public OutletEntity(String outletName, Integer openingHour, Integer closingHour, Double locationLatitude, Double locationLongitude) {
+        this();
         this.outletName = outletName;
         this.openingHour = openingHour;
         this.closingHour = closingHour;
         this.locationLatitude = locationLatitude;
         this.locationLongitude = locationLongitude;
     }
-   
-    
+
     public Long getOutletId() {
         return outletId;
     }
@@ -90,8 +115,6 @@ public class OutletEntity implements Serializable {
     public void setOutletId(Long outletId) {
         this.outletId = outletId;
     }
-    
-    
 
     @Override
     public int hashCode() {
@@ -118,6 +141,16 @@ public class OutletEntity implements Serializable {
         return "entity.OutletEntity[ id=" + outletId + " ]";
     }
 
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+    
+    
+    
     /**
      * @return the outletName
      */
@@ -271,5 +304,33 @@ public class OutletEntity implements Serializable {
     public void setRetailerEntity(RetailerEntity retailerEntity) {
         this.retailerEntity = retailerEntity;
     }
-    
+
+    /**
+     * @return the listings
+     */
+    public List<Listing> getListings() {
+        return listings;
+    }
+
+    /**
+     * @param listings the listings to set
+     */
+    public void setListings(List<Listing> listings) {
+        this.listings = listings;
+    }
+
+//    /**
+//     * @return the categories
+//     */
+//    public List<CategoryEntity> getCategories() {
+//        return categories;
+//    }
+//
+//    /**
+//     * @param categories the categories to set
+//     */
+//    public void setCategories(List<CategoryEntity> categories) {
+//        this.categories = categories;
+//    }
+
 }

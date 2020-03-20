@@ -5,10 +5,12 @@
  */
 package ejb.session.stateless;
 
+import entity.Listing;
 import entity.OutletEntity;
 import entity.RetailerEntity;
 import java.util.List;
 import java.util.Set;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -20,6 +22,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import util.exception.DeactivateOutletException;
 import util.exception.InputDataValidationException;
 import util.exception.OutletNameExistsException;
 import util.exception.OutletNotFoundException;
@@ -36,6 +39,9 @@ public class OutletSessionBean implements OutletSessionBeanLocal {
     @PersistenceContext(unitName = "graBBT-ejbPU")
     private EntityManager em;
 
+    @EJB
+    private ListingSessionBeanLocal listingSessionBeanLocal;
+
     private final ValidatorFactory validatorFactory;
     private final Validator validator;
 
@@ -43,27 +49,30 @@ public class OutletSessionBean implements OutletSessionBeanLocal {
         validatorFactory = Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
     }
-    
+
     @Override
-    public Long createNewOutlet(OutletEntity newOutletEntity, Long retailerId) throws OutletNameExistsException, UnknownPersistenceException, InputDataValidationException {
+    public Long createNewOutlet(OutletEntity newOutletEntity, Long retailerId) throws OutletNameExistsException, RetailerNotFoundException, UnknownPersistenceException, InputDataValidationException {
+        System.out.println("*********** OutletSessionBean.createNewOutlet()**************");
         try {
             Set<ConstraintViolation<OutletEntity>> constraintViolations = validator.validate(newOutletEntity);
 
-            if(retailerId != null)
-                {
-                    RetailerEntity retailerEntity = em.find(RetailerEntity.class, retailerId);
-
+            if (retailerId != null) {
+                RetailerEntity retailerEntity = em.find(RetailerEntity.class, retailerId);
+                if (constraintViolations.isEmpty()) {
+                    
+                    em.persist(newOutletEntity);
+                    
+                    //setting bidirectional rs
                     retailerEntity.getOutletEntities().add(newOutletEntity);
                     newOutletEntity.setRetailerEntity(retailerEntity);
+                    
+                    em.flush();
+                    return newOutletEntity.getOutletId();
+                } else {
+                    throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
                 }
-                
-            if (constraintViolations.isEmpty()) {
-                em.persist(newOutletEntity);
-                em.flush();
-
-                return newOutletEntity.getOutletId();
             } else {
-                throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+                throw new RetailerNotFoundException("Retailer with ID " + retailerId + " does not exist!");
             }
         } catch (PersistenceException ex) {
             if (ex.getCause() != null && ex.getCause().getClass().getName().equals("org.eclipse.persistence.exceptions.DatabaseException")) {
@@ -77,23 +86,47 @@ public class OutletSessionBean implements OutletSessionBeanLocal {
             }
         }
     }
-    
+
     @Override
     public List<OutletEntity> retrieveAllOutletsByRetailerId(Long retailerId) {
-        Query q = em.createQuery("SELECT o FROM OutletEntity o WHERE o.retailerEntity.retailerId = :inRetailerId");
+        Query q = em.createQuery("SELECT o FROM OutletEntity o WHERE o.retailerEntity.retailerId = :inRetailerId ORDER BY o.isActive");
         q.setParameter("inRetailerId", retailerId);
 
         return q.getResultList();
-        
     }
-    
+
+    @Override
+    public OutletEntity retrieveOutletByOutletId(Long outletId) throws OutletNotFoundException {
+        OutletEntity outletEntity = em.find(OutletEntity.class, outletId);
+
+        if (outletEntity != null) {
+            return outletEntity;
+        } else {
+            throw new OutletNotFoundException("Outlet with ID " + outletId + " does not exist!");
+        }
+    }
+
     private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<OutletEntity>> constraintViolations) {
-        String msg = "Input data validatio for (outlet entity) error!:";
+        String msg = "Input data validation for (outlet entity) error!:";
 
         for (ConstraintViolation constraintViolation : constraintViolations) {
             msg += "\n\t" + constraintViolation.getPropertyPath() + " - " + constraintViolation.getInvalidValue() + "; " + constraintViolation.getMessage();
         }
 
         return msg;
+    }
+
+    @Override
+    public void deactivateOutlet(Long outletId) throws OutletNotFoundException, DeactivateOutletException {
+        OutletEntity outletEntityToDeactivate = retrieveOutletByOutletId(outletId);
+
+        List<Listing> listings = listingSessionBeanLocal.retrieveListingsByOutletId(outletId);
+        //if no listings left, can delete
+        if (listings.isEmpty()) {
+            outletEntityToDeactivate.setIsActive(false);
+        } else {
+            throw new DeactivateOutletException("Outlet ID " + outletId + "is associated with existing listing item(s) and cannot be deleted!");
+        }
+
     }
 }

@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/template/defaultTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">   
+    <h:head>
+        <title>Create New Outlet</title>
+    </h:head>
+    <ui:define name="content">
+        <div>
+
+            <h:form id="formCreateNewOutlet">
+                <p:messages id="messagesCreateNewOutlet" redisplay="false" />
+
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="outletName" value="Outlet Name: " style="font-weight: bold;" />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="outletName" value="#{createNewOutletManagedBean.newOutletEntity.outletName}" placeholder="outlet name" required="true" requiredMessage="Outlet Name is required" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="outletName" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="openingHour" value="Opening Hour (24hr): " style="font-weight: bold;" />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="openingHour" value="#{createNewOutletManagedBean.newOutletEntity.openingHour}" type="number" placeholder="9" required="true" requiredMessage="Outlet opening hour is required" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="openingHour" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="closingHour" value="Closing Hour (24hr): " style="font-weight: bold;" />
+                        </p:column>
+                        <p:column>
+                            <!--see if can do validation of overlap here or not -->
+                            <p:inputText id="closingHour" value="#{createNewOutletManagedBean.newOutletEntity.closingHour}" type="number" placeholder="20" required="true" requiredMessage="Outlet closing hour is required" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="closingHour" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="locationLatitude" value="Location Latitude " style="font-weight: bold;" />
+                        </p:column>
+                        <p:column>
+                            <p:spinner id="locationLatitude" value="#{createNewOutletManagedBean.newOutletEntity.locationLatitude}" placeholder="00.0000" min="-90" max="90" stepFactor="0.0001" required="true" requiredMessage="Location Latitude is required" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="locationLatitude" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="locationLongitude" value="Location Longitude " style="font-weight: bold;" />
+                        </p:column>
+                        <p:column>
+                            <p:spinner id="locationLongitude" value="#{createNewOutletManagedBean.newOutletEntity.locationLongitude}" placeholder="000.0000" min="-180" max="80" stepFactor="0.0001" required="true" requiredMessage="Location Longitude is required" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="locationLongitude" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:commandButton type="reset" value="Clear" />&nbsp;
+                            <p:commandButton  value="Create New Outlet" actionListener="#{createNewOutletManagedBean.createNewOutlet}" update="@form"/>
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
+
