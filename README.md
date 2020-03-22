@@ -13,5 +13,7 @@
 
 ## Chloe
 - Create new outlet to allow panel/list view
-- Want to work on building a navbar
-- Want to work on retailer profile details
+- Logout confirmation dialogue still fixing
+- Retailer "my account page" 
+- Want to build a retailer Notifications tab (when order comes in, when payment completes) 
+
