@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entity;
 
 import java.io.Serializable;
@@ -15,6 +10,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import util.security.CryptographicHelper;
 
 /**
  *
@@ -27,36 +23,39 @@ public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
-    
+
     @Column(nullable = false, length = 64)
     @NotNull
     @Size(max = 64)
     private String name;
-    
+
     @Column(nullable = false, unique = true, length = 32)
     @NotNull
     @Size(min = 4, max = 32)
     private String username;
-    
+
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     @NotNull
     private String password;
-    
+
+    @Column(columnDefinition = "CHAR(32) NOT NULL")
+    private String salt;
+
     @Column(nullable = false, length = 9, unique = true)
     @NotNull
     @Size(max = 9)
     private String phoneNumber;
-    
+
     @Column(nullable = false, length = 128)
     @NotNull
     @Size(max = 128)
     private String address;
-    
+
     @Column(nullable = false, length = 128)
     @NotNull
     @Size(max = 128)
     private String email;
-    
+
     @Column(nullable = false)
     @NotNull
     @Min(0)
@@ -64,17 +63,30 @@ public class Customer implements Serializable {
     private Integer bbPoints; //default value is 0
 
     public Customer() {
+        this.salt = CryptographicHelper.getInstance().generateRandomString(32);
+
     }
 
     public Customer(String name, String username, String password, String phoneNumber, String address, String email) {
         this();
         this.name = name;
         this.username = username;
-        this.password = password;
+        setPassword(password);
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.email = email;
         this.bbPoints = 0;
+    }
+    
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+         if (password != null) {
+            this.password = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + this.salt));
+        } else {
+            this.password = null;
+        }
     }
 
     public Long getCustomerId() {
@@ -145,12 +157,6 @@ public class Customer implements Serializable {
         return password;
     }
 
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     /**
      * @return the phoneNumber
@@ -207,5 +213,12 @@ public class Customer implements Serializable {
     public void setBbPoints(Integer bbPoints) {
         this.bbPoints = bbPoints;
     }
-    
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 }

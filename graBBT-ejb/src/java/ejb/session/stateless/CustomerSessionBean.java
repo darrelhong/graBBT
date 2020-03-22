@@ -20,8 +20,10 @@ import javax.validation.ValidatorFactory;
 import util.exception.CustomerNotFoundException;
 import util.exception.DeleteCustomerException;
 import util.exception.InputDataValidationException;
+import util.exception.InvalidLoginCredentialException;
 import util.exception.UnknownPersistenceException;
 import util.exception.UpdateCustomerException;
+import util.security.CryptographicHelper;
 
 /**
  *
@@ -173,6 +175,22 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
     }
     */
 
+    @Override
+    public Customer customerLogin(String username, String password) throws InvalidLoginCredentialException {
+        try {
+            Customer cust = retrieveCustomerByUsername(username);
+            String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + cust.getSalt()));
+            
+            if (cust.getPassword().equals(passwordHash)) {
+                return cust;
+            } else {
+                throw new InvalidLoginCredentialException("Username or password is incorrect!");
+            }
+        } catch (CustomerNotFoundException ex) {
+            throw new InvalidLoginCredentialException("Username name does not exist!");
+        }
+    }
+    
     private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<Customer>>constraintViolations)
     {
         String msg = "Input data validation error!:";

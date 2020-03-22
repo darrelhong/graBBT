@@ -1,5 +1,6 @@
 package ejb.session.singleton;
 
+import ejb.session.stateless.CustomerSessionBeanLocal;
 import ejb.session.stateless.ListingSessionBeanLocal;
 import entity.Listing;
 import java.math.BigDecimal;
@@ -7,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import ejb.session.stateless.OutletSessionBeanLocal;
 import ejb.session.stateless.RetailerSessionBeanLocal;
+import entity.Customer;
 import entity.OutletEntity;
 import entity.RetailerEntity;
 import java.util.logging.Level;
@@ -30,6 +32,8 @@ import util.exception.UnknownPersistenceException;
 @Startup
 public class GraBBTDataInitSessionBean {
 
+    @EJB
+    private CustomerSessionBeanLocal customerSessionBeanLocal;
     @EJB
     private ListingSessionBeanLocal listingSessionBean;
     @EJB
@@ -88,6 +92,10 @@ public class GraBBTDataInitSessionBean {
             listingSessionBean.createNewListing(koiGoldenOolong);
             koiJurong.getListings().add(koiGoldenOolong);
 
+            //customer side of things
+            Customer customer = new Customer("Customer 1", "customer", "password", "87654321", "address", "qwerty@gmail.com");
+            Long customerId = customerSessionBeanLocal.createNewCustomer(customer);
+            
         } catch (InputDataValidationException | RetailerUsernameExistsException
                 | UnknownPersistenceException | OutletNameExistsException
                 | RetailerNotFoundException | OutletNotFoundException ex) {

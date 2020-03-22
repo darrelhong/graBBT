@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Local;
 import util.exception.CustomerNotFoundException;
 import util.exception.InputDataValidationException;
+import util.exception.InvalidLoginCredentialException;
 import util.exception.UnknownPersistenceException;
 import util.exception.UpdateCustomerException;
 
@@ -31,5 +32,7 @@ public interface CustomerSessionBeanLocal {
     public Customer retrieveCustomerByUsername(String username) throws CustomerNotFoundException;
 
     public void updateCustomer(Customer customer) throws CustomerNotFoundException, InputDataValidationException, UpdateCustomerException;
+
+    public Customer customerLogin(String username, String password) throws InvalidLoginCredentialException;
     
 }
