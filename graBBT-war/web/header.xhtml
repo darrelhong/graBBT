@@ -34,10 +34,10 @@
         <h:panelGroup rendered="#{sessionScope.isLogin == true}">
             <h:form id="logoutForm">
                 <p:outputLabel style="float: left; font-size: x-large" value="graBBT Retailer Management System" />
-                <span style="float:right">
-                    <h:outputText value="You are logged in as #{sessionScope.currentRetailerEntity.retailerName}."/>&nbsp;
-                    <p:menuButton value="Options">
-                        <p:menuitem value="My Profile" icon="fa fa-user-o" />
+                <span style="float:right;">
+                    <p:commandButton type="button" value="Notifications" icon="fa fa-bell-o" />&nbsp;
+                     <p:menuButton value="#{sessionScope.currentRetailerEntity.retailerName}" icon="fa fa-user-o" >
+                        <p:menuitem value="My Account" actionListener="#{loginManagedBean.accountRedirect}" icon="fa fa-user-o" />
                         <p:menuitem value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" />
                     </p:menuButton>
                 </span>
