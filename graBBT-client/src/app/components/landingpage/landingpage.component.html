@@ -1,0 +1,37 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    position="end"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+  >
+    <mat-toolbar>Cart</mat-toolbar>
+    <h1>Cart goes here</h1>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="header-toolbar mat-elevation-z6">
+      <a routerLink="/landing"><span>graBBT</span></a>
+      <button
+        class="logout-button"
+        mat-flat-button
+        type="button"
+        (click)="logout()"
+      >
+        Logout
+      </button>
+      <button
+        class="cart-button"
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+      >
+        <mat-icon aria-label="Side nav toggle icon">shopping_cart</mat-icon>
+      </button>
+    </mat-toolbar>
+    <header></header>
+
+    <h1>Nothing here yet!</h1>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,22 @@
+mat-toolbar {
+  display: flex;
+  position: fixed;
+  z-index: 2;
+}
+
+mat-toolbar a {
+  text-decoration: none;
+  color: inherit;
+}
+
+header {
+  height: 64px;
+}
+mat-card {
+  width: 270px;
+  margin: 20px auto;
+}
+
+mat-form-field {
+  width: 270px;
+}

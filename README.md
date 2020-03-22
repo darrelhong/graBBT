@@ -15,3 +15,20 @@
 - Create new outlet to allow panel/list view
 - Want to work on building a navbar
 - Want to work on retailer profile details
+
+# Angular Client
+
+Set up with
+```
+cd graBBT-client
+npm i
+ng serve
+```
+hopefully it works
+if using vscode, install Prettier for code formatiing
+
+
+
+- Right now all static pages
+- no link to back-end
+- simulated login and logout, username=customer password=password

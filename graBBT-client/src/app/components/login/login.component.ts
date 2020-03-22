@@ -1,0 +1,63 @@
+import { Component, OnInit } from '@angular/core'
+import { FormBuilder, Validators } from '@angular/forms'
+import { SessionService } from 'src/app/services/session.service'
+import { CustomerService } from 'src/app/services/customer.service'
+import { Customer } from 'src/app/services/customer'
+import { Router } from '@angular/router'
+import { MatSnackBar } from '@angular/material/snack-bar'
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
+})
+export class LoginComponent implements OnInit {
+  loginForm = this.formBuilder.group({
+    username: [null, Validators.required],
+    password: [null, Validators.required],
+  })
+
+  hide = true
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private sessionService: SessionService,
+    private customerService: CustomerService,
+    private _snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit() {}
+
+  onSubmit() {
+    if (this.loginForm.valid) {
+      const username = this.loginForm.get('username').value
+      const password = this.loginForm.get('password').value
+      console.log(username)
+      console.log(password)
+      this.sessionService.setUsername(username)
+      this.sessionService.setPassword(password)
+
+      this.customerService.customerLogin(username, password).subscribe(
+        resp => {
+          const customer: Customer = resp.customer
+
+          if (customer != null) {
+            this.sessionService.setCustomerIsLogin(true)
+            this.sessionService.setCurrentCustomer(customer)
+          }
+
+          this.router.navigate(['/landing'])
+        },
+        error => {
+          console.log(error)
+          this.errorSnackBar('An error occured.')
+        }
+      )
+    }
+  }
+
+  errorSnackBar(message: string) {
+    this._snackBar.open(message, 'Dismiss', { duration: 5000 })
+  }
+}

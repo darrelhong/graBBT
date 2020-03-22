@@ -1,0 +1,146 @@
+<mat-toolbar class="mat-elevation-z6" color="primary">
+  <a routerLink="/index"><span>graBBT</span></a>
+</mat-toolbar>
+<header></header>
+
+<form [formGroup]="signupForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-card-title>
+        Sign up
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            placeholder="name"
+            formControlName="name"
+            required="true"
+          />
+          <mat-error *ngIf="signupForm.controls['name'].hasError('required')">
+            Name is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="signupForm.controls['name'].hasError('maxlength')">
+            Name must be less than <strong>64 characters</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
+          <input
+            matInput
+            placeholder="username"
+            formControlName="username"
+            required="true"
+          />
+          <mat-error
+            *ngIf="signupForm.controls['username'].hasError('required')"
+          >
+            Username is <strong>required</strong>
+          </mat-error>
+          <mat-error
+            *ngIf="signupForm.controls['username'].hasError('maxlength')"
+          >
+            Name must be less than <strong>32 characters</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            [type]="hide ? 'password' : 'text'"
+            placeholder="password"
+            formControlName="password"
+            required="true"
+          />
+          <button
+            type="button"
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+          >
+            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error
+            *ngIf="signupForm.controls['password'].hasError('required')"
+          >
+            Password is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input
+            type="email"
+            matInput
+            placeholder="a@gmail.com"
+            formControlName="email"
+            required="true"
+          />
+          <mat-error *ngIf="signupForm.controls['email'].hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="signupForm.controls['email'].hasError('email')">
+            Invalid email format
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Phone</mat-label>
+          <input
+            type="tel"
+            matInput
+            placeholder="phone"
+            formControlName="phone"
+            required="true"
+          />
+          <mat-error *ngIf="signupForm.controls['phone'].hasError('required')">
+            Phone no. is <strong>required</strong>
+          </mat-error>
+          <mat-error
+            *ngIf="
+              signupForm.controls['phone'].hasError('minlength') ||
+              signupForm.controls['phone'].hasError('maxlength')
+            "
+          >
+            Phone no. must be <strong>8 digits</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <mat-form-field appearance="fill">
+          <mat-label>Address</mat-label>
+          <textarea
+            matInput
+            placeholder="address"
+            formControlName="address"
+            required="true"
+          ></textarea>
+          <mat-error
+            *ngIf="signupForm.controls['address'].hasError('required')"
+          >
+            Address is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="row">
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</form>
