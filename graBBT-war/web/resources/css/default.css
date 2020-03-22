@@ -11,6 +11,11 @@ a:hover {
     cursor: hand;
 }
 
+.profile-hover {
+    width:100px;
+    height:100px;
+    display:none;
+}
 
 
 /* PrimeFaces styling elements below this comment */

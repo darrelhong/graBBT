@@ -39,10 +39,14 @@ public class LoginManagedBean {
     }
 
     public void logout(ActionEvent event) throws IOException {
+        System.out.println("logout called*****************");
         ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true)).invalidate();
         FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
     }
 
+    public void accountRedirect (ActionEvent event) throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/systemOperation/viewMyAccount.xhtml");
+    }
     /**
      * @return the username
      */
