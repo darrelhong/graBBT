@@ -1,16 +1,23 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
 mat-toolbar {
   display: flex;
-  position: fixed;
+  position: sticky;
   z-index: 2;
+  top: 0;
 }
 
 mat-toolbar a {
   text-decoration: none;
   color: inherit;
-}
-
-header {
-  height: 64px;
 }
 
 #login-button {
@@ -53,9 +60,8 @@ header {
 #instruction-grid {
   width: 60%;
   margin: auto;
-  height: 600px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   justify-items: center;
   align-items: center;
 }
@@ -65,9 +71,9 @@ img {
 }
 
 footer {
-  background-color: #eceff1;
   height: 30px;
   padding: 10px;
+  background-color: #eceff1;
   display: flex;
   align-items: center;
 }

@@ -1,6 +1,7 @@
 mat-toolbar {
   display: flex;
-  position: fixed;
+  position: sticky;
+  top: 0;
   z-index: 2;
 }
 
@@ -9,9 +10,6 @@ mat-toolbar a {
   color: inherit;
 }
 
-header {
-  height: 64px;
-}
 mat-card {
   width: 270px;
   margin: 20px auto;

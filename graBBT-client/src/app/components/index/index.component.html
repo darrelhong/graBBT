@@ -1,54 +1,59 @@
-<mat-toolbar class="mat-elevation-z6" color="primary">
-  <a routerLink="/index"><span>graBBT</span></a>
-  <button
-    routerLink="/login"
-    mat-flat-button
-    id="login-button"
-    type="button"
-    color="accent"
-  >
-    Login
-  </button>
-  <button mat-flat-button type="button" routerLink="/signup">Sign up</button>
-</mat-toolbar>
-<header></header>
+<div class="container">
+  <mat-toolbar class="mat-elevation-z6" color="primary">
+    <a routerLink="/index"><span>graBBT</span></a>
+    <button
+      routerLink="/login"
+      mat-flat-button
+      id="login-button"
+      type="button"
+      color="accent"
+    >
+      Login
+    </button>
+    <button mat-flat-button type="button" routerLink="/signup">
+      Sign up
+    </button>
+  </mat-toolbar>
 
-<div id="splash">
-  <h1 class="mat-h1" id="splash-h1">
-    Welcome
-  </h1>
-  <h2 class="mat-h2" id="splash-h2">
-    For all your bubble tea needs
-  </h2>
-  <button mat-raised-button routerLink="/login">Get started</button>
+  <main>
+    <div id="splash">
+      <h1 class="mat-h1" id="splash-h1">
+        Welcome
+      </h1>
+      <h2 class="mat-h2" id="splash-h2">
+        For all your bubble tea needs
+      </h2>
+      <button mat-raised-button routerLink="/login">Get started</button>
+    </div>
+
+    <div id="instructions">
+      <h1 class="mat-display-2">Your favourite drinks delivered fresh</h1>
+      <div id="instruction-grid">
+        <div>
+          <img src="assets/images/landing1.png" />
+          <h3 class="mat-h2">Just a tap away.</h3>
+        </div>
+        <div>
+          <img src="assets/images/landing2.png" />
+
+          <h3 class="mat-h2">All your favourite stores.</h3>
+        </div>
+        <div>
+          <img src="assets/images/landing3.png" />
+
+          <h3 class="mat-h2">Pay with ease.</h3>
+        </div>
+        <div>
+          <img src="assets/images/landing4.png" />
+
+          <h3 class="mat-h2">It’s more rewarding.</h3>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p class="mat-body">
+      All rights reserved. ©
+    </p>
+  </footer>
 </div>
-
-<div id="instructions">
-  <h1 class="mat-display-2">Your favourite drinks delivered fresh</h1>
-  <div id="instruction-grid">
-    <div>
-      <img src="assets/images/landing1.png" />
-      <h3 class="mat-h2">Just a tap away.</h3>
-    </div>
-    <div>
-      <img src="assets/images/landing2.png" />
-
-      <h3 class="mat-h2">All your favourite stores.</h3>
-    </div>
-    <div>
-      <img src="assets/images/landing3.png" />
-
-      <h3 class="mat-h2">Pay with ease.</h3>
-    </div>
-    <div>
-      <img src="assets/images/landing4.png" />
-
-      <h3 class="mat-h2">It’s more rewarding.</h3>
-    </div>
-  </div>
-</div>
-<footer>
-  <p class="mat-body">
-    All rights reserved. ©
-  </p>
-</footer>
