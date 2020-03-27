@@ -64,6 +64,7 @@ public class Customer implements Serializable {
 
     public Customer() {
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
+        this.bbPoints = 0;
 
     }
 
@@ -75,7 +76,6 @@ public class Customer implements Serializable {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.email = email;
-        this.bbPoints = 0;
     }
     
     /**

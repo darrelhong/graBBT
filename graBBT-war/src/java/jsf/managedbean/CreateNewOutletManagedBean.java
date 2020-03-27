@@ -59,7 +59,7 @@ public class CreateNewOutletManagedBean implements Serializable {
             System.out.println("test");
             
             Long newOutletEntityId = outletSessionBeanLocal.createNewOutlet(newOutletEntity, currentRetailerId);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New outlet created successfully (Outlet ID: " + newOutletEntityId + ")", null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New outlet created successfully (Customer ID: " + newOutletEntityId + ")", null));
         }
         catch (OutletNameExistsException | RetailerNotFoundException | UnknownPersistenceException | InputDataValidationException | OpeningAndClosingHoursOverlapException ex)
         {
