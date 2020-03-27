@@ -14,11 +14,11 @@
       <a routerLink="/landing"><span>graBBT</span></a>
       <button
         class="logout-button"
-        mat-flat-button
+        mat-icon-button
         type="button"
-        (click)="logout()"
+        (click)="openBottomSheet()"
       >
-        Logout
+        <mat-icon>account_circle</mat-icon>
       </button>
       <button
         class="cart-button"

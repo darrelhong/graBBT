@@ -1,4 +1,5 @@
 mat-toolbar {
+  min-height: 64px;
   display: flex;
   position: sticky;
   top: 0;

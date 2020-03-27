@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 
 import {
+  MatBottomSheetModule,
   MatButtonModule,
   MatCardModule,
   MatCheckboxModule,
@@ -27,6 +28,7 @@ import {
 
 @NgModule({
   exports: [
+    MatBottomSheetModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,

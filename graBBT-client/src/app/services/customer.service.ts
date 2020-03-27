@@ -28,4 +28,14 @@ export class CustomerService {
       return throwError('error')
     }
   }
+
+  signUp(newCustomer: Customer): Observable<any> {
+    const createCustReq = {
+      customer: newCustomer,
+    }
+    // send post request
+    return of({
+      createCustReq,
+    })
+  }
 }

@@ -103,16 +103,18 @@
             type="tel"
             matInput
             placeholder="phone"
-            formControlName="phone"
+            formControlName="phoneNumber"
             required="true"
           />
-          <mat-error *ngIf="signupForm.controls['phone'].hasError('required')">
+          <mat-error
+            *ngIf="signupForm.controls['phoneNumber'].hasError('required')"
+          >
             Phone no. is <strong>required</strong>
           </mat-error>
           <mat-error
             *ngIf="
-              signupForm.controls['phone'].hasError('minlength') ||
-              signupForm.controls['phone'].hasError('maxlength')
+              signupForm.controls['phoneNumber'].hasError('minlength') ||
+              signupForm.controls['phoneNumber'].hasError('maxlength')
             "
           >
             Phone no. must be <strong>8 digits</strong>

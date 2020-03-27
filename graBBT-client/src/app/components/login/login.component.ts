@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private sessionService: SessionService,
     private customerService: CustomerService,
-    private _snackBar: MatSnackBar
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {}
@@ -51,13 +51,13 @@ export class LoginComponent implements OnInit {
         },
         error => {
           console.log(error)
-          this.errorSnackBar('An error occured.')
+          this.displayErrorSnackBar('An error occured.')
         }
       )
     }
   }
 
-  errorSnackBar(message: string) {
-    this._snackBar.open(message, 'Dismiss', { duration: 5000 })
+  displayErrorSnackBar(message: string) {
+    this.snackBar.open(message, 'Dismiss', { duration: 5000 })
   }
 }
