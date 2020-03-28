@@ -39,30 +39,7 @@ public class CustomerResource {
      */
     public CustomerResource() {
     }
-
-    /**
-     * Retrieves representation of an instance of
-     * ws.restful.resources.CustomerResource
-     *
-     * @return an instance of java.lang.String
-     */
-    @GET
-    @Produces(MediaType.APPLICATION_XML)
-    public String getXml() {
-        //TODO return proper representation object
-        throw new UnsupportedOperationException();
-    }
-
-    /**
-     * PUT method for updating or creating an instance of CustomerResource
-     *
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_XML)
-    public void putXml(String content) {
-    }
-
+ 
     @Path("customerLogin")
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
@@ -85,7 +62,7 @@ public class CustomerResource {
     
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-
+    @Produces(MediaType.APPLICATION_JSON)
     public Response createNewCustomer(CreateCustomerReq createCustomerReq) {
         if (createCustomerReq != null) {
             try {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, Validators } from '@angular/forms'
 import { SessionService } from 'src/app/services/session.service'
-import { CustomerService } from 'src/app/services/customer.service'
-import { Customer } from 'src/app/services/customer'
+import { CustomerService } from 'src/app/services/customer/customer.service'
+import { Customer } from 'src/app/services/customer/customer'
 import { Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material/snack-bar'
 

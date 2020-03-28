@@ -8,6 +8,8 @@ package ejb.session.stateless;
 import entity.Listing;
 import entity.OutletEntity;
 import entity.RetailerEntity;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 import javax.ejb.EJB;
@@ -22,6 +24,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import sun.util.calendar.Gregorian;
 import util.exception.DeactivateOutletException;
 import util.exception.InputDataValidationException;
 import util.exception.OutletNameExistsException;
@@ -94,11 +97,24 @@ public class OutletSessionBean implements OutletSessionBeanLocal {
 
         return q.getResultList();
     }
+    
+    @Override
+    public List<OutletEntity> retrieveAllOutlets() {
+//        Check openging hours
+//        Calendar c = GregorianCalendar.getInstance();
+//        int currentHour = c.get(Calendar.HOUR_OF_DAY);
+//        System.out.println("currentHour: " + currentHour);
+//        
+//        Query q = em.createQuery("SELECT o FROM OutletEntity o WHERE o.isActive = TRUE AND o.openingHour > :currentHour AND :currentHour < o.closingHour");
+//        q.setParameter("currentHour", currentHour);
+        Query q = em.createQuery("SELECT o FROM OutletEntity o WHERE o.isActive = TRUE");
+    
+        return q.getResultList();
+    }
 
     @Override
     public OutletEntity retrieveOutletByOutletId(Long outletId) throws OutletNotFoundException {
         OutletEntity outletEntity = em.find(OutletEntity.class, outletId);
-
         if (outletEntity != null) {
             return outletEntity;
         } else {

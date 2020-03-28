@@ -29,4 +29,6 @@ public interface OutletSessionBeanLocal {
     public OutletEntity retrieveOutletByOutletId(Long outletId) throws OutletNotFoundException;
 
     public void deactivateOutlet(Long outletId) throws OutletNotFoundException, DeactivateOutletException;
+
+    public List<OutletEntity> retrieveAllOutlets();
 }

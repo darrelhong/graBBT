@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core'
-import { Observable, of, throwError } from 'rxjs'
-import { Customer } from './customer'
+import { Observable, throwError } from 'rxjs'
 import {
   HttpClient,
   HttpErrorResponse,
   HttpHeaders,
 } from '@angular/common/http'
 import { catchError } from 'rxjs/operators'
+
+import { Customer } from './customer'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

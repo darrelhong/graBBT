@@ -22,6 +22,7 @@ export class LandingpageComponent implements OnInit {
     )
 
   username: string
+
   constructor(
     private breakpointObserver: BreakpointObserver,
     private sessionService: SessionService,
