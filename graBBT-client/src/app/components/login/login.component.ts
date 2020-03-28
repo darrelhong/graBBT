@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
       this.customerService.customerLogin(username, password).subscribe(
         resp => {
           const customer: Customer = resp.customer
-
+          console.log(customer)
           if (customer != null) {
             this.sessionService.setCustomerIsLogin(true)
             this.sessionService.setCurrentCustomer(customer)

@@ -21,7 +21,7 @@ import util.exception.UpdateCustomerException;
 @Local
 public interface CustomerSessionBeanLocal {
 
-    public Long createNewCustomer(Customer newCustomer) throws UnknownPersistenceException, InputDataValidationException;
+    public Customer createNewCustomer(Customer newCustomer) throws UnknownPersistenceException, InputDataValidationException;
 
     public List<Customer> retrieveAllCustomers();
 

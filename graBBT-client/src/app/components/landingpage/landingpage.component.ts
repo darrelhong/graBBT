@@ -21,6 +21,7 @@ export class LandingpageComponent implements OnInit {
       shareReplay()
     )
 
+  username: string
   constructor(
     private breakpointObserver: BreakpointObserver,
     private sessionService: SessionService,
@@ -28,7 +29,9 @@ export class LandingpageComponent implements OnInit {
     private bottomSheet: MatBottomSheet
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.username = this.sessionService.getCurrentCustomer().name
+  }
 
   logout() {
     this.sessionService.setCurrentCustomer(null)

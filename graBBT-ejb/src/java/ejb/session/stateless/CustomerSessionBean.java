@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -45,7 +47,7 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
     }
     
     @Override
-    public Long createNewCustomer(Customer newCustomer) throws UnknownPersistenceException, InputDataValidationException
+    public Customer createNewCustomer(Customer newCustomer) throws UnknownPersistenceException, InputDataValidationException
     {
         try {
             Set<ConstraintViolation<Customer>> constraintViolations = validator.validate(newCustomer);
@@ -53,7 +55,7 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
             if (constraintViolations.isEmpty()) {
                 em.persist(newCustomer);
                 em.flush();
-                return newCustomer.getCustomerId();
+                return newCustomer;
             } else {
                 throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
             }
@@ -104,18 +106,16 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
     @Override
     public Customer retrieveCustomerByUsername(String username) throws CustomerNotFoundException
     {
-        Customer customer = em.find(Customer.class, username);
+        Query q = em.createQuery("SELECT c FROM Customer c WHERE c.username = :inUsername");
+        q.setParameter("inUsername", username);
         
-        if (customer != null)
-        {
-            return customer;
+        try {
+            return (Customer) q.getSingleResult();
+        } catch (NoResultException | NonUniqueResultException ex) {
+            throw new CustomerNotFoundException("Customer with username " + username + " not found!");
         }
-        else
-        {
-            throw new CustomerNotFoundException("Customer with username " + username + " does not exist!");
-        }
-    }
-    
+        
+    }    
     @Override
     public void updateCustomer(Customer customer) throws CustomerNotFoundException, InputDataValidationException, UpdateCustomerException
     {

@@ -94,7 +94,7 @@ public class GraBBTDataInitSessionBean {
 
             //customer side of things
             Customer customer = new Customer("Customer 1", "customer", "password", "87654321", "address", "qwerty@gmail.com");
-            Long customerId = customerSessionBeanLocal.createNewCustomer(customer);
+            customer = customerSessionBeanLocal.createNewCustomer(customer);
             
         } catch (InputDataValidationException | RetailerUsernameExistsException
                 | UnknownPersistenceException | OutletNameExistsException

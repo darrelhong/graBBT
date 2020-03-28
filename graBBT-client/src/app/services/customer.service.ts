@@ -1,41 +1,82 @@
 import { Injectable } from '@angular/core'
 import { Observable, of, throwError } from 'rxjs'
 import { Customer } from './customer'
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+} from '@angular/common/http'
+import { catchError } from 'rxjs/operators'
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class CustomerService {
-  constructor() {}
+  baseUrl = '/api/Customer'
+
+  constructor(private httpClient: HttpClient) {}
 
   customerLogin(username: string, password: string): Observable<any> {
-    if (username === 'customer' && password === 'password') {
-      return of({
-        customer: JSON.stringify(
-          new Customer(
-            1,
-            'Customer 1',
-            'customer',
-            'password',
-            '87654321',
-            'Addeess 1',
-            'email@gmail.com',
-            0
-          )
-        ),
-      })
-    } else {
-      return throwError('error')
-    }
+    return this.httpClient
+      .get<any>(
+        this.baseUrl +
+          '/customerLogin?username=' +
+          username +
+          '&password=' +
+          password
+      )
+      .pipe(catchError(this.handleError))
+
+    // if (username === 'customer' && password === 'password') {
+    //   return of({
+    //     customer: JSON.stringify(
+    //       new Customer(
+    //         1,
+    //         'Customer 1',
+    //         'customer',
+    //         'password',
+    //         '87654321',
+    //         'Addeess 1',
+    //         'email@gmail.com',
+    //         0
+    //       )
+    //     ),
+    //   })
+    // } else {
+    //   return throwError('error')
+    // }
   }
 
   signUp(newCustomer: Customer): Observable<any> {
     const createCustReq = {
-      customer: newCustomer,
+      newCustomer: newCustomer,
     }
     // send post request
-    return of({
-      createCustReq,
-    })
+    return this.httpClient
+      .post<any>(this.baseUrl, createCustReq, httpOptions)
+      .pipe(catchError(this.handleError))
+
+    // return of({
+    //   createCustReq,
+    // })
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = ''
+
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = 'An unknown error has occurred: ' + error.error.message
+    } else {
+      errorMessage =
+        'A HTTP error has occurred: ' +
+        `HTTP ${error.status}: ${error.error.message}`
+    }
+
+    console.error(errorMessage)
+    return throwError(errorMessage)
   }
 }
