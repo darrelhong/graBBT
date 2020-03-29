@@ -19,13 +19,12 @@ export class OutletsComponent implements OnInit {
         this.outlets = resp.outletEntites
         const date = new Date()
         const hour = date.getHours()
-        let comp = true
         for (let o of this.outlets) {
           o.open = o.openingHour < hour && hour < o.closingHour ? true : false
         }
         this.outlets.sort((a, b) => {
           // show open outlets first
-          return (+b.open) - (+a.open)
+          return +b.open - +a.open
         })
         console.log(this.outlets)
       },

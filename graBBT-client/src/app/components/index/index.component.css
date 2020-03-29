@@ -9,15 +9,6 @@ main {
 }
 
 mat-toolbar {
-  display: flex;
-  flex-direction: column;
-}
-
-main {
-  flex: 1 0 auto;
-}
-
-mat-toolbar {
   min-height: 64px;
   position: sticky;
   z-index: 2;
