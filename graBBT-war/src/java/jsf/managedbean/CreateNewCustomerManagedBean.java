@@ -40,7 +40,7 @@ public class CreateNewCustomerManagedBean implements Serializable {
     {
         try
         {
-           Long newCustomerId = customerSessionBeanLocal.createNewCustomer(newCustomer);
+           Long newCustomerId = customerSessionBeanLocal.createNewCustomer(newCustomer).getCustomerId();
         
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New customer created successfully (Outlet ID: " + newCustomerId + " )", null));
      
