@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
             this.sessionService.setCurrentCustomer(customer)
           }
 
-          this.router.navigate(['/landing'])
+          this.router.navigate(['/main'])
         },
         error => {
           console.log(error)

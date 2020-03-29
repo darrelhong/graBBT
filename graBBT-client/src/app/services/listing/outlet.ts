@@ -6,6 +6,7 @@ export class Outlet {
   outletRating: number
   openingHour: number
   closingHour: number
+  open: boolean
 
   constructor(
     outletId?: number,

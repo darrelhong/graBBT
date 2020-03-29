@@ -1,0 +1,46 @@
+.outlet-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-gap: 15px;
+  padding: 20px;
+}
+
+.outlet-card {
+  max-width: 270px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.outlet-card:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+mat-card-header {
+  margin-top: -16px;
+  margin-left: -16px;
+  margin-right: -16px;
+  flex-grow: 1;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+mat-card-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 16px;
+  margin-bottom: 0;
+}
+.rating-text {
+  margin-left: 3px;
+}
+
+.open-chip {
+  margin-left: auto;
+}
