@@ -25,7 +25,7 @@ export class OutletsComponent implements OnInit {
         }
         this.outlets.sort((a, b) => {
           // show open outlets first
-          return b.open - a.open
+          return (+b.open) - (+a.open)
         })
         console.log(this.outlets)
       },
