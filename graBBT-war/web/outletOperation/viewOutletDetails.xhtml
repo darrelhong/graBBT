@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/template/defaultTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">   
+     <h:head>
+        <title>View Outlet Details</title>
+    </h:head>
+    <ui:define name="content">
+        <div>
+            <h:panelGroup>
+                <h:form rendered="#{viewOutletDetailsManagedBean.outletEntityToView != null}">
+                    <h:commandButton value="Update" actionListener="#{viewOutletDetailsManagedBean.updateOutlet}" />&nbsp;|
+                    <h:commandButton value="Back" actionListener="#{viewOutletDetailsManagedBean.back}" />
+                </h:form>
+            </h:panelGroup>
+            
+            <br/>
+            
+            <h:form>
+                <p:dataTable value="#{viewOutletDetailsManagedBean.outletEntityToView != null}" style="width: 100%">
+                
+                    <p:column>
+                        <f:facet name="header">Outlet Name</f:facet>
+                        <h:outputText value="#{viewOutletDetailsManagedBean.outletEntityToView.outletName}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Outlet ID</f:facet>
+                        <h:outputText value="#{viewOutletDetailsManagedBean.outletEntityToView.outletId}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Active Status</f:facet>
+                        <h:outputText value="#{viewOutletDetailsManagedBean.outletEntityToView.isActive}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Opening Hour</f:facet>
+                        <h:outputText value="#{viewOutletDetailsManagedBean.outletEntityToView.openingHour}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Closing Hour</f:facet>
+                        <h:outputText value="#{viewOutletDetailsManagedBean.outletEntityToView.outletName}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Outlet Rating</f:facet>
+                        <h:outputText value="#{viewOutletDetailsManagedBean.outletEntityToView.outletRating} /5.0" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Rating Count</f:facet>
+                        <h:outputText value="#{viewOutletDetailsManagedBean.outletEntityToView.ratingCount}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Location Latitude</f:facet>
+                        <h:outputText value="#{viewOutletDetailsManagedBean.outletEntityToView.locationLatitude}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Location Longitude</f:facet>
+                        <h:outputText value="#{viewOutletDetailsManagedBean.outletEntityToView.locationLongitude}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Outlet Revenue Daily</f:facet>
+                        <h:outputText value="#{viewOutletDetailsManagedBean.outletEntityToView.outletRevenueDaily}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Outlet Revenue Monthly</f:facet>
+                        <h:outputText value="#{viewOutletDetailsManagedBean.outletEntityToView.outletRevenueMonthly}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Outlet Revenue Overall</f:facet>
+                        <h:outputText value="#{viewOutletDetailsManagedBean.outletEntityToView.outletRevenueOverall}" />
+                    </p:column>
+                    
+                </p:dataTable>
+            </h:form>
+            
+        </div>
+    </ui:define>
+</ui:composition>
+

@@ -107,6 +107,33 @@ public class OutletEntity implements Serializable {
         this.locationLatitude = locationLatitude;
         this.locationLongitude = locationLongitude;
     }
+    
+    public void addListing(Listing listing)
+    {
+        if (listing != null)
+        {
+            if(!this.listings.contains(listing))
+            {
+                this.listings.add(listing);
+                
+                if(!listing.getOutletEntity().getOutletId().equals(outletId))
+                {
+                    listing.setOutletEntity(this);
+                }
+            }
+        }
+    }
+    
+    public void removeListing(Listing listing)
+    {
+        if(listing != null)
+        {
+            if(this.listings.contains(listing))
+            {
+                this.listings.remove(listing);
+            }
+        }
+    }
 
     public Long getOutletId() {
         return outletId;

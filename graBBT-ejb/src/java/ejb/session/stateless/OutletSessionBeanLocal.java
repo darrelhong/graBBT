@@ -14,6 +14,7 @@ import util.exception.OutletNameExistsException;
 import util.exception.OutletNotFoundException;
 import util.exception.RetailerNotFoundException;
 import util.exception.UnknownPersistenceException;
+import util.exception.UpdateOutletException;
 
 /**
  *
@@ -29,4 +30,6 @@ public interface OutletSessionBeanLocal {
     public OutletEntity retrieveOutletByOutletId(Long outletId) throws OutletNotFoundException;
 
     public void deactivateOutlet(Long outletId) throws OutletNotFoundException, DeactivateOutletException;
+
+    public void updateOutlet(OutletEntity outletEntity, List<Long> listingIds) throws OutletNotFoundException, InputDataValidationException, UpdateOutletException;
 }

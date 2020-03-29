@@ -24,10 +24,12 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import util.exception.DeactivateOutletException;
 import util.exception.InputDataValidationException;
+import util.exception.ListingNotFoundException;
 import util.exception.OutletNameExistsException;
 import util.exception.OutletNotFoundException;
 import util.exception.RetailerNotFoundException;
 import util.exception.UnknownPersistenceException;
+import util.exception.UpdateOutletException;
 
 /**
  *
@@ -103,6 +105,43 @@ public class OutletSessionBean implements OutletSessionBeanLocal {
             return outletEntity;
         } else {
             throw new OutletNotFoundException("Outlet with ID " + outletId + " does not exist!");
+        }
+    }
+    
+    @Override
+    public void updateOutlet(OutletEntity outletEntity, List<Long> listingIds) throws OutletNotFoundException, InputDataValidationException, UpdateOutletException
+    {
+        if(outletEntity != null && outletEntity.getOutletId() != null) 
+        {
+            Set<ConstraintViolation<OutletEntity>> constraintViolations = validator.validate(outletEntity);
+            
+            if(constraintViolations.isEmpty())
+            {
+                OutletEntity outletEntityToUpdate = retrieveOutletByOutletId(outletEntity.getOutletId());
+                
+                if (outletEntityToUpdate.getOutletId().equals(outletEntity.getOutletId()))
+                {
+                    
+                    outletEntityToUpdate.setOutletName(outletEntity.getOutletName());
+                    outletEntityToUpdate.setIsActive(outletEntity.getIsActive());
+                    outletEntityToUpdate.setOpeningHour(outletEntity.getOpeningHour());
+                    outletEntityToUpdate.setClosingHour(outletEntity.getClosingHour());
+                    outletEntityToUpdate.setLocationLatitude(outletEntity.getLocationLatitude());
+                    outletEntityToUpdate.setLocationLongitude(outletEntity.getLocationLongitude());
+                }
+                else
+                {
+                    throw new UpdateOutletException("Outlet ID of the outlet record to be updated does not match the existing record");
+                }
+            }
+            else
+            {
+                throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+            }
+        }
+        else
+        {
+            throw new OutletNotFoundException("Outlet ID not provided for outlet to be updated");
         }
     }
 

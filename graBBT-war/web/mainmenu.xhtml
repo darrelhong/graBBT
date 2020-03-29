@@ -16,7 +16,9 @@
                     <p:submenu label="System" expanded="true">
                         <p:menuitem value="Home" outcome="/index" icon="fa fa-home"/>
                         <p:menuitem value="My Account" outcome="/systemOperation/viewMyAccount.xhtml" icon="fa fa-user" rendered="#{sessionScope.isLogin == true}" />
-                        <p:menuitem value="Logout" onclick="PF('confirmDialogue').show();" icon="fa fa-sign-out" rendered="#{sessionScope.isLogin == true}" /> 
+                        <p:menuitem value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" rendered="#{sessionScope.isLogin == true}" >
+                            <p:confirm header="Confirmation" message="Are you sure you want to logout?" icon="pi pi-exclamation-triangle" />
+                        </p:menuitem>
                     </p:submenu>
 
                     <p:submenu label="Outlet Management" rendered="#{sessionScope.isLogin == true}" expanded="true">
@@ -29,13 +31,10 @@
                     </p:submenu>
                 </p:panelMenu>
                 
-                <h:form>
-                    <p:confirmDialog widgetVar="confirmDialogue" message="Are you sure?" header="Confirmation" global="true" showEffect="fade" hideEffect="fade" >
-                        <p:commandButton value="Yes" type="button" action="#{loginManagedBean.logout}" process="@this" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-                        <p:commandButton value="No" type="button" onclick="PF('confirmDialogue').hide();" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
-                    </p:confirmDialog> 
-                </h:form>
-
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                </p:confirmDialog>  
             </h:form>
         </nav>
     </section>

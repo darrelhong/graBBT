@@ -1,6 +1,6 @@
 .header-toolbar {
   display: flex;
-  position: fixed;
+  position: sticky;
   z-index: 2;
 }
 

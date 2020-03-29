@@ -12,10 +12,8 @@
 ## Chloe
 
 - Create new outlet to allow panel/list view
-- Logout confirmation dialogue still fixing
 - Retailer "my account page" - Include Profile details & simple overview details of outlets, listings and revenue - Each detail should be able to be clicked on --> redirect to the relevant page with their full details
 - Want to build a retailer Notifications tab (when order comes in, when payment completes)
-  <<<<<<< HEAD
 - Want to work on building a navbar
 - Want to work on retailer profile details
 
