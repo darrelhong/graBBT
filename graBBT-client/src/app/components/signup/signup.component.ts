@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, Validators } from '@angular/forms'
+import { MatSnackBar } from '@angular/material/snack-bar'
+
+import { Customer } from 'src/app/services/customer/customer'
+import { CustomerService } from 'src/app/services/customer/customer.service'
+import { SessionService } from 'src/app/services/session.service'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-signup',
@@ -20,7 +26,7 @@ export class SignupComponent implements OnInit {
     ],
     password: [null, Validators.required],
     email: [null, Validators.compose([Validators.required, Validators.email])],
-    phone: [
+    phoneNumber: [
       null,
       Validators.compose([
         Validators.required,
@@ -32,11 +38,46 @@ export class SignupComponent implements OnInit {
     address: [null, Validators.required],
   })
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private customerService: CustomerService,
+    private sessionService: SessionService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {}
 
   onSubmit() {
     console.log('submitted')
+
+    const newCustomer = new Customer()
+    newCustomer.username = this.signupForm.get('username').value
+    newCustomer.password = this.signupForm.get('password').value
+    newCustomer.name = this.signupForm.get('name').value
+    newCustomer.phoneNumber = this.signupForm.get('phoneNumber').value
+    newCustomer.address = this.signupForm.get('address').value
+    newCustomer.email = this.signupForm.get('email').value
+
+    this.customerService.signUp(newCustomer).subscribe(
+      resp => {
+        const customer: Customer = resp.customer
+
+        if (customer != null) {
+          this.sessionService.setCustomerIsLogin(true)
+          this.sessionService.setCurrentCustomer(customer)
+        }
+
+        this.router.navigate(['/landing'])
+      },
+      error => {
+        console.log(error)
+        this.displayErrorSnackBar('An error occured')
+      }
+    )
+  }
+
+  displayErrorSnackBar(message: string) {
+    this.snackBar.open(message, 'Dismiss', { duration: 5000 })
   }
 }

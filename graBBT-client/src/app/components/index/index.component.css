@@ -10,6 +10,15 @@ main {
 
 mat-toolbar {
   display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+mat-toolbar {
+  min-height: 64px;
   position: sticky;
   z-index: 2;
   top: 0;
@@ -58,7 +67,7 @@ mat-toolbar a {
 }
 
 #instruction-grid {
-  width: 60%;
+  width: 80%;
   margin: auto;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -71,6 +80,7 @@ img {
 }
 
 footer {
+  flex-shrink: 0;
   height: 30px;
   padding: 10px;
   background-color: #eceff1;

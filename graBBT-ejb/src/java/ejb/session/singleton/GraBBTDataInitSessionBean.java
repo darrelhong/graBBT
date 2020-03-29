@@ -59,6 +59,14 @@ public class GraBBTDataInitSessionBean {
             Long koiPayaOutletId = outletSessionBean.createNewOutlet(new OutletEntity("KOI Paya Lebar", 9, 20, 1.3178, 103.8924), retailerId);
             Long koiJurongOutletId = outletSessionBean.createNewOutlet(new OutletEntity("KOI Jurong", 9, 20, 1.3329, 103.7436), retailerId);
 
+            Long gongChaRetailerId = retailerSessionBean.createNewRetailer(new RetailerEntity("Gong Cha", "manager2", "password"));
+            Long gongChaNexOutletId = outletSessionBean.createNewOutlet(new OutletEntity("Gong Cha NEX", 10, 21, 1.350690, 103.872293), gongChaRetailerId);
+            Long gongChaTpyOutletId = outletSessionBean.createNewOutlet(new OutletEntity("Gong Cha Toa Payoh", 10, 21, 1.332910, 103.84819), gongChaRetailerId);
+
+            Long lihoRetailerId = retailerSessionBean.createNewRetailer(new RetailerEntity("LiHO Tea", "manager3", "password"));
+            Long lihoStarVistaOutletId = outletSessionBean.createNewOutlet(new OutletEntity("LiHO Star Vista", 8, 20, 1.306803, 103.788484), lihoRetailerId);
+            Long lihoOrchardGatewayOutletId = outletSessionBean.createNewOutlet(new OutletEntity("LiHO Orchard Gateway", 8, 20, 1.300763, 103.839079), lihoRetailerId);
+
             // Creating options hashmaps
             Map<String, BigDecimal> sizeOptions = new HashMap<>();
             sizeOptions.put("Medium", new BigDecimal(0.00));
@@ -92,10 +100,103 @@ public class GraBBTDataInitSessionBean {
             listingSessionBean.createNewListing(koiGoldenOolong);
             koiJurong.getListings().add(koiGoldenOolong);
 
+            // for gong cha
+            Map<String, BigDecimal> gcSizeOptions = new HashMap<>();
+            gcSizeOptions.put("Medium", new BigDecimal(0.00));
+            gcSizeOptions.put("Large", new BigDecimal(1.10));
+            Map<String, BigDecimal> gcSugarOptions = new HashMap<>();
+            gcSugarOptions.put("0% Sugar free", new BigDecimal(0.00));
+            gcSugarOptions.put("30% Little sugar", new BigDecimal(0.00));
+            gcSugarOptions.put("50% Half sugar", new BigDecimal(0.00));
+            gcSugarOptions.put("70% Less sugar", new BigDecimal(0.00));
+            gcSugarOptions.put("100% Full sugar", new BigDecimal(0.00));
+            Map<String, BigDecimal> gcIceOptions = new HashMap<>();
+            gcIceOptions.put("Normal Ice", new BigDecimal(0.00));
+            gcIceOptions.put("No Ice", new BigDecimal(0.00));
+            Map<String, BigDecimal> gcToppingOptions = new HashMap<>();
+            gcToppingOptions.put("Herbal Jelly", new BigDecimal(0.70));
+            gcToppingOptions.put("Pudding Jelly", new BigDecimal(0.70));
+            gcToppingOptions.put("Pearl", new BigDecimal(0.40));
+            gcToppingOptions.put("White Pearl", new BigDecimal(0.70));
+            gcToppingOptions.put("Coconut Jelly", new BigDecimal(0.50));
+            gcToppingOptions.put("Red Bean", new BigDecimal(0.70));
+            gcToppingOptions.put("Milk Foam (Original)", new BigDecimal(0.80));
+            gcToppingOptions.put("Aloe Vera", new BigDecimal(0.70));
+            gcToppingOptions.put("Rainbow Jelly", new BigDecimal(0.60));
+            gcToppingOptions.put("Basil Seeds", new BigDecimal(0.40));
+
+            OutletEntity gongChaNex = outletSessionBean.retrieveOutletByOutletId(gongChaNexOutletId);
+            OutletEntity gongChaTpy = outletSessionBean.retrieveOutletByOutletId(gongChaTpyOutletId);
+
+            Listing gcGreenMilkTea = new Listing("Green Milk Tea", new BigDecimal(3.00), gongChaNex, "gcgreenmilktea.jpeg", gcSizeOptions, gcSugarOptions, gcIceOptions, gcToppingOptions);
+            listingSessionBean.createNewListing(gcGreenMilkTea);
+            gongChaNex.getListings().add(gcGreenMilkTea);
+            Listing gcBlackMilkTea = new Listing("Black Milk Tea", new BigDecimal(3.00), gongChaNex, "gcblackmilktea.jpeg", gcSizeOptions, gcSugarOptions, gcIceOptions, gcToppingOptions);
+            listingSessionBean.createNewListing(gcBlackMilkTea);
+            gongChaNex.getListings().add(gcBlackMilkTea);
+            Listing gcOolongTea = new Listing("Oolong Tea", new BigDecimal(2.30), gongChaNex, "gcoolongtea.jpeg", gcSizeOptions, gcSugarOptions, gcIceOptions, gcToppingOptions);
+            listingSessionBean.createNewListing(gcOolongTea);
+            gongChaNex.getListings().add(gcOolongTea);
+
+            Listing gcGreenMilkTeaTpy = new Listing("Green Milk Tea", new BigDecimal(3.00), gongChaTpy, "gcgreenmilktea.jpeg", gcSizeOptions, gcSugarOptions, gcIceOptions, gcToppingOptions);
+            listingSessionBean.createNewListing(gcGreenMilkTeaTpy);
+            gongChaTpy.getListings().add(gcGreenMilkTeaTpy);
+            Listing gcBlackMilkTeaTpy = new Listing("Black Milk Tea", new BigDecimal(3.00), gongChaTpy, "gcblackmilktea.jpeg", gcSizeOptions, gcSugarOptions, gcIceOptions, gcToppingOptions);
+            listingSessionBean.createNewListing(gcBlackMilkTeaTpy);
+            gongChaTpy.getListings().add(gcBlackMilkTeaTpy);
+            Listing gcOolongTeaTpy = new Listing("Oolong Tea", new BigDecimal(2.30), gongChaTpy, "gcoolongtea.jpeg", gcSizeOptions, gcSugarOptions, gcIceOptions, gcToppingOptions);
+            listingSessionBean.createNewListing(gcOolongTeaTpy);
+            gongChaTpy.getListings().add(gcOolongTeaTpy);
+
+            // for liho
+            Map<String, BigDecimal> lhSizeOptions = new HashMap<>();
+            lhSizeOptions.put("Medium", new BigDecimal(0.00));
+            lhSizeOptions.put("Large", new BigDecimal(1.00));
+            Map<String, BigDecimal> lhSugarOptions = new HashMap<>();
+            lhSugarOptions.put("0% Sugar free", new BigDecimal(0.00));
+            lhSugarOptions.put("30% Little sugar", new BigDecimal(0.00));
+            lhSugarOptions.put("50% Half sugar", new BigDecimal(0.00));
+            lhSugarOptions.put("70% Less sugar", new BigDecimal(0.00));
+            lhSugarOptions.put("100% Full sugar", new BigDecimal(0.00));
+            Map<String, BigDecimal> lhIceOptions = new HashMap<>();
+            lhIceOptions.put("Normal", new BigDecimal(0.00));
+            lhIceOptions.put("Less ice", new BigDecimal(0.00));
+            lhIceOptions.put("No Ice", new BigDecimal(0.00));
+            Map<String, BigDecimal> lhToppingOptions = new HashMap<>();
+            lhToppingOptions.put("Golden Pearl", new BigDecimal(0.60));
+            lhToppingOptions.put("White Pearl", new BigDecimal(0.70));
+            lhToppingOptions.put("Brown Sugar Pearl", new BigDecimal(0.70));
+            lhToppingOptions.put("Unicorn Pearl", new BigDecimal(0.70));
+            lhToppingOptions.put("Pudding Jelly", new BigDecimal(0.70));
+            lhToppingOptions.put("CheezHO", new BigDecimal(1.20));
+
+            OutletEntity lihoStarVista = outletSessionBean.retrieveOutletByOutletId(lihoStarVistaOutletId);
+            OutletEntity lihoOrchardGateway = outletSessionBean.retrieveOutletByOutletId(lihoOrchardGatewayOutletId);
+
+            Listing lhStrawberryLatte = new Listing("Strawberry Latte", new BigDecimal(7.10), lihoStarVista, "lhstrawberrylatte.png", lhSizeOptions, lhSugarOptions, lhIceOptions, lhToppingOptions);
+            listingSessionBean.createNewListing(lhStrawberryLatte);
+            lihoStarVista.getListings().add(lhStrawberryLatte);
+            Listing lhAvocadoMilkCoffee = new Listing("Avocado Milk Coffee", new BigDecimal(6.10), lihoStarVista, "lhavocadomilkcoffee.jpeg", lhSizeOptions, lhSugarOptions, lhIceOptions, lhToppingOptions);
+            listingSessionBean.createNewListing(lhAvocadoMilkCoffee);
+            lihoStarVista.getListings().add(lhAvocadoMilkCoffee);
+            Listing lhCheezHOMelonTea = new Listing("CheezHO Melon Tea", new BigDecimal(3.40), lihoStarVista, "lhcheezhomelontea.jpeg", lhSizeOptions, lhSugarOptions, lhIceOptions, lhToppingOptions);
+            listingSessionBean.createNewListing(lhCheezHOMelonTea);
+            lihoStarVista.getListings().add(lhCheezHOMelonTea);
+
+            Listing lhStrawberryLatteOC = new Listing("Strawberry Latte", new BigDecimal(7.10), lihoOrchardGateway, "lhstrawberrylatte.png", lhSizeOptions, lhSugarOptions, lhIceOptions, lhToppingOptions);
+            listingSessionBean.createNewListing(lhStrawberryLatteOC);
+            lihoOrchardGateway.getListings().add(lhStrawberryLatteOC);
+            Listing lhAvocadoMilkCoffeeOC = new Listing("Avocado Milk Coffee", new BigDecimal(6.10), lihoOrchardGateway, "lhavocadomilkcoffee.jpeg", lhSizeOptions, lhSugarOptions, lhIceOptions, lhToppingOptions);
+            listingSessionBean.createNewListing(lhAvocadoMilkCoffeeOC);
+            lihoOrchardGateway.getListings().add(lhAvocadoMilkCoffeeOC);
+            Listing lhCheezHOMelonTeaOC = new Listing("CheezHO Melon Tea", new BigDecimal(3.40), lihoOrchardGateway, "lhcheezhomelontea.jpeg", lhSizeOptions, lhSugarOptions, lhIceOptions, lhToppingOptions);
+            listingSessionBean.createNewListing(lhCheezHOMelonTeaOC);
+            lihoOrchardGateway.getListings().add(lhCheezHOMelonTeaOC);
+
             //customer side of things
             Customer customer = new Customer("Customer 1", "customer", "password", "87654321", "address", "qwerty@gmail.com");
-            Long customerId = customerSessionBeanLocal.createNewCustomer(customer);
-            
+            customer = customerSessionBeanLocal.createNewCustomer(customer); 
+
         } catch (InputDataValidationException | RetailerUsernameExistsException
                 | UnknownPersistenceException | OutletNameExistsException
                 | RetailerNotFoundException | OutletNotFoundException ex) {

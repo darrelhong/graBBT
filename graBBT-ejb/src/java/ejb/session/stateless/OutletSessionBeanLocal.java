@@ -32,4 +32,6 @@ public interface OutletSessionBeanLocal {
     public void deactivateOutlet(Long outletId) throws OutletNotFoundException, DeactivateOutletException;
 
     public void updateOutlet(OutletEntity outletEntity, List<Long> listingIds) throws OutletNotFoundException, InputDataValidationException, UpdateOutletException;
+    
+    public List<OutletEntity> retrieveAllOutlets();
 }

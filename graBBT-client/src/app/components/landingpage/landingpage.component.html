@@ -9,17 +9,19 @@
     <mat-toolbar>Cart</mat-toolbar>
     <h1>Cart goes here</h1>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <mat-toolbar color="primary" class="header-toolbar mat-elevation-z6">
       <a routerLink="/landing"><span>graBBT</span></a>
       <button
         class="logout-button"
-        mat-flat-button
+        mat-icon-button
         type="button"
-        (click)="logout()"
+        (click)="openBottomSheet()"
       >
-        Logout
+        <mat-icon>account_circle</mat-icon>
       </button>
+      <span class="mat-body-2">Hi, {{ username }}</span>
       <button
         class="cart-button"
         type="button"

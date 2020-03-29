@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core'
 
 import {
+  MatBottomSheetModule,
   MatButtonModule,
   MatCardModule,
   MatCheckboxModule,
+  MatChipsModule,
   MatDatepickerModule,
   MatDialogModule,
   MatDividerModule,
@@ -15,6 +17,7 @@ import {
   MatPaginatorModule,
   MatProgressSpinnerModule,
   MatRadioModule,
+  MatRippleModule,
   MatSelectModule,
   MatSliderModule,
   MatSnackBarModule,
@@ -27,9 +30,11 @@ import {
 
 @NgModule({
   exports: [
+    MatBottomSheetModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
+    MatChipsModule,
     MatDatepickerModule,
     MatDialogModule,
     MatDividerModule,
@@ -41,6 +46,7 @@ import {
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatRadioModule,
+    MatRippleModule,
     MatSelectModule,
     MatSliderModule,
     MatSnackBarModule,

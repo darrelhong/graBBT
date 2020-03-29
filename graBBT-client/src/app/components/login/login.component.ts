@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, Validators } from '@angular/forms'
 import { SessionService } from 'src/app/services/session.service'
-import { CustomerService } from 'src/app/services/customer.service'
-import { Customer } from 'src/app/services/customer'
+import { CustomerService } from 'src/app/services/customer/customer.service'
+import { Customer } from 'src/app/services/customer/customer'
 import { Router } from '@angular/router'
 import { MatSnackBar } from '@angular/material/snack-bar'
 
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private sessionService: SessionService,
     private customerService: CustomerService,
-    private _snackBar: MatSnackBar
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {}
@@ -41,23 +41,23 @@ export class LoginComponent implements OnInit {
       this.customerService.customerLogin(username, password).subscribe(
         resp => {
           const customer: Customer = resp.customer
-
+          console.log(customer)
           if (customer != null) {
             this.sessionService.setCustomerIsLogin(true)
             this.sessionService.setCurrentCustomer(customer)
           }
 
-          this.router.navigate(['/landing'])
+          this.router.navigate(['/main'])
         },
         error => {
           console.log(error)
-          this.errorSnackBar('An error occured.')
+          this.displayErrorSnackBar('An error occured.')
         }
       )
     }
   }
 
-  errorSnackBar(message: string) {
-    this._snackBar.open(message, 'Dismiss', { duration: 5000 })
+  displayErrorSnackBar(message: string) {
+    this.snackBar.open(message, 'Dismiss', { duration: 5000 })
   }
 }

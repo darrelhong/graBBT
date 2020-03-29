@@ -48,8 +48,8 @@ public class ListingSessionBean implements ListingSessionBeanLocal {
             throw new UnknownPersistenceException(ex.getMessage());
         }
     }
-    
-     @Override
+
+    @Override
     public Listing createNewListing(Listing newListing, Long outletId) throws UnknownPersistenceException, InputDataValidationException {
         try {
             Set<ConstraintViolation<Listing>> constraintViolations = validator.validate(newListing);
@@ -68,25 +68,25 @@ public class ListingSessionBean implements ListingSessionBeanLocal {
             throw new UnknownPersistenceException(ex.getMessage());
         }
     }
-    
+
     //for testing
     @Override
     public List retrieveAllListings() {
         Query q = em.createQuery("SELECT l from Listing l");
         return q.getResultList();
     }
-    
+
     @Override
     public Listing retrieveListingById(Long listingId) throws ListingNotFoundException {
         Listing listing = em.find(Listing.class, listingId);
-        
+
         if (listing != null) {
             return listing;
         } else {
             throw new ListingNotFoundException("Listing with ID " + listingId + " does not exist!");
         }
     }
-    
+
     @Override
     public List retrieveListingsByOutletId(Long outletId) throws OutletNotFoundException {
         OutletEntity outletEntity = em.find(OutletEntity.class, outletId);
@@ -96,13 +96,13 @@ public class ListingSessionBean implements ListingSessionBeanLocal {
             throw new OutletNotFoundException("Outlet with ID " + outletId + " does not exists!");
         }
     }
-    
+
     public void updateListing(Listing listing) throws InputDataValidationException, ListingNotFoundException {
         if (listing != null && listing.getListingId() != null) {
             Set<ConstraintViolation<Listing>> constraintViolations = validator.validate(listing);
             if (constraintViolations.isEmpty()) {
                 Listing listingToUpdate = retrieveListingById(listing.getListingId());
-                
+
                 listingToUpdate.setBasePrice(listing.getBasePrice());
                 listingToUpdate.setDescription(listing.getDescription());
                 listingToUpdate.setImageSrc(listing.getImageSrc());
@@ -118,11 +118,11 @@ public class ListingSessionBean implements ListingSessionBeanLocal {
             throw new ListingNotFoundException("Lisitng ID not provided!");
         }
     }
-    
+
     @Override
     public void deleteListing(Long listingId) throws ListingNotFoundException {
         Listing listingToDelete = retrieveListingById(listingId);
-        
+
         em.remove(listingToDelete);
     }
 

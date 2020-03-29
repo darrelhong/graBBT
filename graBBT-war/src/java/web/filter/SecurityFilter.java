@@ -23,9 +23,9 @@ import javax.servlet.http.HttpSession;
 public class SecurityFilter implements Filter {
 
     FilterConfig filterConfig;
-    
+
     private static final String CONTEXT_ROOT = "/graBBT-war";
-    
+
     public void init(FilterConfig filterConfig) throws ServletException {
         this.filterConfig = filterConfig;
     }
@@ -76,33 +76,27 @@ public class SecurityFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         HttpSession httpSession = httpServletRequest.getSession(true);
-        String requestServletPath = httpServletRequest.getServletPath();        
-        
+        String requestServletPath = httpServletRequest.getServletPath();
+
         if (httpSession.getAttribute("isLogin") == null) {
             httpSession.setAttribute("isLogin", false);
         }
         Boolean isLogin = (Boolean) httpSession.getAttribute("isLogin");
-        
+
         if (!excludeLoginCheck(requestServletPath)) {
             if (isLogin == true) {
                 RetailerEntity curr = (RetailerEntity) httpSession.getAttribute("currentRetailerEntity");
-                
-                if (curr.getUsername().equals("manager")) {
-                    chain.doFilter(request, response);
-                    
-                } else {
-                    httpServletResponse.sendRedirect(CONTEXT_ROOT + "/accessRightError.xhtml");
-                }
-            } else {
-                httpServletResponse.sendRedirect(CONTEXT_ROOT + "/accessRightError.xhtml");
+
+                chain.doFilter(request, response);
+
             }
         } else {
             chain.doFilter(request, response);
         }
     }
-    
+
     public void destroy() {
-        
+
     }
 
 //    //Check logged in user?
