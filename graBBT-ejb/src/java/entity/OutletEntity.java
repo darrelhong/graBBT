@@ -69,6 +69,10 @@ public class OutletEntity implements Serializable {
     private Double locationLatitude;
     //constraints to be added
     private Double locationLongitude;
+    
+    //nullable FOR NOW so as not to break anything
+    @Column(nullable = true)
+    private String imageSrc;
 
     //constraints to be added; to confirm format of storing revenue reports
     private Double outletRevenueDaily;
@@ -106,6 +110,16 @@ public class OutletEntity implements Serializable {
         this.closingHour = closingHour;
         this.locationLatitude = locationLatitude;
         this.locationLongitude = locationLongitude;
+    }
+    
+     public OutletEntity(String outletName, Integer openingHour, Integer closingHour, Double locationLatitude, Double locationLongitude, String imageSrc) {
+        this();
+        this.outletName = outletName;
+        this.openingHour = openingHour;
+        this.closingHour = closingHour;
+        this.locationLatitude = locationLatitude;
+        this.locationLongitude = locationLongitude;
+        this.imageSrc = imageSrc;
     }
     
     public void addListing(Listing listing)
@@ -359,5 +373,19 @@ public class OutletEntity implements Serializable {
 //    public void setCategories(List<CategoryEntity> categories) {
 //        this.categories = categories;
 //    }
+
+    /**
+     * @return the imageSrc
+     */
+    public String getImageSrc() {
+        return imageSrc;
+    }
+
+    /**
+     * @param imageSrc the imageSrc to set
+     */
+    public void setImageSrc(String imageSrc) {
+        this.imageSrc = imageSrc;
+    }
 
 }

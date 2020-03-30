@@ -7,6 +7,7 @@ export class Outlet {
   openingHour: number
   closingHour: number
   open: boolean
+  imageSrc: string
 
   constructor(
     outletId?: number,
@@ -15,7 +16,8 @@ export class Outlet {
     locationLongitude?: number,
     outletRating?: number,
     openingHour?: number,
-    closingHour?: number
+    closingHour?: number,
+    imageSrc?: string
   ) {
     this.outletId = outletId
     this.outletName = outletName
@@ -24,5 +26,6 @@ export class Outlet {
     this.outletRating = outletRating
     this.openingHour = openingHour
     this.closingHour = closingHour
+    this.imageSrc = imageSrc
   }
 }

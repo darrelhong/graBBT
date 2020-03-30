@@ -56,16 +56,16 @@ public class GraBBTDataInitSessionBean {
     private void initialiseData() {
         try {
             Long retailerId = retailerSessionBean.createNewRetailer(new RetailerEntity("KOI Thé", "manager", "password"));
-            Long koiPayaOutletId = outletSessionBean.createNewOutlet(new OutletEntity("KOI Paya Lebar", 9, 20, 1.3178, 103.8924), retailerId);
-            Long koiJurongOutletId = outletSessionBean.createNewOutlet(new OutletEntity("KOI Jurong", 9, 20, 1.3329, 103.7436), retailerId);
+            Long koiPayaOutletId = outletSessionBean.createNewOutlet(new OutletEntity("KOI Paya Lebar", 9, 20, 1.3178, 103.8924, "https://d1sag4ddilekf6.cloudfront.net/compressed/merchants/4-CYXHC8ACMAJHL6/hero/a3bf1cae2d904f59ade999b5506589b8_1574426083675315081.jpeg"), retailerId);
+            Long koiJurongOutletId = outletSessionBean.createNewOutlet(new OutletEntity("KOI Jurong", 9, 20, 1.3329, 103.7436, "https://d1sag4ddilekf6.cloudfront.net/compressed/merchants/4-CYXHC8ACMAJHL6/hero/a3bf1cae2d904f59ade999b5506589b8_1574426083675315081.jpeg"), retailerId);
 
             Long gongChaRetailerId = retailerSessionBean.createNewRetailer(new RetailerEntity("Gong Cha", "manager2", "password"));
-            Long gongChaNexOutletId = outletSessionBean.createNewOutlet(new OutletEntity("Gong Cha NEX", 10, 21, 1.350690, 103.872293), gongChaRetailerId);
-            Long gongChaTpyOutletId = outletSessionBean.createNewOutlet(new OutletEntity("Gong Cha Toa Payoh", 10, 21, 1.332910, 103.84819), gongChaRetailerId);
+            Long gongChaNexOutletId = outletSessionBean.createNewOutlet(new OutletEntity("Gong Cha NEX", 10, 21, 1.350690, 103.872293, "https://d1sag4ddilekf6.cloudfront.net/compressed/merchants/4-CYLTMAT1UCKJHA/hero/11f48737b519449e805c3ea9a9380419_1571021342597132272.jpeg"), gongChaRetailerId);
+            Long gongChaTpyOutletId = outletSessionBean.createNewOutlet(new OutletEntity("Gong Cha Toa Payoh", 10, 21, 1.332910, 103.84819, "https://d1sag4ddilekf6.cloudfront.net/compressed/merchants/4-CYLTMAT1UCKJHA/hero/11f48737b519449e805c3ea9a9380419_1571021342597132272.jpeg"), gongChaRetailerId);
 
             Long lihoRetailerId = retailerSessionBean.createNewRetailer(new RetailerEntity("LiHO Tea", "manager3", "password"));
-            Long lihoStarVistaOutletId = outletSessionBean.createNewOutlet(new OutletEntity("LiHO Star Vista", 8, 20, 1.306803, 103.788484), lihoRetailerId);
-            Long lihoOrchardGatewayOutletId = outletSessionBean.createNewOutlet(new OutletEntity("LiHO Orchard Gateway", 8, 20, 1.300763, 103.839079), lihoRetailerId);
+            Long lihoStarVistaOutletId = outletSessionBean.createNewOutlet(new OutletEntity("LiHO Star Vista", 8, 20, 1.306803, 103.788484, "https://d1sag4ddilekf6.cloudfront.net/compressed/merchants/SGDD05614/hero/88f1429db6f34f588dda4e07ac74cab6_1584587162689370277.jpeg"), lihoRetailerId);
+            Long lihoOrchardGatewayOutletId = outletSessionBean.createNewOutlet(new OutletEntity("LiHO Orchard Gateway", 8, 20, 1.300763, 103.839079, "https://d1sag4ddilekf6.cloudfront.net/compressed/merchants/SGDD05614/hero/88f1429db6f34f588dda4e07ac74cab6_1584587162689370277.jpeg"), lihoRetailerId);
 
             // Creating options hashmaps
             Map<String, BigDecimal> sizeOptions = new HashMap<>();
@@ -195,7 +195,7 @@ public class GraBBTDataInitSessionBean {
 
             //customer side of things
             Customer customer = new Customer("Customer 1", "customer", "password", "87654321", "address", "qwerty@gmail.com");
-            customer = customerSessionBeanLocal.createNewCustomer(customer); 
+            customer = customerSessionBeanLocal.createNewCustomer(customer);
 
         } catch (InputDataValidationException | RetailerUsernameExistsException
                 | UnknownPersistenceException | OutletNameExistsException
