@@ -1,0 +1,53 @@
+.listing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  grid-gap: 1.5rem;
+  padding: 2rem;
+}
+
+.listing-card {
+  border: 1px solid transparent;
+  max-width: 380px;
+}
+
+.listing-card:hover {
+  border: 1px solid #4caf50;
+}
+
+.listing-card:hover .add-button {
+  color: #7e57c2;
+}
+
+.card-content {
+  display: flex;
+}
+
+img {
+  flex-shrink: 0;
+}
+
+.name-group {
+  margin-left: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.mat-card-title {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.price-group {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+}
+.price {
+  font-weight: 500;
+}
+
+.add-button {
+  margin-left: auto;
+  color: transparent;
+}

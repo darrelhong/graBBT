@@ -1,0 +1,42 @@
+<p>listings works!</p>
+<div class="listing-grid">
+  <mat-card class="listing-card">
+    <div class="card-content">
+      <img
+        mat-card-md-image
+        src="https://d1sag4ddilekf6.cloudfront.net/item/SGITE20200122023425020365/photos/6cd3348be7e04fe19d3790520752dc66_1579660465786323103.jpeg"
+      />
+      <div class="name-group">
+        <mat-card-title>Pearl Milk Tea</mat-card-title>
+        <mat-card-subtitle>This is a static card</mat-card-subtitle>
+        <div class="price-group">
+          <span class="price">{{ 3.4 | currency: '':'' }}</span>
+          <mat-icon class="add-button">add_circle</mat-icon>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-card class="listing-card" *ngFor="let listing of listings">
+    <div class="card-content">
+      <img
+        *ngIf="listing.imageSrc"
+        mat-card-md-image
+        src="/images/{{ listing.imageSrc }}"
+      />
+      <img
+        *ngIf="!listing.imageSrc"
+        mat-card-md-image
+        src="/images/defaultimage.jpg"
+      />
+      <div class="name-group">
+        <mat-card-title>{{ listing.name }}</mat-card-title>
+        <mat-card-subtitle>{{ listing.description }}</mat-card-subtitle>
+        <div class="price-group">
+          <span class="price">{{ listing.basePrice | currency: '':'' }}</span>
+          <mat-icon class="add-button">add_circle</mat-icon>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

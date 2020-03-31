@@ -33,4 +33,6 @@ export class OutletsComponent implements OnInit {
       }
     )
   }
+
+  viewListings() {}
 }

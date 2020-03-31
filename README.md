@@ -35,3 +35,15 @@ if using vscode, install Prettier for code formatiing
 - Onced logged in, redirected to Main module which is another NgModule
 - this allows for another routler outlet with child paths
 - currently can view a list of outlets THATS ALL
+
+# Static image server
+
+Make sure to run static image server in graBBT-imageServer if not images won't load
+
+```
+cd grabBBT-imageServer
+npm i
+node app.js
+
+# listening on 3000
+```

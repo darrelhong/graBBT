@@ -156,8 +156,8 @@
                     <p:panel header="#{listing.name}" style="text-align: center">
                         <h:panelGrid columns="1" style="width: 100%">
 
-                            <p:graphicImage library="image" name="#{listing.imageSrc}" rendered="#{not empty listing.imageSrc}" width="100px"/>
-                            <p:graphicImage library="image" name="defaultimage.jpg" rendered="#{empty listing.imageSrc}" width="100px"/>
+                            <p:graphicImage url="http://localhost:3000/images/#{listing.imageSrc}" rendered="#{not empty listing.imageSrc}" width="100px"/>
+                            <p:graphicImage url="http://localhost:3000/images/defaultimage.jpg" rendered="#{empty listing.imageSrc}" width="100px"/>
 
                             <h:outputText value="#{listing.basePrice}" >
                                 <f:convertNumber minFractionDigits="2" maxFractionDigits="2" type="currency" currencyCode="SGD" />
@@ -173,9 +173,8 @@
 
                 <p:dataViewListItem>
                     <h:panelGrid columns="3" style="width: 100%" columnClasses="logo,detail">
-                        <p:graphicImage library="image" name="#{listing.imageSrc}" rendered="#{not empty listing.imageSrc}" width="75px"/>
-                        <p:graphicImage library="image" name="defaultimage.jpg" rendered="#{empty listing.imageSrc}" width="100px"/>
-
+                        <p:graphicImage url="http://localhost:3000/images/#{listing.imageSrc}" rendered="#{not empty listing.imageSrc}" width="75px"/>
+                        <p:graphicImage url="http://localhost:3000/images/defaultimage.jpg" rendered="#{empty listing.imageSrc}" width="75px"/>
                         <p:outputPanel>
                             <h:panelGrid columns="2" cellpadding="5">
                                 <h:outputText value="Name" />
@@ -205,8 +204,8 @@
                     <p:outputPanel id="listingDetails" style="text-align:center">
                         <p:panelGrid columns="2" style="margin: auto">
                             <f:facet name="header">
-                                <h:graphicImage library="image" name="#{viewListingsByOutletManagedBean.selectedListing.imageSrc}" rendered="#{not empty viewListingsByOutletManagedBean.selectedListing.imageSrc}" width="250px"/>
-                                <p:graphicImage library="image" name="defaultimage.jpg" rendered="#{empty viewListingsByOutletManagedBean.selectedListing.imageSrc}" width="100px"/>
+                                <h:graphicImage url="http://localhost:3000/images/#{viewListingsByOutletManagedBean.selectedListing.imageSrc}" rendered="#{not empty viewListingsByOutletManagedBean.selectedListing.imageSrc}" width="250px"/>
+                                <p:graphicImage url="http://localhost:3000/defaultimage.jpg" rendered="#{empty viewListingsByOutletManagedBean.selectedListing.imageSrc}" width="250px"/>
                             </f:facet>
 
                             <h:outputText value="Name" />

@@ -15,13 +15,19 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class ListingService {
-  basUrl = '/api/Listing'
+  baseUrl = '/api/Listing'
 
   constructor(private httpClient: HttpClient) {}
 
   retrieveAllOutlets(): Observable<any> {
     return this.httpClient
-      .get<any>(this.basUrl + '/retrieveAllOutlets')
+      .get<any>(this.baseUrl + '/retrieveAllOutlets')
+      .pipe(catchError(this.handleError))
+  }
+
+  retrieveListingsByOutletId(outletId: string): Observable<any> {
+    return this.httpClient
+      .get<any>(this.baseUrl + '/retrieveListingsByOutletId/' + outletId)
       .pipe(catchError(this.handleError))
   }
 

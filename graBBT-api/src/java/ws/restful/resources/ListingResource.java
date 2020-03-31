@@ -2,6 +2,7 @@ package ws.restful.resources;
 
 import ejb.session.stateless.ListingSessionBeanLocal;
 import ejb.session.stateless.OutletSessionBeanLocal;
+import entity.Listing;
 import entity.OutletEntity;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,6 +21,7 @@ import javax.ws.rs.core.Response.Status;
 import util.exception.OutletNotFoundException;
 import ws.restful.model.ErrorResp;
 import ws.restful.model.RetrieveAllOutletsResp;
+import ws.restful.model.RetrieveListingsbyOutletResp;
 
 /**
  * REST Web Service
@@ -70,6 +72,25 @@ public class ListingResource {
         }
 
         return Response.status(Status.OK).entity(new RetrieveAllOutletsResp(outletEntities)).build();
+    }
+    
+    @Path("retrieveListingsByOutletId/{outletId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveOutletByOutletId(@PathParam("outletId") Long outletId)  {
+        try {
+            System.out.println("********************REST API retrieveOutletByOutletId(" + outletId + ")******************************");
+            List<Listing> listings = listingSessionBeanLocal.retrieveListingsByOutletId(outletId);
+            
+            for (Listing l : listings) {
+                l.setOutletEntity(null);
+            }
+            
+            return Response.status(Status.OK).entity(new RetrieveListingsbyOutletResp(listings)).build();
+        } catch (OutletNotFoundException ex) {
+            ErrorResp errorResp = new ErrorResp(ex.getMessage());
+            return Response.status(Status.BAD_REQUEST).entity(errorResp).build();
+        }
     }
 
     private OutletSessionBeanLocal lookupOutletSessionBeanLocal() {

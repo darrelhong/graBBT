@@ -18,7 +18,7 @@
     </context-param>
     <context-param>
         <param-name>alternatedocroot_1</param-name>
-        <param-value>C:/NetBeansProjects/proj/graBBT/graBBT-war/web/resources/image</param-value>
+        <param-value>C:/NetBeansProjects/proj/graBBT/graBBT-imageServer/images</param-value>
     </context-param>
     <listener>
         <description>ServletContextAttributeListener, HttpSessionListener</description>

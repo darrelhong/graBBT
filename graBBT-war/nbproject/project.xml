@@ -7,9 +7,6 @@
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <web-module-libraries>
                 <library dirs="200">
-                    <file>${libs.jsf20.classpath}</file>
-                </library>
-                <library dirs="200">
                     <file>${libs.javaee-api-7.0.classpath}</file>
                 </library>
                 <library dirs="200">

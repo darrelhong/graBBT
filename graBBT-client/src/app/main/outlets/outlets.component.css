@@ -1,8 +1,8 @@
 .outlet-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  grid-gap: 15px;
-  padding: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-gap: 1rem;
+  padding: 2rem;
 }
 
 .outlet-card {
@@ -13,6 +13,11 @@
 }
 
 .outlet-card:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.disabled-card {
+  cursor: default;
   background-color: rgba(0, 0, 0, 0.03);
 }
 
