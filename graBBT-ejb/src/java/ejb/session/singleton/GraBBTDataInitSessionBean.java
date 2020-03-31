@@ -56,7 +56,7 @@ public class GraBBTDataInitSessionBean {
     private void initialiseData() {
         try {
             Long retailerId = retailerSessionBean.createNewRetailer(new RetailerEntity("KOI Thé", "manager", "password"));
-            Long koiPayaOutletId = outletSessionBean.createNewOutlet(new OutletEntity("KOI Paya Lebar", 9, 20, 1.3178, 103.8924, "koi,jpeg"), retailerId);
+            Long koiPayaOutletId = outletSessionBean.createNewOutlet(new OutletEntity("KOI Paya Lebar", 9, 20, 1.3178, 103.8924, "koi.jpeg"), retailerId);
             Long koiJurongOutletId = outletSessionBean.createNewOutlet(new OutletEntity("KOI Jurong", 9, 20, 1.3329, 103.7436, "koi.jpeg"), retailerId);
 
             Long gongChaRetailerId = retailerSessionBean.createNewRetailer(new RetailerEntity("Gong Cha", "manager2", "password"));
