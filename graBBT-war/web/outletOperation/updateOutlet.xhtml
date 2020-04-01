@@ -11,6 +11,74 @@
     </h:head>
     <ui:define name="content">
         <div>
+            <h3>Current Outlet:</h3>
+            
+            <p:dataTable value="#{updateOutletManagedBean.outletEntityToUpdate != null}" style="width: 100%">
+                
+                    <p:column>
+                        <f:facet name="header">Outlet Name</f:facet>
+                        <h:outputText value="#{updateOutletManagedBean.outletEntityToUpdate.outletName}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Outlet ID</f:facet>
+                        <h:outputText value="#{updateOutletManagedBean.outletEntityToUpdate.outletId}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Active Status</f:facet>
+                        <h:outputText value="#{updateOutletManagedBean.outletEntityToUpdate.isActive}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Opening Hour</f:facet>
+                        <h:outputText value="#{updateOutletManagedBean.outletEntityToUpdate.openingHour}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Closing Hour</f:facet>
+                        <h:outputText value="#{updateOutletManagedBean.outletEntityToUpdate.outletName}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Outlet Rating</f:facet>
+                        <h:outputText value="#{updateOutletManagedBean.outletEntityToUpdate.outletRating} /5.0" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Rating Count</f:facet>
+                        <h:outputText value="#{updateOutletManagedBean.outletEntityToUpdate.ratingCount}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Location Latitude</f:facet>
+                        <h:outputText value="#{updateOutletManagedBean.outletEntityToUpdate.locationLatitude}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Location Longitude</f:facet>
+                        <h:outputText value="#{updateOutletManagedBean.outletEntityToUpdate.locationLongitude}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Outlet Revenue Daily</f:facet>
+                        <h:outputText value="#{updateOutletManagedBean.outletEntityToUpdate.outletRevenueDaily}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Outlet Revenue Monthly</f:facet>
+                        <h:outputText value="#{updateOutletManagedBean.outletEntityToUpdate.outletRevenueMonthly}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Outlet Revenue Overall</f:facet>
+                        <h:outputText value="#{updateOutletManagedBean.outletEntityToUpdate.outletRevenueOverall}" />
+                    </p:column>
+                    
+                </p:dataTable>
+        </div>
+        
+        <div>
             <h:form id="formUpdateOutlet">
                 
                 <h:outputText style="font-size: 20px" value="Update Outlet"/>&nbsp;

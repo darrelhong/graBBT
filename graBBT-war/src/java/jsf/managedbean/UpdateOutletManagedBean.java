@@ -55,7 +55,7 @@ public class UpdateOutletManagedBean implements Serializable {
     @PostConstruct
     public void postConstruct()
     {
-        setCurrentOutletId((Long) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("currentOutletId"));
+        setCurrentOutletId((Long) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("outletIdToUpdate"));
         
         try
         {

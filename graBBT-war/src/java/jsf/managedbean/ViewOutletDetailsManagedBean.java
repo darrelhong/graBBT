@@ -31,7 +31,6 @@ public class ViewOutletDetailsManagedBean implements Serializable
     private OutletSessionBeanLocal outletSessionBeanLocal;
 
     private Long outletIdToView;
-    private String backMode;
     private OutletEntity outletEntityToView;
     
     public ViewOutletDetailsManagedBean() 
@@ -42,7 +41,6 @@ public class ViewOutletDetailsManagedBean implements Serializable
     public void postConstruct()
     {
         outletIdToView = (Long) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("outletIdToView");
-        backMode = (String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backMode");
     
         try
         {
@@ -60,14 +58,7 @@ public class ViewOutletDetailsManagedBean implements Serializable
     
     public void back(ActionEvent event) throws IOException
     {
-        if(backMode == null || backMode.trim().length() == 0)
-        {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("viewAllOutlets.xhtml");
-        }
-        else
-        {
-            FacesContext.getCurrentInstance().getExternalContext().redirect(backMode + ".xhtml");
-        }
+        FacesContext.getCurrentInstance().getExternalContext().redirect("viewAllOutlets.xhtml");
     }
     
     public void updateOutlet(ActionEvent event) throws IOException
