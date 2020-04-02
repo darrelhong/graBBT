@@ -12,7 +12,9 @@
 
   <mat-sidenav-content>
     <mat-toolbar color="primary" class="header-toolbar mat-elevation-z6">
+      
       <a routerLink="/landing"><span>graBBT</span></a>
+      
       <button
         class="logout-button"
         mat-icon-button
@@ -21,7 +23,18 @@
       >
         <mat-icon>account_circle</mat-icon>
       </button>
-      <span class="mat-body-2">Hi, {{ name }}</span>
+      <span class="mat-body-2">Hi, {{ name }}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+      
+      <button
+        routerLink="/main"
+        mat-flat-button
+        class="browse-bbt"
+        type="button"
+        color="accent"
+      >
+        Browse BBT
+      </button>
+     
       <button
         class="cart-button"
         type="button"

@@ -1,5 +1,6 @@
 .header-toolbar {
   display: flex;
+  flex-direction: row;
   position: sticky;
   z-index: 2;
 }
@@ -34,4 +35,9 @@
 
 .cart-button {
   margin-left: auto;
+}
+
+.browse-bbt {
+  margin-left: inherit;
+  margin-right: 5px;
 }
