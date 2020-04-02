@@ -10,16 +10,7 @@
         <title>View Outlet Details</title>
     </h:head>
     <ui:define name="content">
-        <div>
-            <h:panelGroup>
-                <h:form rendered="#{viewOutletDetailsManagedBean.outletEntityToView != null}">
-                    <h:commandButton value="Update" actionListener="#{viewOutletDetailsManagedBean.updateOutlet}" />&nbsp;|
-                    <h:commandButton value="Back" actionListener="#{viewOutletDetailsManagedBean.back}" />
-                </h:form>
-            </h:panelGroup>
-            
-            <br/>
-            
+        <div>            
             <h:form>
                 <p:dataTable value="#{viewOutletDetailsManagedBean.outletEntityToView != null}" style="width: 100%">
                 
@@ -84,6 +75,13 @@
                     </p:column>
                     
                 </p:dataTable>
+                
+                <br/>
+                
+                <h:panelGroup>
+                    <p:commandButton value="Update" actionListener="#{viewOutletDetailsManagedBean.updateOutlet}" />&nbsp;
+                    <p:commandButton value="Back" actionListener="#{viewOutletDetailsManagedBean.back}" />
+                </h:panelGroup>
             </h:form>
             
         </div>
