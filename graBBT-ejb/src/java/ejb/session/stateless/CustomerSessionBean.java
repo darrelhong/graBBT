@@ -117,44 +117,35 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal {
         
     }    
     @Override
-    public void updateCustomer(Customer customer) throws CustomerNotFoundException, InputDataValidationException, UpdateCustomerException
+    public Customer updateCustomer(Customer customer) throws CustomerNotFoundException, InputDataValidationException, UpdateCustomerException
     {
         if (customer != null && customer.getCustomerId() != null)
         {
-            Set<ConstraintViolation<Customer>> constraintViolations = validator.validate(customer);
-            
-            if (constraintViolations.isEmpty())
+            Customer customerToUpdate = retrieveCustomerById(customer.getCustomerId());
+
+            if (customerToUpdate.getUsername().equals(customer.getUsername()))
             {
-                Customer customerToUpdate = retrieveCustomerById(customer.getCustomerId());
+
+                customerToUpdate.setName(customer.getName());
+                customerToUpdate.setUsername(customer.getUsername());
+                //customerToUpdate.setPassword(customer.getPassword());
+                customerToUpdate.setPhoneNumber(customer.getPhoneNumber());
+                customerToUpdate.setAddress(customer.getAddress());
+                customerToUpdate.setEmail(customer.getEmail());
+                customerToUpdate.setBbPoints(customer.getBbPoints());
                 
-                if (customerToUpdate.getUsername().equals(customer.getUsername()))
-                {
-                    if (customerToUpdate.getPhoneNumber().equals(customer.getPhoneNumber()))
-                    {
-                        customerToUpdate.setName(customer.getName());
-                        customerToUpdate.setUsername(customer.getUsername());
-                        customerToUpdate.setPassword(customer.getPassword());
-                        customerToUpdate.setPhoneNumber(customer.getPhoneNumber());
-                        customerToUpdate.setAddress(customer.getAddress());
-                        customerToUpdate.setEmail(customer.getEmail());
-                    }
-                    else
-                    {
-                        throw new UpdateCustomerException("Phone number of customer record to be updated does not match the existing record!");
-                    }
-                }
-                else
-                {
-                    throw new UpdateCustomerException("Username of customer record to be updated does not match the existing record!");
-                }
+                System.out.println(customerToUpdate.getPhoneNumber());
+                return customerToUpdate;
             }
             else
             {
-                throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
+                System.out.println("error2");
+                throw new UpdateCustomerException("Username of customer record to be updated does not match the existing record!");
             }
         }
         else
         {
+            System.out.println("error4");
             throw new CustomerNotFoundException("Customer ID not provided!");
         }
     }

@@ -58,12 +58,19 @@ export class CustomerService {
     }
     // send post request
     return this.httpClient
-      .post<any>(this.baseUrl, createCustReq, httpOptions)
+      .post<any>(this.baseUrl + '/createNewCustomer', createCustReq, httpOptions)
       .pipe(catchError(this.handleError))
 
-    // return of({
-    //   createCustReq,
-    // })
+  }
+
+  updateCustomer(updatedCustomer: Customer): Observable<any> {
+    const custUpdateReq = {
+      "updatedCustomer": updatedCustomer,
+    }
+
+    return this.httpClient
+      .post<any>(this.baseUrl + '/updateCustomer', custUpdateReq, httpOptions)
+      .pipe(catchError(this.handleError))
   }
 
   private handleError(error: HttpErrorResponse) {

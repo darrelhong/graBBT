@@ -18,13 +18,16 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import util.exception.CustomerNotFoundException;
 import util.exception.InputDataValidationException;
 import util.exception.InvalidLoginCredentialException;
 import util.exception.UnknownPersistenceException;
+import util.exception.UpdateCustomerException;
 import ws.restful.model.CreateCustomerReq;
 import ws.restful.model.CreateCustomerResp;
 import ws.restful.model.CustomerLoginResp;
 import ws.restful.model.ErrorResp;
+import ws.restful.model.UpdatedCustomerReq;
 
 @Path("Customer")
 public class CustomerResource {
@@ -60,6 +63,7 @@ public class CustomerResource {
         }
     }
     
+    @Path("createNewCustomer")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -84,6 +88,38 @@ public class CustomerResource {
         }
     }
 
+    @Path("updateCustomer")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateCustomer(UpdatedCustomerReq updatedCustomerReq) {
+        
+        System.out.println("updateCustomer in webservice");
+        
+        if (updatedCustomerReq != null){
+            
+            try {  
+                
+                System.out.println("********** CustomerResource.updateCustomer() ************** ");
+                customerSessionBeanLocal.updateCustomer(updatedCustomerReq.getUpdatedCustomer());
+                
+                //CreateCustomerResp createCustomerResp = new CreateCustomerResp(updatedCustomer); //return updated customer under the same wrapper class as create
+                return Response.status(Response.Status.OK).build();    
+                
+            } catch(CustomerNotFoundException | InputDataValidationException | UpdateCustomerException ex) {
+
+                ErrorResp errorResp = new ErrorResp("Invalid Request");
+                
+                return Response.status(Status.BAD_REQUEST).entity(errorResp).build(); 
+            }
+        } else {
+            ErrorResp errorResp = new ErrorResp("Invalid Request");
+            
+            return Response.status(Status.BAD_REQUEST).entity(errorResp).build();
+        }
+    }
+    
+    
     private CustomerSessionBeanLocal lookupCustomerSessionBeanLocal() {
         try {
             javax.naming.Context c = new InitialContext();

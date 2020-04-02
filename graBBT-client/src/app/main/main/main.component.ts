@@ -21,7 +21,7 @@ export class MainComponent implements OnInit {
       shareReplay()
     )
 
-  username: string
+  name: string
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -31,7 +31,7 @@ export class MainComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.username = this.sessionService.getCurrentCustomer().name
+    this.name = this.sessionService.getCurrentCustomer().name
   }
 
   logout() {
@@ -43,5 +43,10 @@ export class MainComponent implements OnInit {
 
   openBottomSheet(): void {
     this.bottomSheet.open(AccountSheetComponent)
+  }
+
+  //find a way to access this
+  closeBottomSheet(): void {
+    this.bottomSheet.dismiss()
   }
 }

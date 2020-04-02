@@ -27,6 +27,5 @@ public class CreateCustomerResp {
         this.customer = customer;
     }
     
-    
-    
+   
 }

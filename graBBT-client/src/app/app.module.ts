@@ -15,7 +15,7 @@ import { LoginComponent } from './components/login/login.component'
 import { SignupComponent } from './components/signup/signup.component'
 import { LandingpageComponent } from './components/landingpage/landingpage.component'
 import { AccountSheetComponent } from './components/account-sheet/account-sheet.component';
-import { MainModule } from './main/main.module'
+import { MainModule } from './main/main.module';
 
 @NgModule({
   declarations: [

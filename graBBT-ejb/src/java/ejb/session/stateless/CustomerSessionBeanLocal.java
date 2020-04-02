@@ -31,7 +31,7 @@ public interface CustomerSessionBeanLocal {
 
     public Customer retrieveCustomerByUsername(String username) throws CustomerNotFoundException;
 
-    public void updateCustomer(Customer customer) throws CustomerNotFoundException, InputDataValidationException, UpdateCustomerException;
+    public Customer updateCustomer(Customer customer) throws CustomerNotFoundException, InputDataValidationException, UpdateCustomerException;
 
     public Customer customerLogin(String username, String password) throws InvalidLoginCredentialException;
     
