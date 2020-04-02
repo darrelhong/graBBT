@@ -17,7 +17,8 @@
 - Want to build a retailer Notifications tab (when order comes in, when payment completes)
 
 ### Client
-- test
+- Add order to cart
+- Checkout cart
 
 
 # Angular Client
