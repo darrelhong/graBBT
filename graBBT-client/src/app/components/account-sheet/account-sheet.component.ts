@@ -10,9 +10,8 @@ import { SessionService } from 'src/app/services/session.service'
   styleUrls: ['./account-sheet.component.css'],
 })
 export class AccountSheetComponent implements OnInit {
-  
   //@Output() closeSheetEvent = new EventEmitter();
-  
+
   constructor(
     private bottomSheetRef: MatBottomSheetRef<AccountSheetComponent>,
     private router: Router,
@@ -32,6 +31,8 @@ export class AccountSheetComponent implements OnInit {
 
   viewAccount(event: MouseEvent): void {
     //this.closeSheetEvent.emit //goes to parent (main component)
+    this.bottomSheetRef.dismiss()
+    event.preventDefault()
     this.router.navigate(['main/account'])
   }
 }

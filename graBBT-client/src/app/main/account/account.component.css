@@ -1,12 +1,21 @@
 h1 {
-    padding-left: 20px;
-    margin-block-start: 0.em;
-    margin-block-end: 0.20em;
+  padding-left: 20px;
+  margin-block-start: 0em;
+  margin-block-end: 0.2em;
 }
 .account-container {
-    display: grid;
-    padding-left: 30px;
+  display: grid;
+  padding-left: 30px;
 }
+
+.account-container button {
+  margin-top: 1rem;
+}
+
 .errorText {
-    color: red;
+  color: red;
+}
+
+mat-form-field {
+  width: 100%;
 }
