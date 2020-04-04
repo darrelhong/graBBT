@@ -39,9 +39,8 @@ img {
 }
 
 .price-group {
-  margin-top: auto;
   display: flex;
-  align-items: center;
+  margin-top: auto;
 }
 .price {
   font-weight: 500;

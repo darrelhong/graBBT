@@ -13,9 +13,13 @@ import { MyMaterialModule } from './modules/material.module'
 import { IndexComponent } from './components/index/index.component'
 import { LoginComponent } from './components/login/login.component'
 import { SignupComponent } from './components/signup/signup.component'
-import { LandingpageComponent } from './components/landingpage/landingpage.component'
-import { AccountSheetComponent } from './components/account-sheet/account-sheet.component';
-import { MainModule } from './main/main.module';
+import {
+  LandingpageComponent,
+  ItemDialogComponent,
+} from './components/landingpage/landingpage.component'
+import { AccountSheetComponent } from './components/account-sheet/account-sheet.component'
+import { MainModule } from './main/main.module'
+import { DialogListingComponent } from './main/listings/dialog-listing/dialog-listing.component'
 
 @NgModule({
   declarations: [
@@ -25,6 +29,7 @@ import { MainModule } from './main/main.module';
     SignupComponent,
     LandingpageComponent,
     AccountSheetComponent,
+    ItemDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,7 +42,7 @@ import { MainModule } from './main/main.module';
     HttpClientModule,
     MainModule,
   ],
-  entryComponents: [AccountSheetComponent],
+  entryComponents: [AccountSheetComponent, ItemDialogComponent],
   providers: [],
   bootstrap: [AppComponent],
 })

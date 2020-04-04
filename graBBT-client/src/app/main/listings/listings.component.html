@@ -17,7 +17,11 @@
     </div>
   </mat-card>
 
-  <mat-card class="listing-card" *ngFor="let listing of listings">
+  <mat-card
+    class="listing-card"
+    *ngFor="let listing of listings; let i = index"
+    (click)="openDialog(i)"
+  >
     <div class="card-content">
       <img
         *ngIf="listing.imageSrc"

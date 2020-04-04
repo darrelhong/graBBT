@@ -1,0 +1,122 @@
+<mat-dialog-content>
+  <mat-card class="listing-card">
+    <div class="card-content">
+      <img
+        *ngIf="data.imageSrc"
+        mat-card-md-image
+        src="/images/{{ data.imageSrc }}"
+      />
+      <img
+        *ngIf="!data.imageSrc"
+        mat-card-md-image
+        src="/images/defaultimage.jpg"
+      />
+      <div class="name-group">
+        <mat-card-title>{{ data.name }}</mat-card-title>
+        <mat-card-subtitle>{{ data.description }}</mat-card-subtitle>
+      </div>
+      <div class="price-group">
+        <span class="price">{{ data.basePrice | currency: '':'' }}</span>
+      </div>
+    </div>
+  </mat-card>
+
+  <form [formGroup]="orderForm">
+    <div class="choice-group">
+      <label class="mat-h3"
+        >Size Options <span class="mat-small hint-text">Choose 1</span></label
+      >
+      <mat-radio-group formControlName="sizeChoice">
+        <div
+          *ngFor="let size of data.sizeOptions | keyvalue; let lastItem = last"
+        >
+          <div class="button-container">
+            <mat-radio-button [value]="size.key">{{
+              size.key
+            }}</mat-radio-button>
+            <span>{{ size.value | currency: '':'' }}</span>
+          </div>
+          <mat-divider *ngIf="!lastItem"></mat-divider>
+        </div>
+      </mat-radio-group>
+    </div>
+
+    <div class="choice-group">
+      <label class="mat-h3"
+        >Sugar Options <span class="mat-small hint-text">Choose 1</span></label
+      >
+      <mat-radio-group formControlName="sugarChoice">
+        <div
+          *ngFor="
+            let sugar of data.sugarOptions | keyvalue;
+            let lastItem = last
+          "
+        >
+          <div class="button-container">
+            <mat-radio-button [value]="sugar.key">{{
+              sugar.key
+            }}</mat-radio-button>
+            <span>{{ sugar.value | currency: '':'' }}</span>
+          </div>
+          <mat-divider *ngIf="!lastItem"></mat-divider>
+        </div>
+      </mat-radio-group>
+    </div>
+
+    <div class="choice-group">
+      <label class="mat-h3"
+        >Ice Options <span class="mat-small hint-text">Choose 1</span></label
+      >
+      <mat-radio-group formControlName="iceChoice">
+        <div
+          *ngFor="let ice of data.iceOptions | keyvalue; let lastItem = last"
+        >
+          <div class="button-container">
+            <mat-radio-button [value]="ice.key" style="margin:5px;">{{
+              ice.key
+            }}</mat-radio-button>
+            <span>{{ ice.value | currency: '':'' }}</span>
+          </div>
+          <mat-divider *ngIf="!lastItem"></mat-divider>
+        </div>
+      </mat-radio-group>
+    </div>
+
+    <div class="choice-group">
+      <label class="mat-h3">Topping Options </label>
+      <div
+        *ngFor="
+          let topping of toppingFormArray.controls;
+          let i = index;
+          let lastItem = last
+        "
+        formArrayName="toppingFormArray"
+      >
+        <div class="button-container">
+          <mat-checkbox [formControlName]="i">
+            {{ toppingArr[i][0] }}
+          </mat-checkbox>
+          <span>{{ toppingArr[i][1] | currency: '':'' }}</span>
+        </div>
+        <mat-divider *ngIf="!lastItem"></mat-divider>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-icon-button (click)="decrementQty()">
+    <mat-icon class="material-icons-outlined">indeterminate_check_box</mat-icon>
+  </button>
+  <span style="font-size: 20px; position: relative; top: 1px;">
+    {{ orderForm.get('quantity').value }}
+  </span>
+  <button mat-icon-button (click)="incrementQty()">
+    <mat-icon class="material-icons-outlined">add_box</mat-icon>
+  </button>
+  <button mat-flat-button color="primary" [disabled]="!orderForm.valid">
+    Add to Cart
+  </button>
+  <span>{{ orderForm.value | json }}</span>
+  <span>{{ orderForm.status }}</span>
+</mat-dialog-actions>
