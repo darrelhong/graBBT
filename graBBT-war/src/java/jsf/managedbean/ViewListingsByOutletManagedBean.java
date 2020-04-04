@@ -39,13 +39,13 @@ public class ViewListingsByOutletManagedBean implements Serializable {
     private Long outletIdNew;
     private Long categoryIdNew;
     private String sizeNameInput;
-    private BigDecimal sizePriceInput;
+    private Double sizePriceInput;
     private String sugarNameInput;
-    private BigDecimal sugarPriceInput;
+    private Double sugarPriceInput;
     private String iceNameInput;
-    private BigDecimal icePriceInput;
+    private Double icePriceInput;
     private String toppingNameInput;
-    private BigDecimal toppingPriceInput;
+    private Double toppingPriceInput;
     private UploadedFile upImage;
 
     public ViewListingsByOutletManagedBean() {
@@ -61,10 +61,10 @@ public class ViewListingsByOutletManagedBean implements Serializable {
 
         }
         newListing = new Listing();
-        sizePriceInput = new BigDecimal(0);
-        sugarPriceInput = new BigDecimal(0);
-        icePriceInput = new BigDecimal(0);
-        toppingPriceInput = new BigDecimal(0);
+        sizePriceInput = 0.0;
+        sugarPriceInput = 0.0;
+        icePriceInput = 0.0;
+        toppingPriceInput = 0.0;
     }
 
     public void addSizeOption() {
@@ -77,7 +77,7 @@ public class ViewListingsByOutletManagedBean implements Serializable {
         newListing.getSizeOptions().put(sizeNameInput, sizePriceInput);
         System.out.println(getNewListing().getSizeOptions().toString());
         sizeNameInput = "";
-        sizePriceInput = new BigDecimal(0);
+        sizePriceInput = 0.0;
     }
 
     public void addSugarOption() {
@@ -90,7 +90,7 @@ public class ViewListingsByOutletManagedBean implements Serializable {
         newListing.getSugarOptions().put(sugarNameInput, sugarPriceInput);
         System.out.println(getNewListing().getSugarOptions().toString());
         sugarNameInput = "";
-        sugarPriceInput = new BigDecimal(0);
+        sugarPriceInput = 0.0;
     }
 
     public void addIceOption() {
@@ -103,7 +103,7 @@ public class ViewListingsByOutletManagedBean implements Serializable {
         newListing.getIceOptions().put(iceNameInput, icePriceInput);
         System.out.println(getNewListing().getIceOptions().toString());
         iceNameInput = "";
-        icePriceInput = new BigDecimal(0);
+        icePriceInput = 0.0;
     }
 
     public void addToppingOption() {
@@ -116,7 +116,7 @@ public class ViewListingsByOutletManagedBean implements Serializable {
         newListing.getToppingOptions().put(toppingNameInput, toppingPriceInput);
         System.out.println(getNewListing().getToppingOptions().toString());
         toppingNameInput = "";
-        toppingPriceInput = new BigDecimal(0);
+        toppingPriceInput = 0.0;
     }
 
     public void handleFileUpload(FileUploadEvent event) {
@@ -284,14 +284,14 @@ public class ViewListingsByOutletManagedBean implements Serializable {
     /**
      * @return the sizePriceInput
      */
-    public BigDecimal getSizePriceInput() {
+    public Double getSizePriceInput() {
         return sizePriceInput;
     }
 
     /**
      * @param sizePriceInput the sizePriceInput to set
      */
-    public void setSizePriceInput(BigDecimal sizePriceInput) {
+    public void setSizePriceInput(Double sizePriceInput) {
         this.sizePriceInput = sizePriceInput;
     }
 
@@ -312,14 +312,14 @@ public class ViewListingsByOutletManagedBean implements Serializable {
     /**
      * @return the sugarPriceInput
      */
-    public BigDecimal getSugarPriceInput() {
+    public Double getSugarPriceInput() {
         return sugarPriceInput;
     }
 
     /**
      * @param sugarPriceInput the sugarPriceInput to set
      */
-    public void setSugarPriceInput(BigDecimal sugarPriceInput) {
+    public void setSugarPriceInput(Double sugarPriceInput) {
         this.sugarPriceInput = sugarPriceInput;
     }
 
@@ -340,14 +340,14 @@ public class ViewListingsByOutletManagedBean implements Serializable {
     /**
      * @return the icePriceInput
      */
-    public BigDecimal getIcePriceInput() {
+    public Double getIcePriceInput() {
         return icePriceInput;
     }
 
     /**
      * @param icePriceInput the icePriceInput to set
      */
-    public void setIcePriceInput(BigDecimal icePriceInput) {
+    public void setIcePriceInput(Double icePriceInput) {
         this.icePriceInput = icePriceInput;
     }
 
@@ -368,14 +368,14 @@ public class ViewListingsByOutletManagedBean implements Serializable {
     /**
      * @return the toppingPriceInput
      */
-    public BigDecimal getToppingPriceInput() {
+    public Double getToppingPriceInput() {
         return toppingPriceInput;
     }
 
     /**
      * @param toppingPriceInput the toppingPriceInput to set
      */
-    public void setToppingPriceInput(BigDecimal toppingPriceInput) {
+    public void setToppingPriceInput(Double toppingPriceInput) {
         this.toppingPriceInput = toppingPriceInput;
     }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core'
 import { FormBuilder, FormArray, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { Listing } from 'src/app/services/listing/listing'
 
 @Component({
   selector: 'app-dialog-listing',
@@ -24,7 +25,7 @@ export class DialogListingComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<DialogListingComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: Listing,
     private fb: FormBuilder
   ) {}
 

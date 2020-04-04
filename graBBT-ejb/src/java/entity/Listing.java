@@ -48,25 +48,25 @@ public class Listing implements Serializable {
     @CollectionTable(name = "size_price_map")
     @MapKeyColumn(name = "size")
     @Column(name = "size_price")
-    private Map<String, BigDecimal> sizeOptions;
+    private Map<String, Double> sizeOptions;
 
     @ElementCollection
     @CollectionTable(name = "sugarlevel_price_map")
     @MapKeyColumn(name = "sugarlevel")
     @Column(name = "sugarlevel_price")
-    private Map<String, BigDecimal> sugarOptions;
+    private Map<String, Double> sugarOptions;
 
     @ElementCollection
     @CollectionTable(name = "icelevel_price_map")
     @MapKeyColumn(name = "icelevel")
     @Column(name = "icelevel_price")
-    private Map<String, BigDecimal> iceOptions;
+    private Map<String, Double> iceOptions;
 
     @ElementCollection
     @CollectionTable(name = "topping_price_map")
     @MapKeyColumn(name = "topping_name")
     @Column(name = "topping_price")
-    private Map<String, BigDecimal> toppingOptions;
+    private Map<String, Double> toppingOptions;
 
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
@@ -107,7 +107,7 @@ public class Listing implements Serializable {
         this.imageSrc = imageSrc;
     }
 
-    public Listing(String name, BigDecimal basePrice, OutletEntity outletEntity, String imageSrc, Map<String, BigDecimal> sizeOptions, Map<String, BigDecimal> sugarOptions, Map<String, BigDecimal> iceOptions, Map<String, BigDecimal> toppingOptions) {
+    public Listing(String name, BigDecimal basePrice, OutletEntity outletEntity, String imageSrc, Map<String, Double> sizeOptions, Map<String, Double> sugarOptions, Map<String, Double> iceOptions, Map<String, Double> toppingOptions) {
         this();
         this.name = name;
         this.basePrice = basePrice;
@@ -119,7 +119,7 @@ public class Listing implements Serializable {
         this.toppingOptions = toppingOptions;
     }
 
-    public Listing(String name, BigDecimal basePrice, OutletEntity outletEntity, String description, String imageSrc, Map<String, BigDecimal> sizeOptions, Map<String, BigDecimal> sugarOptions, Map<String, BigDecimal> iceOptions, Map<String, BigDecimal> toppingOptions) {
+    public Listing(String name, BigDecimal basePrice, OutletEntity outletEntity, String description, String imageSrc, Map<String, Double> sizeOptions, Map<String, Double> sugarOptions, Map<String, Double> iceOptions, Map<String, Double> toppingOptions) {
         this.name = name;
         this.basePrice = basePrice;
         this.outletEntity = outletEntity;
@@ -223,56 +223,56 @@ public class Listing implements Serializable {
     /**
      * @return the toppingOptions
      */
-    public Map<String, BigDecimal> getToppingOptions() {
+    public Map<String, Double> getToppingOptions() {
         return toppingOptions;
     }
 
     /**
      * @param toppingOptions the toppingOptions to set
      */
-    public void setToppingOptions(Map<String, BigDecimal> toppingOptions) {
+    public void setToppingOptions(Map<String, Double> toppingOptions) {
         this.toppingOptions = toppingOptions;
     }
 
     /**
      * @return the sugarOptions
      */
-    public Map<String, BigDecimal> getSugarOptions() {
+    public Map<String, Double> getSugarOptions() {
         return sugarOptions;
     }
 
     /**
      * @param sugarOptions the sugarOptions to set
      */
-    public void setSugarOptions(Map<String, BigDecimal> sugarOptions) {
+    public void setSugarOptions(Map<String, Double> sugarOptions) {
         this.sugarOptions = sugarOptions;
     }
 
     /**
      * @return the sizeOptions
      */
-    public Map<String, BigDecimal> getSizeOptions() {
+    public Map<String, Double> getSizeOptions() {
         return sizeOptions;
     }
 
     /**
      * @param sizeOptions the sizeOptions to set
      */
-    public void setSizeOptions(Map<String, BigDecimal> sizeOptions) {
+    public void setSizeOptions(Map<String, Double> sizeOptions) {
         this.sizeOptions = sizeOptions;
     }
 
     /**
      * @return the iceOptions
      */
-    public Map<String, BigDecimal> getIceOptions() {
+    public Map<String, Double> getIceOptions() {
         return iceOptions;
     }
 
     /**
      * @param iceOptions the iceOptions to set
      */
-    public void setIceOptions(Map<String, BigDecimal> iceOptions) {
+    public void setIceOptions(Map<String, Double> iceOptions) {
         this.iceOptions = iceOptions;
     }
 
