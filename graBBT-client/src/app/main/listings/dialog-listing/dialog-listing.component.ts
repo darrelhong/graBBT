@@ -14,11 +14,17 @@ export class DialogListingComponent implements OnInit {
     sugarChoice: ['', Validators.required],
     iceChoice: ['', Validators.required],
     toppingFormArray: this.fb.array([]),
-    quantity: [0, Validators.min(1)],
+    quantity: [1, Validators.min(1)],
   })
+
+  orderPrice: number
 
   get toppingFormArray() {
     return this.orderForm.get('toppingFormArray') as FormArray
+  }
+
+  get quantity() {
+    return this.orderForm.get('quantity').value
   }
 
   toppingArr = []
@@ -31,8 +37,45 @@ export class DialogListingComponent implements OnInit {
 
   ngOnInit() {
     this.toppingArr = Object.entries(this.data.toppingOptions)
+    // console.log(this.toppingArr)
     this.toppingArr.forEach(e => {
       this.toppingFormArray.push(this.fb.control(false))
+    })
+    this.orderPrice = this.data.basePrice
+
+    this.onFormChanges()
+  }
+
+  // calculate new orderPrice on form change
+  onFormChanges(): void {
+    this.orderForm.valueChanges.subscribe(form => {
+      let newPrice = this.data.basePrice
+      console.log('form changed!')
+      if (form.sizeChoice) {
+        console.log(
+          form.sizeChoice + ' ' + this.data.sizeOptions[form.sizeChoice]
+        )
+        newPrice += this.data.sizeOptions[form.sizeChoice]
+      }
+      if (form.sugarChoice) {
+        console.log(
+          form.sugarChoice + ' ' + this.data.sugarOptions[form.sugarChoice]
+        )
+        newPrice += this.data.sugarOptions[form.sugarChoice]
+      }
+      if (form.iceChoice) {
+        console.log(form.iceChoice + ' ' + this.data.iceOptions[form.iceChoice])
+        newPrice += this.data.iceOptions[form.iceChoice]
+      }
+      console.log(form.toppingFormArray)
+      form.toppingFormArray.forEach((selected, index) => {
+        if (selected) {
+          newPrice += this.toppingArr[index][1]
+        }
+      })
+      console.log(form.quantity)
+      newPrice *= form.quantity
+      this.orderPrice = newPrice
     })
   }
 
@@ -41,16 +84,12 @@ export class DialogListingComponent implements OnInit {
   }
 
   decrementQty() {
-    if (this.orderForm.get('quantity').value > 0) {
-      this.orderForm
-        .get('quantity')
-        .setValue(this.orderForm.get('quantity').value - 1)
+    if (this.quantity > 1) {
+      this.orderForm.get('quantity').setValue(this.quantity - 1)
     }
   }
 
   incrementQty() {
-    this.orderForm
-      .get('quantity')
-      .setValue(this.orderForm.get('quantity').value + 1)
+    this.orderForm.get('quantity').setValue(this.quantity + 1)
   }
 }

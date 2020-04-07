@@ -1,8 +1,38 @@
+.page-container {
+  padding: 2rem 2rem;
+}
+
+h1 {
+  margin: 0;
+}
+.outlet-info {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.outlet-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.rating-group {
+  display: flex;
+  align-items: center;
+}
+
+.rating-text {
+  margin-left: 3px;
+}
+
+iframe {
+  margin-left: auto;
+}
+
 .listing-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
   grid-gap: 1.5rem;
-  padding: 2rem;
+  margin-top: 0.5rem;
 }
 
 .listing-card {

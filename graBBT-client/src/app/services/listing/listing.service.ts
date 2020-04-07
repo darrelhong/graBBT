@@ -25,6 +25,12 @@ export class ListingService {
       .pipe(catchError(this.handleError))
   }
 
+  retrieveOutletById(outletId: string): Observable<any> {
+    return this.httpClient
+      .get<any>(this.baseUrl + '/retrieveOutlet/' + outletId)
+      .pipe(catchError(this.handleError))
+  }
+
   retrieveListingsByOutletId(outletId: string): Observable<any> {
     return this.httpClient
       .get<any>(this.baseUrl + '/retrieveListingsByOutletId/' + outletId)

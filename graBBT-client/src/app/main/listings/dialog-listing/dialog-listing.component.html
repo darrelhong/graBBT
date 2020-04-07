@@ -105,7 +105,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-icon-button (click)="decrementQty()">
+  <button mat-icon-button (click)="decrementQty()" [disabled]="quantity == 1">
     <mat-icon class="material-icons-outlined">indeterminate_check_box</mat-icon>
   </button>
   <span style="font-size: 20px; position: relative; top: 1px;">
@@ -115,8 +115,8 @@
     <mat-icon class="material-icons-outlined">add_box</mat-icon>
   </button>
   <button mat-flat-button color="primary" [disabled]="!orderForm.valid">
-    Add to Cart
+    Add to Cart - {{ orderPrice | currency }}
   </button>
-  <span>{{ orderForm.value | json }}</span>
-  <span>{{ orderForm.status }}</span>
+  <span class="mat-small">{{ orderForm.value | json }}</span>
+  <span class="mat-small">{{ orderForm.status }}</span>
 </mat-dialog-actions>

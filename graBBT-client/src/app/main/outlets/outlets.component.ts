@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { Outlet } from 'src/app/services/listing/outlet'
 import { ListingService } from 'src/app/services/listing/listing.service'
 import { compileBaseDefFromMetadata } from '@angular/compiler'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-outlets',
@@ -11,7 +12,7 @@ import { compileBaseDefFromMetadata } from '@angular/compiler'
 export class OutletsComponent implements OnInit {
   outlets: Outlet[]
 
-  constructor(private listingService: ListingService) {}
+  constructor(private listingService: ListingService, private router: Router) {}
 
   ngOnInit() {
     this.listingService.retrieveAllOutlets().subscribe(
@@ -33,6 +34,4 @@ export class OutletsComponent implements OnInit {
       }
     )
   }
-
-  viewListings() {}
 }

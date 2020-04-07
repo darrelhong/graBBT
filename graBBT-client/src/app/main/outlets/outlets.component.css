@@ -1,8 +1,15 @@
+.page-container {
+  padding: 0rem 2rem;
+}
+
 .outlet-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   grid-gap: 1rem;
-  padding: 2rem;
+}
+
+.card-container {
+  text-decoration: none;
 }
 
 .outlet-card {
@@ -18,7 +25,11 @@
 
 .disabled-card {
   cursor: default;
-  background-color: rgba(0, 0, 0, 0.03);
+  opacity: 0.6;
+}
+
+.disabled-card:hover {
+  background-color: white;
 }
 
 mat-card-header {
