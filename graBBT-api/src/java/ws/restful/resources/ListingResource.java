@@ -77,9 +77,9 @@ public class ListingResource {
     @Path("retrieveListingsByOutletId/{outletId}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveOutletByOutletId(@PathParam("outletId") Long outletId)  {
+    public Response retrieveListingsByOutletId(@PathParam("outletId") Long outletId)  {
         try {
-            System.out.println("********************REST API retrieveOutletByOutletId(" + outletId + ")******************************");
+            System.out.println("********************REST API retrieveListingsByOutletId(" + outletId + ")******************************");
             List<Listing> listings = listingSessionBeanLocal.retrieveListingsByOutletId(outletId);
             
             for (Listing l : listings) {

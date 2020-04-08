@@ -1,55 +1,56 @@
-<p>outlets works!</p>
+<div class="page-container">
+  <h1>Outlets</h1>
 
-
-
-<div class="outlet-grid">
-  <mat-card class="outlet-card">
-    <mat-card-header>
-      <mat-card-title>KOI Thé Novena Square</mat-card-title>
-      <mat-card-subtitle>This is a static card</mat-card-subtitle>
-    </mat-card-header>
-    <img
-      mat-card-image
-      src="https://d1sag4ddilekf6.cloudfront.net/compressed/merchants/4-CYXHC8ACMAJHL6/hero/a3bf1cae2d904f59ade999b5506589b8_1574426083675315081.jpeg"
-      alt="koi image"
-      draggable="false"
-    />
-    <mat-card-footer>
-      <mat-icon color="accent">star</mat-icon>
-      <span class="rating-text">4.8</span>
-      <mat-chip-list class="open-chip">
-        <mat-chip color="primary" selected>Open</mat-chip>
-      </mat-chip-list>
-    </mat-card-footer>
-  </mat-card>
-
-  <div *ngFor="let outlet of outlets" (click)="viewListings()">
-    <mat-card
-      class="outlet-card"
-      [routerLink]="outlet.open ? ['listings', outlet.outletId] : null"
-      routerLinkActive="disabled-card"
-    >
+  <div class="outlet-grid">
+    <mat-card class="outlet-card">
       <mat-card-header>
-        <mat-card-title>{{ outlet.outletName }}</mat-card-title>
-        <mat-card-subtitle
-          >This part to be decided how it works</mat-card-subtitle
-        >
+        <mat-card-title>KOI Thé Novena Square</mat-card-title>
+        <mat-card-subtitle>This is a static card</mat-card-subtitle>
       </mat-card-header>
       <img
         mat-card-image
-        src="/images/{{ outlet.imageSrc }}"
-        alt="outlet-image"
+        src="https://d1sag4ddilekf6.cloudfront.net/compressed/merchants/4-CYXHC8ACMAJHL6/hero/a3bf1cae2d904f59ade999b5506589b8_1574426083675315081.jpeg"
+        alt="koi image"
         draggable="false"
       />
-      <mat-card-content>
+      <mat-card-footer>
         <mat-icon color="accent">star</mat-icon>
-        <span class="rating-text">{{ outlet.outletRating }}</span>
+        <span class="rating-text">4.8</span>
         <mat-chip-list class="open-chip">
-          <mat-chip [color]="outlet.open ? 'primary' : 'warn'" selected>{{
-            outlet.open ? 'Open' : ' Closed'
-          }}</mat-chip>
+          <mat-chip color="primary" selected>Open</mat-chip>
         </mat-chip-list>
-      </mat-card-content>
+      </mat-card-footer>
     </mat-card>
+
+    <a
+      class="card-container"
+      *ngFor="let outlet of outlets"
+      [routerLink]="outlet.open ? ['listings', outlet.outletId] : null"
+      [state]="{ outlet: outlet }"
+    >
+      <mat-card class="outlet-card" routerLinkActive="disabled-card">
+        <mat-card-header>
+          <mat-card-title>{{ outlet.outletName }}</mat-card-title>
+          <mat-card-subtitle
+            >This part to be decided how it works</mat-card-subtitle
+          >
+        </mat-card-header>
+        <img
+          mat-card-image
+          src="/images/{{ outlet.imageSrc }}"
+          alt="outlet-image"
+          draggable="false"
+        />
+        <mat-card-content>
+          <mat-icon color="accent">star</mat-icon>
+          <span class="rating-text">{{ outlet.outletRating }}</span>
+          <mat-chip-list class="open-chip">
+            <mat-chip [color]="outlet.open ? 'primary' : 'warn'" selected>{{
+              outlet.open ? 'Open' : ' Closed'
+            }}</mat-chip>
+          </mat-chip-list>
+        </mat-card-content>
+      </mat-card>
+    </a>
   </div>
 </div>

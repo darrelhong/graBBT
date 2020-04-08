@@ -1,0 +1,136 @@
+<mat-card class="listing-card">
+  <div class="card-content">
+    <img
+      mat-card-md-image
+      src="https://d1sag4ddilekf6.cloudfront.net/item/SGITE20200122023425020365/photos/6cd3348be7e04fe19d3790520752dc66_1579660465786323103.jpeg"
+    />
+    <div class="name-group">
+      <mat-card-title>Pearl Milk Tea</mat-card-title>
+      <mat-card-subtitle>This is a static card</mat-card-subtitle>
+    </div>
+    <div class="price-group">
+      <span class="price">{{ 3.4 | currency: '':'' }}</span>
+    </div>
+  </div>
+</mat-card>
+
+<mat-dialog-content>
+  <form [formGroup]="orderForm">
+    <div style="margin-top: 0.5rem;">
+      <label class="mat-h3"
+        >Size Options
+        <span class="mat-small" style="color: #676767;">Choose 1</span></label
+      >
+      <mat-radio-group
+        formControlName="sizeChoice"
+        style="display: flex; flex-direction: column;"
+      >
+        <div
+          *ngFor="let size of data.sizeOptions | keyvalue; let lastItem = last"
+        >
+          <div style="display:flex; align-items: center; font-size: 15px;">
+            <mat-radio-button [value]="size.key" style="margin:5px;">{{
+              size.key
+            }}</mat-radio-button>
+            <span style="margin-left: auto;">{{
+              size.value | currency: '':''
+            }}</span>
+          </div>
+          <mat-divider *ngIf="!lastItem"></mat-divider>
+        </div>
+      </mat-radio-group>
+    </div>
+
+    <div style="margin-top: 0.5rem;">
+      <label class="mat-h3"
+        >Sugar Options
+        <span class="mat-small" style="color: #676767;">Choose 1</span></label
+      >
+      <mat-radio-group
+        formControlName="sugarChoice"
+        style="display: flex; flex-direction: column;"
+      >
+        <div
+          *ngFor="
+            let sugar of data.sugarOptions | keyvalue;
+            let lastItem = last
+          "
+        >
+          <div style="display:flex; align-items: center; font-size: 15px;">
+            <mat-radio-button [value]="sugar.key" style="margin:5px;">{{
+              sugar.key
+            }}</mat-radio-button>
+            <span style="margin-left: auto;">{{
+              sugar.value | currency: '':''
+            }}</span>
+          </div>
+          <mat-divider *ngIf="!lastItem"></mat-divider>
+        </div>
+      </mat-radio-group>
+    </div>
+
+    <div style="margin-top: 0.5rem;">
+      <label class="mat-h3"
+        >Ice Options
+        <span class="mat-small" style="color: #676767;">Choose 1</span></label
+      >
+      <mat-radio-group
+        formControlName="iceChoice"
+        style="display: flex; flex-direction: column;"
+      >
+        <div
+          *ngFor="let ice of data.iceOptions | keyvalue; let lastItem = last"
+        >
+          <div style="display:flex; align-items: center; font-size: 15px;">
+            <mat-radio-button [value]="ice.key" style="margin:5px;">{{
+              ice.key
+            }}</mat-radio-button>
+            <span style="margin-left: auto;">{{
+              ice.value | currency: '':''
+            }}</span>
+          </div>
+          <mat-divider *ngIf="!lastItem"></mat-divider>
+        </div>
+      </mat-radio-group>
+    </div>
+
+    <div style="margin-top: 0.5rem;">
+      <label class="mat-h3">Topping Options </label>
+      <div
+        *ngFor="
+          let topping of toppingFormArray.controls;
+          let i = index;
+          let lastItem = last
+        "
+        formArrayName="toppingFormArray"
+      >
+        <div style="display: flex; align-items: center; font-size: 15px;">
+          <mat-checkbox style="margin: 5px;" [formControlName]="i">
+            {{ toppingArr[i][0] }}
+          </mat-checkbox>
+          <span style="margin-left: auto;">{{
+            toppingArr[i][1] | currency: '':''
+          }}</span>
+        </div>
+        <mat-divider *ngIf="!lastItem"></mat-divider>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-icon-button (click)="decrementQty()">
+    <mat-icon class="material-icons-outlined">indeterminate_check_box</mat-icon>
+  </button>
+  <span style="font-size: 20px; position: relative; top: 1px;">
+    {{ orderForm.get('quantity').value }}
+  </span>
+  <button mat-icon-button (click)="incrementQty()">
+    <mat-icon class="material-icons-outlined">add_box</mat-icon>
+  </button>
+  <button mat-flat-button color="primary" [disabled]="!orderForm.valid">
+    Add to Cart
+  </button>
+  <span>{{ orderForm.value | json }}</span>
+  <span>{{ orderForm.status }}</span>
+</mat-dialog-actions>
