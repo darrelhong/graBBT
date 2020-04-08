@@ -8,6 +8,7 @@ export class Outlet {
   closingHour: number
   open: boolean
   imageSrc: string
+  distance: number
 
   constructor(
     outletId?: number,

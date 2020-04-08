@@ -26,6 +26,8 @@ h1 {
 
 iframe {
   margin-left: auto;
+  border: 1px solid #bdbdbd;
+  border-radius: 5px;
 }
 
 .listing-grid {

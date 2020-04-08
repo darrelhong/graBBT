@@ -1,5 +1,18 @@
 .page-container {
-  padding: 0rem 2rem;
+  padding: 2rem 2rem;
+}
+
+.title-group {
+  display: flex;
+  align-items: flex-start;
+}
+
+.title-group h1 {
+  margin: 0;
+}
+
+.title-group mat-form-field {
+  margin-left: auto;
 }
 
 .outlet-grid {

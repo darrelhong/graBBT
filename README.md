@@ -13,13 +13,14 @@
 ## Chloe
 
 ### Retailer
+
 - Retailer "my account page" - Include Profile details & simple overview details of outlets, listings and revenue - Each detail should be able to be clicked on --> redirect to the relevant page with their full details
 - Want to build a retailer Notifications tab (when order comes in, when payment completes)
 
 ### Client
+
 - Add order to cart
 - Checkout cart
-
 
 # Angular Client
 
@@ -32,12 +33,20 @@ ng serve
 ```
 
 hopefully it works
-if using vscode, install Prettier for code formatiing
+if using vscode, install Prettier for code formatting
 
 - Index, login and signup are three static pages
 - Onced logged in, redirected to Main module which is another NgModule
 - this allows for another routler outlet with child paths
 - currently can view a list of outlets THATS ALL
+
+### Geolocation
+
+For geolocation to work, must allow location use ng serve over https
+`ng serve --ssl=true`
+
+access website through
+`https://localhost:4200`
 
 # Static image server
 

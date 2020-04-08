@@ -1,6 +1,16 @@
 <div class="page-container">
-  <h1>Outlets</h1>
+  <div class="title-group">
+    <h1>Outlets</h1>
 
+    <mat-form-field>
+      <mat-label>Sort by</mat-label>
+      <mat-select (selectionChange)="sort($event)">
+        <mat-option value="name">Name</mat-option>
+        <mat-option value="rating">Rating</mat-option>
+        <mat-option value="distance">Distance</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
   <div class="outlet-grid">
     <mat-card class="outlet-card">
       <mat-card-header>
