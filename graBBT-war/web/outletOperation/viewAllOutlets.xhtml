@@ -38,12 +38,16 @@
                     
                     <p:column>
                         <f:facet name="header">Opening Hour</f:facet>
-                        <h:outputText value="#{outletEntity.openingHour}" />
+                        <h:outputText value="#{outletEntity.openingHour}" >
+                            <!--<f:convertDateTime pattern="ha" />-->
+                        </h:outputText>
                     </p:column>
 
                     <p:column>
                         <f:facet name="header">Closing Hour</f:facet>
-                        <h:outputText value="#{outletEntity.closingHour}" />
+                        <h:outputText value="#{outletEntity.closingHour}">
+                            <!--<f:convertDateTime pattern="ha" />-->
+                        </h:outputText>
                     </p:column>
                     
                     <p:column>
