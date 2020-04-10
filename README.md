@@ -40,14 +40,6 @@ if using vscode, install Prettier for code formatting
 - this allows for another routler outlet with child paths
 - currently can view a list of outlets THATS ALL
 
-### Geolocation
-
-For geolocation to work, must allow location use ng serve over https
-`ng serve --ssl=true`
-
-access website through
-`https://localhost:4200`
-
 # Static image server
 
 Make sure to run static image server in graBBT-imageServer if not images won't load
@@ -59,3 +51,14 @@ node app.js
 
 # listening on 3000
 ```
+
+## Others
+
+### Geolocation
+
+For geolocation to work, must allow location and use `localhost`
+
+If serving over LAN, use ng serve with https
+`ng serve --ssl=true`
+then access website through
+`https://<local ip>:4200`

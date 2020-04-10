@@ -7,16 +7,20 @@ package entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -29,32 +33,34 @@ public class OrderLineItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderLineItemId;
-    
-    @Column(nullable = false, length = 64)
-    @NotNull
-    @Size(max = 64)
-    private String itemName;
-    
-    @Column(nullable = false, precision = 11, scale = 2)
-    @NotNull
-    @DecimalMin("0.00")
-    private BigDecimal price;
-    
+
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private Listing listing;
+
     @Column(nullable = false)
     @NotNull
     @Min(0)
     private Integer quantity;
-    
+
+    @Column(nullable = false, precision = 11, scale = 2)
+    @NotNull
+    @DecimalMin("0.00")
+    @Digits(integer = 9, fraction = 2)
+    private BigDecimal subTotal;
+
+    @ElementCollection
     private List<String> itemOptions;
 
     public OrderLineItem() {
+        this.itemOptions = new ArrayList<>();
     }
 
-    public OrderLineItem(String itemName, BigDecimal price, Integer quantity, List<String> itemOptions) {
+    public OrderLineItem(Listing listing, Integer quantity, BigDecimal subTotal, List<String> itemOptions) {
         this();
-        this.itemName = itemName;
-        this.price = price;
+        this.listing = listing;
         this.quantity = quantity;
+        this.subTotal = subTotal;
         this.itemOptions = itemOptions;
     }
 
@@ -92,34 +98,6 @@ public class OrderLineItem implements Serializable {
     }
 
     /**
-     * @return the itemName
-     */
-    public String getItemName() {
-        return itemName;
-    }
-
-    /**
-     * @param itemName the itemName to set
-     */
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    /**
-     * @return the price
-     */
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    /**
-     * @param price the price to set
-     */
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    /**
      * @return the quantity
      */
     public Integer getQuantity() {
@@ -146,5 +124,33 @@ public class OrderLineItem implements Serializable {
     public void setItemOptions(List<String> itemOptions) {
         this.itemOptions = itemOptions;
     }
-    
+
+    /**
+     * @return the listing
+     */
+    public Listing getListing() {
+        return listing;
+    }
+
+    /**
+     * @param listing the listing to set
+     */
+    public void setListing(Listing listing) {
+        this.listing = listing;
+    }
+
+    /**
+     * @return the subTotal
+     */
+    public BigDecimal getSubTotal() {
+        return subTotal;
+    }
+
+    /**
+     * @param subTotal the subTotal to set
+     */
+    public void setSubTotal(BigDecimal subTotal) {
+        this.subTotal = subTotal;
+    }
+
 }

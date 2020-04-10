@@ -23,7 +23,7 @@ export class OutletsComponent implements OnInit {
         const date = new Date()
         const hour = date.getHours()
         for (const o of this.outlets) {
-          o.open = o.openingHour < hour && hour < o.closingHour ? true : false
+          o.open = o.openingHour < hour && hour < o.closingHour ? true : true
         }
         this.outlets.sort((a, b) => {
           // show open outlets first
@@ -35,6 +35,8 @@ export class OutletsComponent implements OnInit {
           navigator.geolocation.getCurrentPosition(position =>
             this.success(position)
           )
+        } else {
+          console.log('unable to get location')
         }
       },
       error => {

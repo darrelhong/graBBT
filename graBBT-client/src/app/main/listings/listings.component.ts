@@ -13,6 +13,8 @@ import { DialogListingComponent } from './dialog-listing/dialog-listing.componen
 import { MatDialog } from '@angular/material/dialog'
 import { Outlet } from 'src/app/services/listing/outlet'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
+import { Cart } from 'src/app/services/cart/cart'
+import { CartService } from 'src/app/services/cart/cart.service'
 
 @Component({
   selector: 'app-listings',
@@ -23,7 +25,6 @@ export class ListingsComponent implements OnInit {
   listings: Listing[]
   selectedListing: Listing
   outlet: Outlet
-
   mapSrc: SafeResourceUrl
 
   constructor(
@@ -40,17 +41,18 @@ export class ListingsComponent implements OnInit {
         .retrieveOutletById(params.get('id'))
         .subscribe(resp => {
           this.outlet = resp
-          this.mapUrl()
+          this.setMapUrl()
         })
       this.listingService
         .retrieveListingsByOutletId(params.get('id'))
         .subscribe(resp => {
           this.listings = resp.listings
+          console.log(this.listings)
         })
     })
   }
 
-  mapUrl() {
+  setMapUrl() {
     this.mapSrc = this.sanitizer.bypassSecurityTrustResourceUrl(
       'https://www.google.com/maps/embed/v1/place?key=AIzaSyCUL4E76ECHB6KNyro4s7psZw44hensP70&q=' +
         this.outlet.locationLatitude +
@@ -64,7 +66,7 @@ export class ListingsComponent implements OnInit {
     this.selectedListing = this.listings[index]
     const dialogRef = this.dialog.open(DialogListingComponent, {
       width: '500px',
-      data: this.selectedListing,
+      data: { listing: this.selectedListing, outlet: this.outlet },
     })
 
     dialogRef.afterClosed().subscribe(result => {

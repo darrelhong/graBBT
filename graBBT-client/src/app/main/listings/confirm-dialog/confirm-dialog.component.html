@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Start new order?</h1>
+<div mat-dialog-content>
+  <p style="margin-top: 0px;">
+    Adding this item will clear your current items with
+    <span style="font-weight: 500;">{{ data.currentOutlet.outletName }}</span>
+    and start a new order with
+    <span style="font-weight: 500;">{{ data.newOutlet.outletName }}</span
+    >.
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="true">OK</button>
+</div>

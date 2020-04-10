@@ -1,13 +1,16 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
-    #drawer
+    #sidenav
     class="sidenav"
     fixedInViewport
     position="end"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
   >
-    <mat-toolbar>Cart</mat-toolbar>
-    <h1>Cart goes here</h1>
+    <div class="sidenav-toolbar">
+      <mat-toolbar>Cart</mat-toolbar>
+      <mat-divider style="background-color: #BDBDBD;"></mat-divider>
+    </div>
+    <app-cart></app-cart>
   </mat-sidenav>
 
   <mat-sidenav-content>
@@ -29,9 +32,14 @@
         type="button"
         aria-label="Toggle sidenav"
         mat-icon-button
-        (click)="drawer.toggle()"
+        (click)="sidenav.toggle()"
       >
-        <mat-icon aria-label="Side nav toggle icon">shopping_cart</mat-icon>
+        <mat-icon
+          aria-label="Side nav toggle icon"
+          matBadge="{{ cart ? cart.totalLineItem : null }}"
+          matBadgeColor="accent"
+          >shopping_cart</mat-icon
+        >
       </button>
     </mat-toolbar>
     <header></header>

@@ -19,7 +19,6 @@ import {
 } from './components/landingpage/landingpage.component'
 import { AccountSheetComponent } from './components/account-sheet/account-sheet.component'
 import { MainModule } from './main/main.module'
-import { DialogListingComponent } from './main/listings/dialog-listing/dialog-listing.component'
 
 @NgModule({
   declarations: [

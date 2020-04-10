@@ -10,6 +10,8 @@ import { ListingsComponent } from './listings/listings.component'
 import { AccountComponent } from './account/account.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { DialogListingComponent } from './listings/dialog-listing/dialog-listing.component'
+import { CartComponent } from './cart/cart.component'
+import { ConfirmDialogComponent } from './listings/confirm-dialog/confirm-dialog.component'
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { DialogListingComponent } from './listings/dialog-listing/dialog-listing
     ListingsComponent,
     AccountComponent,
     DialogListingComponent,
+    CartComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -27,6 +31,6 @@ import { DialogListingComponent } from './listings/dialog-listing/dialog-listing
     FormsModule,
     ReactiveFormsModule,
   ],
-  entryComponents: [DialogListingComponent],
+  entryComponents: [DialogListingComponent, ConfirmDialogComponent],
 })
 export class MainModule {}
