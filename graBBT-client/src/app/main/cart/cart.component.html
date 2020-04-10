@@ -1,0 +1,51 @@
+<div class="page-container">
+  <div class="empty-cart" *ngIf="isEmpty()">
+    <img src="assets/logo.jpeg" style="max-width: 160px;" />
+    <h3>Looks like your cart is empty</h3>
+    <span>Add items to your cart and place order here!</span>
+  </div>
+
+  <div class="cart" *ngIf="!isEmpty()">
+    <h2 class="mat-h2">{{ cart.outlet.outletName }}</h2>
+
+    <div class="cart-list">
+      <div class="cart-item" *ngFor="let item of cart.cartItems; let i = index">
+        <div class="cart-item-details">
+          <img src="/images/{{ item.listing.imageSrc }}" />
+          <div class="details-group">
+            <span class="item-name">{{ item.listing.name }}</span>
+            <span class="option" *ngFor="let option of item.selectedOptions">{{
+              option
+            }}</span>
+          </div>
+          <div class="price-group">
+            <span class="quantity">Qty: {{ item.qty }}</span>
+            <span class="price">{{ item.subtotal | currency: '':'' }}</span>
+          </div>
+          <div>
+            <mat-icon class="close-btn" (click)="removeItem(i)"
+              >highlight_off</mat-icon
+            >
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-group mat-elevation-z6" *ngIf="!isEmpty()">
+  <mat-divider></mat-divider>
+  <div class="checkout-group">
+    <span class="total">Total: {{ cart.totalAmount | currency }}</span>
+    <button
+      class="checkout-btn"
+      mat-flat-button
+      color="primary"
+      [disabled]="isEmpty()"
+      (click)="test()"
+    >
+      Checkout
+    </button>
+  </div>
+</div>

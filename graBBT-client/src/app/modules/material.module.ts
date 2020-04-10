@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core'
 
 import {
+  MatBadgeModule,
   MatBottomSheetModule,
   MatButtonModule,
   MatCardModule,
@@ -30,6 +31,7 @@ import {
 
 @NgModule({
   exports: [
+    MatBadgeModule,
     MatBottomSheetModule,
     MatButtonModule,
     MatCardModule,
