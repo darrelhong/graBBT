@@ -1,11 +1,11 @@
 <div class="page-container">
-  <div class="empty-cart" *ngIf="!cart.outlet">
+  <div class="empty-cart" *ngIf="isEmpty()">
     <img src="assets/logo.jpeg" style="max-width: 160px;" />
     <h3>Looks like your cart is empty</h3>
     <span>Add items to your cart and place order here!</span>
   </div>
 
-  <div class="cart" *ngIf="cart.outlet">
+  <div class="cart" *ngIf="!isEmpty()">
     <h2 class="mat-h2">{{ cart.outlet.outletName }}</h2>
 
     <div class="cart-list">
@@ -34,7 +34,7 @@
   </div>
 </div>
 
-<div class="bottom-group mat-elevation-z6" *ngIf="cart.outlet">
+<div class="bottom-group mat-elevation-z6" *ngIf="!isEmpty()">
   <mat-divider></mat-divider>
   <div class="checkout-group">
     <span class="total">Total: {{ cart.totalAmount | currency }}</span>
@@ -42,7 +42,7 @@
       class="checkout-btn"
       mat-flat-button
       color="primary"
-      [disabled]="!cart.outlet"
+      [disabled]="isEmpty()"
       (click)="test()"
     >
       Checkout

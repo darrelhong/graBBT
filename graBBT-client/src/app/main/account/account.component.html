@@ -1,5 +1,10 @@
-<h1>Account Details</h1>
 <div class="account-container" *ngIf="!editView">
+  <h1>Account Details 
+    <span>
+      <button mat-fab color="primary" style="margin-top: -15px;" (click)="editView = true">Edit</button>
+    </span>
+  </h1>
+  
   <mat-card style="max-width: 600px;">
     <mat-list role="list">
       <mat-list-item role="listitem"
@@ -23,7 +28,6 @@
       >
     </mat-list>
   </mat-card>
-  <button mat-fab color="primary" (click)="editView = true">Edit</button>
 </div>
 
 <!--edit page-->
@@ -34,6 +38,7 @@
   novalidate
   (ngSubmit)="updateAccount(updateAccountForm)"
 >
+  <h1>Edit Account Details</h1>
   <mat-card>
     <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>

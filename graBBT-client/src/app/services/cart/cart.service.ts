@@ -14,20 +14,33 @@ export class CartService {
 
   constructor() {
     if (sessionStorage.cart) {
-      this.cart = new BehaviorSubject<Cart>(JSON.parse(sessionStorage.cart))
+      const tempCart: Cart = JSON.parse(sessionStorage.cart)
+      if (tempCart.cartItems.length > 0) {
+        this.cart = new BehaviorSubject<Cart>(JSON.parse(sessionStorage.cart))
+        console.log(this.cart.value)
+      } else {
+        const newCart: Cart = new Cart()
+        newCart.cartItems = []
+        this.cart = new BehaviorSubject<Cart>(newCart)
+      }
     } else {
-      sessionStorage.cart = JSON.stringify(this.returnTestData())
-      this.cart = new BehaviorSubject<Cart>(JSON.parse(sessionStorage.cart))
+      const newCart: Cart = new Cart()
+      newCart.cartItems = []
+      this.cart = new BehaviorSubject<Cart>(newCart)
     }
+    sessionStorage.cart = JSON.stringify(this.cart.value)
     console.log(this.cart.getValue())
   }
 
   updateCart(newCart: Cart) {
+    console.log('update cart caklled')
     if (newCart.cartItems.length > 0) {
       newCart = this.calculateCart(newCart)
       this.cart.next(newCart)
     } else {
-      this.cart.next(new Cart())
+      const cart = new Cart()
+      cart.cartItems = []
+      this.cart.next(cart)
     }
     sessionStorage.cart = JSON.stringify(this.cart.value)
   }

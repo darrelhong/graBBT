@@ -22,6 +22,10 @@ export class CartComponent implements OnInit {
     this.cartService.updateCart(this.cart)
   }
 
+  isEmpty() {
+    return this.cart.cartItems.length <= 0
+  }
+
   // testing only
   test() {
     this.cartService.changeCartDetails()

@@ -1,4 +1,29 @@
 <div class="page-container">
+  <h1 style="margin-top: 0px; margin-bottom: 5px;">What's happening</h1>
+  <mat-carousel
+    timings="250ms ease-in"
+    [autoplay]="true"
+    interval="5000"
+    color="accent"
+    maxWidth="auto"
+    proportion="25"
+    slides="5"
+    [loop]="true"
+    [hideArrows]="false"
+    [hideIndicators]="false"
+    [useKeyboard]="true"
+    [useMouseWheel]="false"
+    orientation="ltr"
+  >
+    <mat-carousel-slide
+      #matCarouselSlide
+      *ngFor="let slide of slides"
+      [image]="slide.url"
+      overlayColor="#00000010"
+      [hideOverlay]="false"
+    ></mat-carousel-slide>
+  </mat-carousel>
+
   <div class="title-group">
     <h1>Outlets</h1>
 

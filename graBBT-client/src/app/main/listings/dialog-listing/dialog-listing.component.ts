@@ -79,40 +79,73 @@ export class DialogListingComponent implements OnInit {
     }
     console.log(item)
 
-    if (this.cart.outlet.outletId !== this.data.outlet.outletId) {
-      const dialogRef = this.cfmDialog.open(ConfirmDialogComponent, {
-        width: '400px',
-        data: { currentOutlet: this.cart.outlet, newOutlet: this.data.outlet },
-      })
+    if (this.cart.outlet) {
+      if (this.cart.outlet.outletId === this.data.outlet.outletId) {
+        this.cart.cartItems.push(item)
+        this.cartService.updateCart(this.cart)
+        this.dialogRef.close()
+        this.sidenavService.open()
+      } else {
+        const dialogRef = this.cfmDialog.open(ConfirmDialogComponent, {
+          width: '400px',
+          data: {
+            currentOutlet: this.cart.outlet,
+            newOutlet: this.data.outlet,
+          },
+        })
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.cartService.newCart(item, this.data.outlet)
-          this.dialogRef.close()
-          this.sidenavService.open()
-        } else {
-          this.dialogRef.close()
-        }
-      })
-
-      // old
-      // const message =
-      //   'Start a new order? Press OK to clear current order with ' +
-      //   this.cart.outlet.outletName +
-      //   ' and start new order with ' +
-      //   this.data.outlet.outletName +
-      //   '.'
-      // const result = confirm(message)
-      // if (result) {
-      //   this.cartService.newCart(item, this.data.outlet)
-      // } else {
-      // }
+        dialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.cartService.newCart(item, this.data.outlet)
+            this.dialogRef.close()
+            this.sidenavService.open()
+          } else {
+            this.dialogRef.close()
+          }
+        })
+      }
     } else {
-      this.cart.cartItems.push(item)
-      this.cartService.updateCart(this.cart)
+      this.cartService.newCart(item, this.data.outlet)
       this.dialogRef.close()
       this.sidenavService.open()
     }
+    // if (
+    //   this.cart.outlet &&
+    //   this.cart.outlet.outletId !== this.data.outlet.outletId
+    // ) {
+    //   const dialogRef = this.cfmDialog.open(ConfirmDialogComponent, {
+    //     width: '400px',
+    //     data: { currentOutlet: this.cart.outlet, newOutlet: this.data.outlet },
+    //   })
+
+    //   dialogRef.afterClosed().subscribe(result => {
+    //     if (result) {
+    //       this.cartService.newCart(item, this.data.outlet)
+    //       this.dialogRef.close()
+    //       this.sidenavService.open()
+    //     } else {
+    //       this.dialogRef.close()
+    //     }
+    //   })
+
+    // old
+    // const message =
+    //   'Start a new order? Press OK to clear current order with ' +
+    //   this.cart.outlet.outletName +
+    //   ' and start new order with ' +
+    //   this.data.outlet.outletName +
+    //   '.'
+    // const result = confirm(message)
+    // if (result) {
+    //   this.cartService.newCart(item, this.data.outlet)
+    // } else {
+    // }
+    // } else {
+    //   this.cart.cartItems.push(item)
+    //   this.cartService.updateCart(this.cart)
+    //   this.dialogRef.close()
+    //   this.sidenavService.open()
+    // }
   }
 
   // calculate new orderPrice on form change

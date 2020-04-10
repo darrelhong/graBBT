@@ -14,9 +14,22 @@ export class OutletsComponent implements OnInit {
   outlets: Outlet[]
   lat: number
   lng: number
+  slides = [
+    {
+      url: '/images/carousel/test-carousel-image-1.jpg',
+    },
+    {
+      url: '/images/carousel/test-carousel-image-2.jpeg',
+    },
+    {
+      url: '/images/carousel/test-carousel-image-3.jpg',
+    },
+  ]
+
   constructor(private listingService: ListingService, private router: Router) {}
 
   ngOnInit() {
+    //retrieve outlets
     this.listingService.retrieveAllOutlets().subscribe(
       resp => {
         this.outlets = resp.outletEntites
