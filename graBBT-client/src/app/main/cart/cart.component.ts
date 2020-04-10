@@ -26,6 +26,9 @@ export class CartComponent implements OnInit {
     return this.cart.cartItems.length <= 0
   }
 
+  checkout() {
+    alert('NOT DONE YET')
+  }
   // testing only
   test() {
     this.cartService.changeCartDetails()
