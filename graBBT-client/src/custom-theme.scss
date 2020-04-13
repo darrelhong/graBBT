@@ -13,6 +13,7 @@
 // hue. Available color palettes: https://material.io/design/color/
 $graBBT-client-primary: mat-palette($mat-green, 600);
 $graBBT-client-accent: mat-palette($mat-deep-purple, A200, A100, A400);
+$graBBT-client-background-color: #f6f6f6;
 
 // The warn palette is optional (defaults to red).
 $graBBT-client-warn: mat-palette($mat-red);
@@ -22,6 +23,20 @@ $graBBT-client-theme: mat-light-theme(
   $graBBT-client-primary,
   $graBBT-client-accent,
   $graBBT-client-warn
+);
+
+$background: map-get($graBBT-client-theme, background);
+$background: map_merge(
+  $background,
+  (
+    background: $graBBT-client-background-color,
+  )
+);
+$graBBT-client-theme: map_merge(
+  $graBBT-client-theme,
+  (
+    background: $background,
+  )
 );
 
 // Include theme styles for core and each component used in your app.

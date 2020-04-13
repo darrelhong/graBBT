@@ -152,35 +152,43 @@ export class DialogListingComponent implements OnInit {
   onFormChanges(): void {
     this.orderForm.valueChanges.subscribe(form => {
       let newPrice = this.data.listing.basePrice
+      // console.log(newPrice)
       console.log('form changed!')
       if (form.sizeChoice) {
-        console.log(
-          form.sizeChoice + ' ' + this.data.listing.sizeOptions[form.sizeChoice]
-        )
+        // console.log(
+        //   form.sizeChoice + ' ' + this.data.listing.sizeOptions[form.sizeChoice]
+        // )
         newPrice += this.data.listing.sizeOptions[form.sizeChoice]
+        // console.log(newPrice)
       }
       if (form.sugarChoice) {
-        console.log(
-          form.sugarChoice +
-            ' ' +
-            this.data.listing.sugarOptions[form.sugarChoice]
-        )
+        // console.log(
+        //   form.sugarChoice +
+        //     ' ' +
+        //     this.data.listing.sugarOptions[form.sugarChoice]
+        // )
         newPrice += this.data.listing.sugarOptions[form.sugarChoice]
+        // console.log(newPrice)
       }
       if (form.iceChoice) {
-        console.log(
-          form.iceChoice + ' ' + this.data.listing.iceOptions[form.iceChoice]
-        )
+        // console.log(
+        //   form.iceChoice + ' ' + this.data.listing.iceOptions[form.iceChoice]
+        // )
         newPrice += this.data.listing.iceOptions[form.iceChoice]
+        // console.log(newPrice)
       }
-      console.log(form.toppingFormArray)
+      // console.log(form.toppingFormArray)
       form.toppingFormArray.forEach((selected, index) => {
         if (selected) {
           newPrice += this.toppingArr[index][1]
+          // console.log(newPrice)
         }
       })
-      console.log(form.quantity)
+      // console.log(form.quantity)
       newPrice *= form.quantity
+      // to fix decimal place errors
+      newPrice = +newPrice.toFixed(2)
+      console.log(newPrice)
       this.subtotal = newPrice
     })
   }

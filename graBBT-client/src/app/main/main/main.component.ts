@@ -54,6 +54,10 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/index'])
   }
 
+  displayCartButton() {
+    return this.router.url !== '/main/checkout'
+  }
+
   openBottomSheet(): void {
     this.bottomSheet.open(AccountSheetComponent)
   }

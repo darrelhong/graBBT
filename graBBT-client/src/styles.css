@@ -8,7 +8,7 @@ body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   -webkit-appearance: none;
   width: 11px;
 }
@@ -16,4 +16,4 @@ body {
   border-radius: 8px;
   border: 2px solid white;
   background-color: rgba(0, 0, 0, 0.5);
-}
+} */
