@@ -1,35 +1,56 @@
-import { Injectable } from '@angular/core'
+import { Injectable, ɵConsole } from '@angular/core'
+import { BehaviorSubject, throwError, Observable } from 'rxjs'
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpErrorResponse,
+} from '@angular/common/http'
+import { catchError } from 'rxjs/operators'
+
 import { Cart } from './cart'
 import { Outlet } from '../listing/outlet'
 import { CartItem } from './cart-item'
-import { Listing } from '../listing/listing'
+import { SessionService } from '../session.service'
 
-import { BehaviorSubject } from 'rxjs'
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
+  baseUrl = '/api/Customer'
   cart: BehaviorSubject<Cart>
 
-  constructor() {
+  constructor(
+    private httpClient: HttpClient,
+    private sessionService: SessionService
+  ) {
     if (sessionStorage.cart) {
       const tempCart: Cart = JSON.parse(sessionStorage.cart)
       if (tempCart.cartItems.length > 0) {
+        // if cart exists and has items
         this.cart = new BehaviorSubject<Cart>(JSON.parse(sessionStorage.cart))
+        console.log('exiting cart')
         console.log(this.cart.value)
       } else {
+        // if cart exists but has no item
         const newCart: Cart = new Cart()
         newCart.cartItems = []
         this.cart = new BehaviorSubject<Cart>(newCart)
+        console.log('new cart')
+        console.log(this.cart.value)
       }
     } else {
+      // if cart does not exist
       const newCart: Cart = new Cart()
       newCart.cartItems = []
       this.cart = new BehaviorSubject<Cart>(newCart)
+      console.log('new cart')
+      console.log(this.cart.value)
     }
     sessionStorage.cart = JSON.stringify(this.cart.value)
-    console.log(this.cart.getValue())
   }
 
   updateCart(newCart: Cart) {
@@ -54,6 +75,55 @@ export class CartService {
       cartItems: [item],
     }
     this.updateCart(newCart)
+  }
+
+  clearCart() {
+    const newCart: Cart = new Cart()
+    newCart.cartItems = []
+    this.updateCart(newCart)
+  }
+
+  checkout(
+    address: string,
+    addressDetails: string,
+    ccNum: string,
+    deliveryNote?: string
+  ): Observable<any> {
+    console.log('cartService.checkout() called')
+    console.log(
+      `address: ${address}, addressDetails: ${addressDetails}, ccNum: ${ccNum}, deliveryNote: ${deliveryNote}`
+    )
+
+    const currentCart = this.cart.value
+
+    const checkoutItems = []
+    for (const item of currentCart.cartItems) {
+      checkoutItems.push({
+        listingId: item.listing.listingId,
+        selectedOptions: item.selectedOptions,
+        qty: item.qty,
+        subtotal: item.subtotal,
+      })
+    }
+
+    const customerId = this.sessionService.getCurrentCustomer().customerId
+
+    const checkoutReq = {
+      customerId,
+      outletId: currentCart.outlet.outletId,
+      totalLineItem: currentCart.totalLineItem,
+      totalQuantity: currentCart.totalQuantity,
+      totalAmount: currentCart.totalAmount,
+      checkoutItems,
+      address,
+      addressDetails,
+      ccNum,
+      deliveryNote,
+    }
+    console.log(checkoutReq)
+    return this.httpClient
+      .post<any>(this.baseUrl + '/checkout', checkoutReq, httpOptions)
+      .pipe(catchError(this.handleError))
   }
 
   calculateCart(cart: Cart): Cart {
@@ -225,5 +295,20 @@ export class CartService {
       ],
     }
     return (testCart = this.calculateCart(testCart))
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = ''
+
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = 'An unknown error has occurred: ' + error.error.message
+    } else {
+      errorMessage =
+        'A HTTP error has occurred: ' +
+        `HTTP ${error.status}: ${error.error.message}`
+    }
+
+    console.error(errorMessage)
+    return throwError(errorMessage)
   }
 }

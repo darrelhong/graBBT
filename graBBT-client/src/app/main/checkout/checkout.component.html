@@ -1,0 +1,121 @@
+<router-outlet></router-outlet>
+
+<div *ngIf="showCheckout">
+  <div
+    style="background: #ffffff; position: absolute; z-index: -1; width: 100%; height: 7rem;"
+  ></div>
+  <div class="page-container">
+    <div class="top-banner">
+      <div class="center">
+        <h1>Checkout</h1>
+        <h3>{{ cart.outlet.outletName }}</h3>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="center">
+        <mat-card class="delivery-location-card">
+          <mat-card-title>Deliver to</mat-card-title>
+          <mat-card-content>
+            <form [formGroup]="checkoutForm">
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Address</mat-label>
+                <input
+                  matInput
+                  placeholder="College Ave E"
+                  formControlName="address"
+                />
+              </mat-form-field>
+              <br />
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Address details</mat-label>
+                <input
+                  matInput
+                  placeholder="e.g. Floor, Unit number"
+                  formControlName="addressDetails"
+                />
+              </mat-form-field>
+              <br />
+              <mat-form-field appearance="outline" floatLabel="always">
+                <mat-label>Delivery note</mat-label>
+                <input
+                  matInput
+                  placeholder="e.g. Meet me at the lobby"
+                  formControlName="deliveryNote"
+                />
+              </mat-form-field>
+            </form>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="order-summary">
+          <mat-card-title>Order Summary</mat-card-title>
+          <mat-card-content>
+            <div class="cart-list">
+              <div
+                class="cart-item"
+                *ngFor="let item of cart.cartItems; let i = index"
+              >
+                <div class="cart-item-details">
+                  <img src="/images/{{ item.listing.imageSrc }}" />
+                  <div class="details-group">
+                    <span class="item-name">{{ item.listing.name }}</span>
+                    <span
+                      class="option"
+                      *ngFor="let option of item.selectedOptions"
+                      >{{ option }}</span
+                    >
+                  </div>
+                  <div class="price-group">
+                    <span class="quantity">Qty: {{ item.qty }}</span>
+                    <span class="price">{{
+                      item.subtotal | currency: '':''
+                    }}</span>
+                  </div>
+                </div>
+                <mat-divider></mat-divider>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card class="payment-details">
+          <mat-card-title>Payment Details</mat-card-title>
+          <mat-card-content>
+            <form [formGroup]="checkoutForm">
+              <mat-form-field appearance="outline">
+                <mat-label>Enter card details</mat-label>
+                <input matInput formControlName="ccNum" />
+                <mat-icon matSuffix>credit_card</mat-icon>
+                <mat-error
+                  *ngIf="checkoutForm.controls['ccNum'].hasError('pattern')"
+                >
+                  Not a valid credit card number
+                </mat-error>
+                <mat-hint>just enter any 16 digit number</mat-hint>
+              </mat-form-field>
+            </form>
+            <!-- for debugging -->
+            <!-- <p class="mat-small">{{ checkoutForm.value | json }}</p> -->
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div class="bottom-bar mat-elevation-z6">
+    <div class="center">
+      <div class="bottom-group">
+        <span class="total">Total: {{ cart.totalAmount | currency }}</span>
+        <button
+          class="place-order-btn"
+          mat-raised-button
+          color="primary"
+          [disabled]="!checkoutForm.valid"
+          (click)="checkout()"
+        >
+          Place order
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

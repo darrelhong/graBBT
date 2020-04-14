@@ -1,0 +1,62 @@
+<div class="page-container">
+  <div class="center">
+    <h2>Order confirmed!</h2>
+
+    <mat-card>
+      <mat-card-title style="font-size: 18px;"
+        >Your order from {{ orderEntity.outlet.outletName }}</mat-card-title
+      >
+      <p><strong>Order ID:</strong> {{ orderEntity.id }}</p>
+      <p>
+        <strong>Transaction Date:</strong>
+        {{ orderEntity.transactionDateTime | date: 'medium' }}
+      </p>
+
+      <!-- <mat-card class="mat-elevation-z3"> -->
+      <p><strong>Items</strong></p>
+      <div class="cart-list">
+        <div
+          class="cart-item"
+          *ngFor="let item of orderEntity.orderLineItems; let i = index"
+        >
+          <div class="cart-item-details">
+            <img src="/images/{{ item.listing.imageSrc }}" />
+            <div class="details-group">
+              <span class="item-name">{{ item.listing.name }}</span>
+              <span class="option" *ngFor="let option of item.itemOptions">{{
+                option
+              }}</span>
+            </div>
+            <div class="price-group">
+              <span class="quantity">Qty: {{ item.quantity }}</span>
+              <span class="price">{{ item.subTotal | currency: '':'' }}</span>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+        </div>
+      </div>
+      <!-- </mat-card> -->
+
+      <div class="total-group" style="display: flex;">
+        <span>Total:</span>
+        <span class="total-price">
+          {{ orderEntity.totalAmount | currency }}
+        </span>
+      </div>
+      <div class="payment-group" style="display: flex;">
+        <span>Payment by:</span>
+        <span class="total-price">
+          <span style="font-weight: 400;">Card ending with</span>
+          {{ orderEntity.ccNum.slice(-4) }}
+        </span>
+      </div>
+
+      <p style="font-size: 18px;">
+        <strong>Delivery details</strong>
+      </p>
+      <p><strong>Address:</strong> {{ orderEntity.address }}</p>
+      <p><strong>Address Details:</strong> {{ orderEntity.addressDetails }}</p>
+      <p><strong>Notes:</strong> {{ orderEntity.deliveryNote }}</p>
+    </mat-card>
+  </div>
+</div>

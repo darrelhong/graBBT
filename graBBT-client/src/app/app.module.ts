@@ -18,7 +18,8 @@ import {
   ItemDialogComponent,
 } from './components/landingpage/landingpage.component'
 import { AccountSheetComponent } from './components/account-sheet/account-sheet.component'
-import { MainModule } from './main/main.module'
+import { MainModule } from './main/main.module';
+import { ErrorComponent } from './components/error/error.component'
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { MainModule } from './main/main.module'
     LandingpageComponent,
     AccountSheetComponent,
     ItemDialogComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,

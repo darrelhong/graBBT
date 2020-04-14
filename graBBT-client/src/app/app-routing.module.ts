@@ -4,6 +4,7 @@ import { IndexComponent } from './components/index/index.component'
 import { LoginComponent } from './components/login/login.component'
 import { SignupComponent } from './components/signup/signup.component'
 import { LandingpageComponent } from './components/landingpage/landingpage.component'
+import { ErrorComponent } from './components/error/error.component'
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'landing', component: LandingpageComponent },
+  { path: 'error', component: ErrorComponent },
 ]
 
 @NgModule({

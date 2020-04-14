@@ -27,57 +27,87 @@ public class OrderEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false)
     @NotNull
     @Min(1)
     private Integer totalLineItem;
-    
+
     @Column(nullable = false)
     @NotNull
     @Min(1)
     private Integer totalQuantity;
-    
+
     @Column(nullable = false, precision = 11, scale = 2)
     @NotNull
     @DecimalMin("0.00")
     @Digits(integer = 9, fraction = 2)
     private BigDecimal totalAmount;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     @NotNull
-    private Date transactionDateTime; 
-    
+    private Date transactionDateTime;
+
     @OneToMany
     private List<OrderLineItem> orderLineItems;
-    
+
     @Column(nullable = false)
     @NotNull
     private Boolean cancelled;
     
-    @ManyToOne(optional = false)
-    @JoinColumn(nullable = true)
-    private Customer customer;
+    // nullable for now
+    @Column(nullable = true)
+    private String address;
     
+    @Column(nullable = true)
+    private String addressDetails;
+    
+    @Column(nullable = true)
+    private String deliveryNote;
+    
+    @Column(nullable = true)
+    private String ccNum;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private Customer customer;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private OutletEntity outlet;
+
     public OrderEntity() {
         this.orderLineItems = new ArrayList<>();
         cancelled = false;
     }
-    
-    public OrderEntity(Integer totalLineItem, Integer totalQuantity, BigDecimal totalAmount, Date transactionDateTime) {
+
+    public OrderEntity(Integer totalLineItem, Integer totalQuantity, BigDecimal totalAmount,
+            Date transactionDateTime, Customer customer, OutletEntity outlet, String address,
+            String addressDetails, String deliveryNote, String ccNum) {
+        this();
         this.totalLineItem = totalLineItem;
         this.totalQuantity = totalQuantity;
         this.totalAmount = totalAmount;
         this.transactionDateTime = transactionDateTime;
+        this.customer = customer;
+        this.outlet = outlet;
+        this.address = address;
+        this.addressDetails = addressDetails;
+        this.deliveryNote = deliveryNote;
+        this.ccNum = ccNum;
     }
-    
-    
-    public OrderEntity(Integer totalLineItem, Integer totalQuantity, BigDecimal totalAmount, Date transactionDateTime, List<OrderLineItem> orderLineItems) {
+
+    public OrderEntity(Integer totalLineItem, Integer totalQuantity, BigDecimal totalAmount,
+            Date transactionDateTime, Customer customer, OutletEntity outlet,
+            List<OrderLineItem> orderLineItems) {
+        this();
         this.totalLineItem = totalLineItem;
         this.totalQuantity = totalQuantity;
         this.totalAmount = totalAmount;
         this.transactionDateTime = transactionDateTime;
+        this.customer = customer;
+        this.outlet = outlet;
         this.orderLineItems = orderLineItems;
     }
 
@@ -211,5 +241,69 @@ public class OrderEntity implements Serializable {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-    
+
+    public OutletEntity getOutlet() {
+        return outlet;
+    }
+
+    public void setOutlet(OutletEntity outlet) {
+        this.outlet = outlet;
+    }
+
+    /**
+     * @return the address
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
+     * @param address the address to set
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
+     * @return the addressDetails
+     */
+    public String getAddressDetails() {
+        return addressDetails;
+    }
+
+    /**
+     * @param addressDetails the addressDetails to set
+     */
+    public void setAddressDetails(String addressDetails) {
+        this.addressDetails = addressDetails;
+    }
+
+    /**
+     * @return the deliveryNote
+     */
+    public String getDeliveryNote() {
+        return deliveryNote;
+    }
+
+    /**
+     * @param deliveryNote the deliveryNote to set
+     */
+    public void setDeliveryNote(String deliveryNote) {
+        this.deliveryNote = deliveryNote;
+    }
+
+    /**
+     * @return the ccNum
+     */
+    public String getCcNum() {
+        return ccNum;
+    }
+
+    /**
+     * @param ccNum the ccNum to set
+     */
+    public void setCcNum(String ccNum) {
+        this.ccNum = ccNum;
+    }
+
 }
