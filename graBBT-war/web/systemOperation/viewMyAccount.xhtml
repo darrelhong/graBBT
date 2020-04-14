@@ -9,5 +9,23 @@
     <ui:define name="content">
         <h3>My Account</h3>
         
+        <ui:repeat value="#{viewMyAccountManagedBean.outletEntities}" var="outletEntity">
+            <p:graphicImage url="http://localhost:3000/images/#{outletEntity.imageSrc}" rendered="#{not empty outletEntity.imageSrc}" width="100px"/>
+            <h:outputText value="Outlet Name: " />
+            <h:outputText value ="#{outletEntity.outletName}" />
+            <br/>
+            <h:outputText value="Opening Hours: " />
+            <h:outputText value="#{outletEntity.openingHour}" >
+                <f:convertNumber pattern="#0000" />
+            </h:outputText> 
+            <h:outputText value="#{outletEntity.closingHour}" >
+                <f:convertNumber pattern="#0000" />
+            </h:outputText>
+            <br />  <br />
+        
+        </ui:repeat>
+        
+        <p:commandButton value="BACK" onclick="window.history.back();" />
+        
     </ui:define>
 </ui:composition>
