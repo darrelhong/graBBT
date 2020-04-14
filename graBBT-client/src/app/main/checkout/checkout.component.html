@@ -21,15 +21,23 @@
               <mat-form-field appearance="outline" floatLabel="always">
                 <mat-label>Address</mat-label>
                 <input
+                  type="text"
                   matInput
                   placeholder="College Ave E"
                   formControlName="address"
+                  [matAutocomplete]="auto"
                 />
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let option of options" [value]="option">
+                    {{ option }}
+                  </mat-option>
+                </mat-autocomplete>
               </mat-form-field>
               <br />
               <mat-form-field appearance="outline" floatLabel="always">
                 <mat-label>Address details</mat-label>
                 <input
+                  type="text"
                   matInput
                   placeholder="e.g. Floor, Unit number"
                   formControlName="addressDetails"
@@ -39,6 +47,7 @@
               <mat-form-field appearance="outline" floatLabel="always">
                 <mat-label>Delivery note</mat-label>
                 <input
+                  type="text"
                   matInput
                   placeholder="e.g. Meet me at the lobby"
                   formControlName="deliveryNote"
