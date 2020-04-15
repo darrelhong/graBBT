@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -349,6 +350,7 @@ public class OutletEntity implements Serializable {
     /**
      * @return the listings
      */
+    @Transient
     public List<Listing> getListings() {
         return listings;
     }

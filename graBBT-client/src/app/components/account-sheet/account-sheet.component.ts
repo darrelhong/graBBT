@@ -35,4 +35,5 @@ export class AccountSheetComponent implements OnInit {
     event.preventDefault()
     this.router.navigate(['main/account'])
   }
+
 }

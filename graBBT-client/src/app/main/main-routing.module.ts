@@ -8,6 +8,7 @@ import { CheckoutComponent } from './checkout/checkout.component'
 import { AuthGuard } from '../auth/auth.guard'
 import { CheckoutSuccessComponent } from './checkout/checkout-success/checkout-success.component'
 import { CheckoutErrorComponent } from './checkout/checkout-error/checkout-error.component'
+import { PromoComponent } from './promo/promo.component'
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
           { path: 'error', component: CheckoutErrorComponent },
         ],
       },
+      {
+        path: 'promo',
+        component: PromoComponent,
+      }
     ],
   },
 ]

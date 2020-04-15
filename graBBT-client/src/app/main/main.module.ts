@@ -5,6 +5,8 @@ import { MainRoutingModule } from './main-routing.module'
 import { MyMaterialModule } from '../modules/material.module'
 import { MatSidenavModule } from '@angular/material/sidenav'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { MatProgressBarModule } from '@angular/material/progress-bar'
+import { MatExpansionModule } from '@angular/material/expansion'
 
 // component imports
 import { MainComponent } from './main/main.component'
@@ -46,6 +48,8 @@ import { CheckoutErrorComponent } from './checkout/checkout-error/checkout-error
     MatSidenavModule,
     FormsModule,
     ReactiveFormsModule,
+    MatProgressBarModule,
+    MatExpansionModule,
   ],
   entryComponents: [DialogListingComponent, ConfirmDialogComponent],
 })

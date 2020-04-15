@@ -15,5 +15,5 @@ import util.exception.CheckoutError;
 public interface OrderSessionBeanLocal {
 
     public OrderEntity checkout(Long customerId, Long outletId, Integer totalLineItem, Integer totalQuantity, BigDecimal totalAmount, String address, String addressDetails, String ccNum, String deliveryNote, List<OrderLineItem> orderLineItems) throws CheckoutError;
-    
+    public List<OrderEntity> retrieveOrderHistoryByCustomerId(Long customerId);
 }

@@ -19,7 +19,8 @@ import {
 } from './components/landingpage/landingpage.component'
 import { AccountSheetComponent } from './components/account-sheet/account-sheet.component'
 import { MainModule } from './main/main.module';
-import { ErrorComponent } from './components/error/error.component'
+import { ErrorComponent } from './components/error/error.component';
+import { PromoComponent } from './main/promo/promo.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ErrorComponent } from './components/error/error.component'
     AccountSheetComponent,
     ItemDialogComponent,
     ErrorComponent,
+    PromoComponent,
   ],
   imports: [
     BrowserModule,

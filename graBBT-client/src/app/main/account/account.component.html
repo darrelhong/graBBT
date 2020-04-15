@@ -1,33 +1,96 @@
 <div class="account-container" *ngIf="!editView">
-  <h1>Account Details 
-    <span>
-      <button mat-fab color="primary" style="margin-top: -15px;" (click)="editView = true">Edit</button>
-    </span>
-  </h1>
-  
-  <mat-card style="max-width: 600px;">
-    <mat-list role="list">
-      <mat-list-item role="listitem"
-        >Name: {{ currentCustomer.name }}</mat-list-item
-      >
-      <mat-list-item role="listitem"
-        >Username: {{ currentCustomer.username }}</mat-list-item
-      >
-      <mat-list-item role="listitem"
-        >Phone Number: {{ currentCustomer.phoneNumber }}</mat-list-item
-      >
-      <mat-list-item role="listitem"
-        >Address: {{ currentCustomer.address }}</mat-list-item
-      >
-      <mat-list-item role="listitem"
-        >Email: {{ currentCustomer.email }}</mat-list-item
-      >
+  <h1>Account</h1>
 
-      <mat-list-item role="listitem"
-        >BB Points: {{ currentCustomer.bbPoints }}</mat-list-item
-      >
-    </mat-list>
-  </mat-card>
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Account Details">
+      <h2>My Account Details</h2>
+      <mat-card style="max-width: 600px;">
+        <mat-list role="list">
+          <mat-list-item role="listitem"
+            >Name: {{ currentCustomer.name }}</mat-list-item
+          >
+          <mat-list-item role="listitem"
+            >Username: {{ currentCustomer.username }}</mat-list-item
+          >
+          <mat-list-item role="listitem"
+            >Phone Number: {{ currentCustomer.phoneNumber }}</mat-list-item
+          >
+          <mat-list-item role="listitem"
+            >Address: {{ currentCustomer.address }}</mat-list-item
+          >
+          <mat-list-item role="listitem"
+            >Email: {{ currentCustomer.email }}</mat-list-item
+          >
+          <mat-list-item role="listitem"
+            >BB Points: {{ currentCustomer.bbPoints }}</mat-list-item
+          >
+          <mat-list-item role="listitem">
+            <mat-progress-bar
+              mode="determinate"
+              value="{{ currentCustomer.bbPoints }}"
+            ></mat-progress-bar>
+          </mat-list-item>
+
+          <mat-list-item role="listitem">
+            <button
+              mat-stroked-button
+              color="primary"
+              (click)="editView = true"
+            >
+              Edit
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Wallet">
+      <div>
+        <h2>My BB Points</h2>
+      </div>
+
+      <div>
+        <h2>My Promos</h2>
+      </div>
+    </mat-tab>
+    <mat-tab label="Orders">
+      <div class="ongoing-orders">
+        <h2>My Ongoing Orders</h2>
+        to display orders that are still being processed here
+      </div>
+
+      <div class="order-history">
+        <h2>My Order History</h2>
+
+        <mat-expansion-panel *ngFor="let order of orders; let i = index">
+          <mat-expansion-panel-header
+            [collapsedHeight]="'80px'"
+            [expandedHeight]="'300px'"
+          >
+            <mat-panel-title>
+              <h4>
+                <b>Delivery from {{ outletNames[i] }}</b>
+              </h4>
+            </mat-panel-title>
+
+            <mat-panel-description *ngIf="order.cancelled" >  
+              <p style="color:red">Cancelled</p>
+            </mat-panel-description>
+
+            <mat-panel-description>  
+              <p>{{ order.totalQuantity }} item(s)  |  {{ order.address }}</p>
+            </mat-panel-description>
+
+            <mat-panel-description>  
+              <p>{{ dates[i] }}</p>
+            </mat-panel-description>
+
+          </mat-expansion-panel-header>
+  
+          
+        </mat-expansion-panel>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>
 
 <!--edit page-->

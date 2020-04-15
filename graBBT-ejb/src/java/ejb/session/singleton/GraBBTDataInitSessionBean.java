@@ -2,6 +2,7 @@ package ejb.session.singleton;
 
 import ejb.session.stateless.CustomerSessionBeanLocal;
 import ejb.session.stateless.ListingSessionBeanLocal;
+import ejb.session.stateless.OrderSessionBeanLocal;
 import entity.Listing;
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -9,8 +10,13 @@ import java.util.Map;
 import ejb.session.stateless.OutletSessionBeanLocal;
 import ejb.session.stateless.RetailerSessionBeanLocal;
 import entity.Customer;
+import entity.OrderEntity;
+import entity.OrderLineItem;
 import entity.OutletEntity;
 import entity.RetailerEntity;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -20,6 +26,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import util.exception.CheckoutError;
 import util.exception.InputDataValidationException;
 import util.exception.OutletNameExistsException;
 import util.exception.OutletNotFoundException;
@@ -40,6 +47,8 @@ public class GraBBTDataInitSessionBean {
     private RetailerSessionBeanLocal retailerSessionBean;
     @EJB
     private OutletSessionBeanLocal outletSessionBean;
+    @EJB
+    private OrderSessionBeanLocal orderSessionBeanLocal;
 
     @PersistenceContext(unitName = "graBBT-ejbPU")
     private EntityManager em;
@@ -226,6 +235,9 @@ public class GraBBTDataInitSessionBean {
                     "qwerty@gmail.com");
             customer = customerSessionBeanLocal.createNewCustomer(customer);
 
+           
+            
+            
         } catch (InputDataValidationException | RetailerUsernameExistsException | UnknownPersistenceException
                 | OutletNameExistsException | RetailerNotFoundException | OutletNotFoundException ex) {
             ex.printStackTrace();

@@ -12,6 +12,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -69,6 +70,14 @@ public class OrderSessionBean implements OrderSessionBeanLocal {
         } catch (CustomerNotFoundException | OutletNotFoundException ex) {
             throw new CheckoutError(ex.getMessage());
         }
+    }
+    
+    @Override
+    public List<OrderEntity> retrieveOrderHistoryByCustomerId(Long customerId)
+    {
+        Query q = em.createQuery("SELECT o FROM OrderEntity o WHERE o.customer.customerId = :inCustomerId ORDER BY o.transactionDateTime DESC");
+        q.setParameter("inCustomerId", customerId);
+        return q.getResultList();
     }
     
     private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<OrderEntity>>constraintViolations)

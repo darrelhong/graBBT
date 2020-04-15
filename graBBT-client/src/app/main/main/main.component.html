@@ -27,6 +27,17 @@
       </button>
       <span class="mat-body-2">Hi, {{ name }}</span>
 
+      &nbsp; &nbsp;
+      <button
+        class="promo-button"
+        mat-icon-button
+        type="button"
+        (click)="redirectToPromo()"
+      >
+        <mat-icon>local_offer</mat-icon>
+      </button>
+      <span class="mat-body-2">Promos</span>
+
       <button
         *ngIf="displayCartButton()"
         class="cart-button"

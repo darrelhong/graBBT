@@ -8,6 +8,7 @@ import {
 import { catchError } from 'rxjs/operators'
 
 import { Customer } from './customer'
+import { SessionService } from '../session.service'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -19,7 +20,7 @@ const httpOptions = {
 export class CustomerService {
   baseUrl = '/api/Customer'
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private sessionService: SessionService) {}
 
   customerLogin(username: string, password: string): Observable<any> {
     return this.httpClient
@@ -70,6 +71,14 @@ export class CustomerService {
 
     return this.httpClient
       .post<any>(this.baseUrl + '/updateCustomer', custUpdateReq, httpOptions)
+      .pipe(catchError(this.handleError))
+  }
+
+  retrieveOrders(): Observable<any> {
+    const customerId = this.sessionService.getCurrentCustomer().customerId
+
+    return this.httpClient
+      .get<any>(this.baseUrl + '/retrieveOrders?customerId=' + customerId)
       .pipe(catchError(this.handleError))
   }
 

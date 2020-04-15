@@ -62,8 +62,11 @@ export class MainComponent implements OnInit, AfterViewInit {
     this.bottomSheet.open(AccountSheetComponent)
   }
 
-  //find a way to access this
   closeBottomSheet(): void {
     this.bottomSheet.dismiss()
+  }
+
+  redirectToPromo(): void {
+    this.router.navigate(['/main/promo'])
   }
 }

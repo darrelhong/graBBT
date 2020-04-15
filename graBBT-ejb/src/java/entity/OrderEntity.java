@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -26,7 +27,7 @@ public class OrderEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long orderId;
 
     @Column(nullable = false)
     @NotNull
@@ -72,7 +73,7 @@ public class OrderEntity implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private Customer customer;
-
+    
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private OutletEntity outlet;
@@ -111,29 +112,29 @@ public class OrderEntity implements Serializable {
         this.orderLineItems = orderLineItems;
     }
 
-    public Long getId() {
-        return id;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (orderId != null ? orderId.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        // TODO: Warning - this method won't work in the case the orderId fields are not set
         if (!(object instanceof OrderEntity)) {
             return false;
         }
         OrderEntity other = (OrderEntity) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.orderId == null && other.orderId != null) || (this.orderId != null && !this.orderId.equals(other.orderId))) {
             return false;
         }
         return true;
@@ -141,7 +142,7 @@ public class OrderEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.OrderEntity[ id=" + id + " ]";
+        return "entity.OrderEntity[ id=" + orderId + " ]";
     }
 
     /**

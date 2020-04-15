@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component'
 import { SignupComponent } from './components/signup/signup.component'
 import { LandingpageComponent } from './components/landingpage/landingpage.component'
 import { ErrorComponent } from './components/error/error.component'
+import { PromoComponent } from './main/promo/promo.component'
 
 const routes: Routes = [
   { path: '', redirectTo: '/index', pathMatch: 'full' },

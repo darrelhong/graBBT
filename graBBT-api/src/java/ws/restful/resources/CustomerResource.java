@@ -39,16 +39,18 @@ import ws.restful.model.CreateCustomerReq;
 import ws.restful.model.CreateCustomerResp;
 import ws.restful.model.CustomerLoginResp;
 import ws.restful.model.ErrorResp;
+import ws.restful.model.OrdersResp;
 import ws.restful.model.UpdatedCustomerReq;
 
 @Path("Customer")
 public class CustomerResource {
 
-    OrderSessionBeanLocal orderSessionBean = lookupOrderSessionBeanLocal();
+    private OrderSessionBeanLocal orderSessionBean = lookupOrderSessionBeanLocal();
 
-    ListingSessionBeanLocal listingSessionBean = lookupListingSessionBeanLocal();
+    private ListingSessionBeanLocal listingSessionBean = lookupListingSessionBeanLocal();
 
     private CustomerSessionBeanLocal customerSessionBeanLocal = lookupCustomerSessionBeanLocal();
+    
 
     @Context
     private UriInfo context;
@@ -186,6 +188,33 @@ public class CustomerResource {
         }
     }
 
+    @Path("retrieveOrders")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveOrdersByCustomerId(@QueryParam("customerId") Long customerId)
+    {
+        System.out.println("retrieveOrdersByCustomerId entered");
+        List<OrderEntity> orders = orderSessionBean.retrieveOrderHistoryByCustomerId(customerId);
+        List<String> outletNames = new ArrayList<>();
+        List<String> dates = new ArrayList<>();
+        
+        for (OrderEntity order : orders)
+        {
+            order.setCustomer(null);
+            order.getOrderLineItems().clear();
+            outletNames.add(order.getOutlet().getOutletName());
+            dates.add((order.getTransactionDateTime().toString()));
+            order.setOutlet(null);
+        }
+        
+        OrdersResp ordersResp = new OrdersResp(orders, outletNames, dates);
+        
+        System.out.println(ordersResp);
+        return Response.status(Response.Status.OK).entity(ordersResp).build();
+        
+    }
+    
     private CustomerSessionBeanLocal lookupCustomerSessionBeanLocal() {
         try {
             javax.naming.Context c = new InitialContext();

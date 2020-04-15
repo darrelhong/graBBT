@@ -20,6 +20,8 @@ export class CheckoutSuccessComponent implements OnInit {
         0,
         -5
       )
+
+      console.log("HELLLLLOOOOOOOOO" + this.orderEntity.transactionDateTime)
     } else {
       this.router.navigate(['/error'], {
         state: {
