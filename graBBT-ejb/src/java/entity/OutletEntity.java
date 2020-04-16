@@ -39,7 +39,7 @@ public class OutletEntity implements Serializable {
     @NotNull
     @Size(max = 64)
     private String outletName;
-    
+
     @Column(nullable = false)
     @NotNull
     private Boolean isActive;
@@ -66,12 +66,17 @@ public class OutletEntity implements Serializable {
     private Integer ratingCount; //stores total number of ratings made for this outlet
 
     //constraints to be added
+    @Column(nullable = false)
+    @NotNull
     private Double locationLatitude;
     //constraints to be added
+    @Column(nullable = false)
+    @NotNull
     private Double locationLongitude;
-    
+
     //nullable FOR NOW so as not to break anything
-    @Column(nullable = true)
+    @Column(nullable = false)
+    @NotNull
     private String imageSrc;
 
     //constraints to be added; to confirm format of storing revenue reports
@@ -83,22 +88,21 @@ public class OutletEntity implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private RetailerEntity retailerEntity;
-    
-    @OneToMany(mappedBy = "outletEntity", cascade=CascadeType.PERSIST)
+
+    @OneToMany(mappedBy = "outletEntity", cascade = CascadeType.PERSIST)
     private List<Listing> listings;
-    
+
 //    @OneToMany(mappedBy = "outlet", cascade=CascadeType.PERSIST)
 //    private List<CategoryEntity> categories;
-
     public OutletEntity() {
         this.outletRating = 5.0;
-        this.ratingCount = 0; 
+        this.ratingCount = 0;
         this.outletRevenueDaily = 0.0;
         this.outletRevenueMonthly = 0.0;
         this.outletRevenueOverall = 0.0;
-        
+
         this.isActive = true; //by default
-        
+
         this.listings = new ArrayList<>();
 //        this.categories = new ArrayList<>();
     }
@@ -111,8 +115,8 @@ public class OutletEntity implements Serializable {
         this.locationLatitude = locationLatitude;
         this.locationLongitude = locationLongitude;
     }
-    
-     public OutletEntity(String outletName, Integer openingHour, Integer closingHour, Double locationLatitude, Double locationLongitude, String imageSrc) {
+
+    public OutletEntity(String outletName, Integer openingHour, Integer closingHour, Double locationLatitude, Double locationLongitude, String imageSrc) {
         this();
         this.outletName = outletName;
         this.openingHour = openingHour;
@@ -121,29 +125,22 @@ public class OutletEntity implements Serializable {
         this.locationLongitude = locationLongitude;
         this.imageSrc = imageSrc;
     }
-    
-    public void addListing(Listing listing)
-    {
-        if (listing != null)
-        {
-            if(!this.listings.contains(listing))
-            {
+
+    public void addListing(Listing listing) {
+        if (listing != null) {
+            if (!this.listings.contains(listing)) {
                 this.listings.add(listing);
-                
-                if(!listing.getOutletEntity().getOutletId().equals(outletId))
-                {
+
+                if (!listing.getOutletEntity().getOutletId().equals(outletId)) {
                     listing.setOutletEntity(this);
                 }
             }
         }
     }
-    
-    public void removeListing(Listing listing)
-    {
-        if(listing != null)
-        {
-            if(this.listings.contains(listing))
-            {
+
+    public void removeListing(Listing listing) {
+        if (listing != null) {
+            if (this.listings.contains(listing)) {
                 this.listings.remove(listing);
             }
         }
@@ -189,9 +186,7 @@ public class OutletEntity implements Serializable {
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
     }
-    
-    
-    
+
     /**
      * @return the outletName
      */
@@ -373,7 +368,6 @@ public class OutletEntity implements Serializable {
 //    public void setCategories(List<CategoryEntity> categories) {
 //        this.categories = categories;
 //    }
-
     /**
      * @return the imageSrc
      */

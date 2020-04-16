@@ -8,17 +8,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.inject.Named;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import util.exception.InputDataValidationException;
+import util.exception.ListingNotFoundException;
 import util.exception.OutletNotFoundException;
 import util.exception.UnknownPersistenceException;
 
@@ -53,12 +54,16 @@ public class ViewListingsByOutletManagedBean implements Serializable {
 
     @PostConstruct
     public void postConstruct() {
-        this.outletId = (Long) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("outletId");
-        try {
-            setOutletListings(listingSessionBean.retrieveListingsByOutletId(outletId));
-        } catch (OutletNotFoundException ex) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while retrieving the outlet details: " + ex.getMessage(), null));
+        Long flashId = (Long) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("outletId");
+        this.outletId = flashId;
+        if (outletId != null) {
+            try {
+                setOutletListings(listingSessionBean.retrieveListingsByOutletId(outletId));
+                System.out.println(outletListings);
+            } catch (OutletNotFoundException ex) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while retrieving the outlet details: " + ex.getMessage(), null));
 
+            }
         }
         newListing = new Listing();
         sizePriceInput = 0.0;
@@ -165,6 +170,18 @@ public class ViewListingsByOutletManagedBean implements Serializable {
 
         } catch (InputDataValidationException | UnknownPersistenceException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while creating the new listing: " + ex.getMessage(), null));
+
+        }
+    }
+
+    public void deleteListing() {
+        System.out.println("Delete called");
+        try {
+            String result = listingSessionBean.deleteListing(selectedListing.getListingId());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Listing ID: " + selectedListing.getListingId() + " " + result, null));
+
+        } catch (ListingNotFoundException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "An error has occurred while deleting the listing: " + ex.getMessage(), null));
 
         }
     }

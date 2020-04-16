@@ -71,16 +71,21 @@ public class Listing implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private OutletEntity outletEntity;
-    
+
     @ManyToOne(optional = true)
     @JoinColumn(nullable = true)
     private CategoryEntity category;
+
+    @Column(nullable = false)
+    @NotNull
+    private Boolean isActive;
 
     public Listing() {
         this.toppingOptions = new HashMap<>();
         this.sugarOptions = new HashMap<>();
         this.sizeOptions = new HashMap<>();
         this.iceOptions = new HashMap<>();
+        this.isActive = true;
     }
 
     public Listing(String name, BigDecimal basePrice, OutletEntity outletEntity) {
@@ -120,6 +125,7 @@ public class Listing implements Serializable {
     }
 
     public Listing(String name, BigDecimal basePrice, OutletEntity outletEntity, String description, String imageSrc, Map<String, Double> sizeOptions, Map<String, Double> sugarOptions, Map<String, Double> iceOptions, Map<String, Double> toppingOptions) {
+        this();
         this.name = name;
         this.basePrice = basePrice;
         this.outletEntity = outletEntity;
@@ -302,6 +308,20 @@ public class Listing implements Serializable {
      */
     public void setCategory(CategoryEntity category) {
         this.category = category;
+    }
+
+    /**
+     * @return the isActive
+     */
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    /**
+     * @param isActive the isActive to set
+     */
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 
 }

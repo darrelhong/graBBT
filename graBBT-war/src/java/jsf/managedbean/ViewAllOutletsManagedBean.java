@@ -13,10 +13,13 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
+import util.exception.DeactivateOutletException;
+import util.exception.OutletNotFoundException;
 
 /**
  *
@@ -42,7 +45,7 @@ public class ViewAllOutletsManagedBean implements Serializable {
         RetailerEntity currentRetailer = (RetailerEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentRetailerEntity");
         currentRetailerId = currentRetailer.getRetailerId();
         System.out.println("*********************POST CONSTRUCT********************" + currentRetailerId);
-        
+
         //populate local list of outlets
         setOutletEntities(outletSessionBeanLocal.retrieveAllOutletsByRetailerId(currentRetailerId)); //can be empty
 
@@ -59,10 +62,22 @@ public class ViewAllOutletsManagedBean implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("outletId", outletId);
         FacesContext.getCurrentInstance().getExternalContext().redirect("viewListingsByOutlet.xhtml");
     }
-        
-        /**
-         * @return the outletEntities
-         */
+
+    public void deleteOutlet(ActionEvent event) throws IOException {
+        Long outletId = (Long) event.getComponent().getAttributes().get("outletId");
+        try {
+            outletSessionBeanLocal.deactivateOutlet(outletId);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Outlet dactivated successfully", ""));
+
+        } catch (DeactivateOutletException | OutletNotFoundException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ""));
+
+        }
+    }
+
+    /**
+     * @return the outletEntities
+     */
     public List<OutletEntity> getOutletEntities() {
         return outletEntities;
     }
