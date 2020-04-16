@@ -12,8 +12,21 @@
   margin: 0;
 }
 
-.title-group mat-form-field {
+.filter.mat-form-field.mat-form-field {
   margin-left: auto;
+  font-size: 14px;
+}
+
+/* ::ng-deep .mat-form-field-label {
+  color: #43a047;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-label {
+  color: #43a047;
+} */
+
+.title-group mat-form-field {
+  margin-left: 1rem;
 }
 
 .outlet-grid {

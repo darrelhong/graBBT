@@ -27,6 +27,7 @@ import {
   MatTableModule,
   MatTabsModule,
   MatToolbarModule,
+  MatTooltipModule,
   MatNativeDateModule,
 } from '@angular/material'
 
@@ -58,6 +59,7 @@ import {
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatNativeDateModule,
   ],
 })

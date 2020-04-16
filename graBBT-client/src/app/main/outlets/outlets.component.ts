@@ -12,8 +12,10 @@ import { MatSelectChange } from '@angular/material'
 })
 export class OutletsComponent implements OnInit {
   outlets: Outlet[]
+  filteredOutlets: Outlet[]
   lat: number
   lng: number
+  searchTerm = ''
   slides = [
     {
       url: '/images/carousel/test-carousel-image-1.jpg',
@@ -43,7 +45,7 @@ export class OutletsComponent implements OnInit {
           return +b.open - +a.open
         })
         console.log(this.outlets)
-
+        this.filteredOutlets = this.outlets
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(position =>
             this.success(position)
@@ -74,7 +76,7 @@ export class OutletsComponent implements OnInit {
   }
 
   sort(event: MatSelectChange) {
-    console.log('sort by: ' + event.value)
+    // console.log('sort by: ' + event.value)
     const sortBy = event.value
 
     if (sortBy === 'name') {
@@ -126,6 +128,9 @@ export class OutletsComponent implements OnInit {
         return 0
       })
     }
+    this.filteredOutlets = this.outlets.filter(l => {
+      return l.outletName.toLowerCase().includes(this.searchTerm)
+    })
   }
 
   distance(lat1, lon1, lat2, lon2) {
@@ -147,5 +152,12 @@ export class OutletsComponent implements OnInit {
       dist = dist * 60 * 1.1515
       return dist
     }
+  }
+
+  filter(event) {
+    this.searchTerm = event.target.value.toLowerCase()
+    this.filteredOutlets = this.outlets.filter(l => {
+      return l.outletName.toLowerCase().includes(this.searchTerm)
+    })
   }
 }
