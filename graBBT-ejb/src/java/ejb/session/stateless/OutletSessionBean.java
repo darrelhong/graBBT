@@ -160,7 +160,7 @@ public class OutletSessionBean implements OutletSessionBeanLocal {
             throw new OutletNotFoundException("Outlet ID not provided for outlet to be updated");
         }
     }
-
+    
     private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<OutletEntity>> constraintViolations) {
         String msg = "Input data validation for (outlet entity) error!:";
 

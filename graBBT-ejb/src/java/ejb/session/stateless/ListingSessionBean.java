@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -79,7 +80,6 @@ public class ListingSessionBean implements ListingSessionBeanLocal {
     @Override
     public Listing retrieveListingById(Long listingId) throws ListingNotFoundException {
         Listing listing = em.find(Listing.class, listingId);
-
         if (listing != null) {
             return listing;
         } else {
@@ -91,7 +91,12 @@ public class ListingSessionBean implements ListingSessionBeanLocal {
     public List retrieveListingsByOutletId(Long outletId) throws OutletNotFoundException {
         OutletEntity outletEntity = em.find(OutletEntity.class, outletId);
         if (outletEntity != null) {
-            return outletEntity.getListings();
+            Query q = em.createQuery("SELECT l from Listing l WHERE l.outletEntity.outletId = :inOutletId AND l.isActive = TRUE");
+            q.setParameter("inOutletId", outletId);
+            
+            return q.getResultList();
+            
+//            return outletEntity.getListings();
         } else {
             throw new OutletNotFoundException("Outlet with ID " + outletId + " does not exists!");
         }
@@ -120,10 +125,21 @@ public class ListingSessionBean implements ListingSessionBeanLocal {
     }
 
     @Override
-    public void deleteListing(Long listingId) throws ListingNotFoundException {
-        Listing listingToDelete = retrieveListingById(listingId);
+    public String deleteListing(Long listingId) throws ListingNotFoundException {
+        System.out.println("ejb delete called");
+        Listing toDelete = retrieveListingById(listingId);
 
-        em.remove(listingToDelete);
+        Query q = em.createQuery("SELECT oli FROM OrderLineItem oli WHERE oli.listing.listingId = :inListingId");
+        q.setParameter("inListingId", listingId);
+
+        try {
+            q.getSingleResult();
+            toDelete.setIsActive(false);
+            return "This item is associated with orders, item disabled instead.";
+        } catch (NoResultException ex) {
+            em.remove(toDelete);
+            return "Item deleted!";
+        }
     }
 
     private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<Listing>> constraintViolations) {

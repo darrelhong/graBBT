@@ -16,8 +16,9 @@
                     <p:button outcome="./createNewOutlet.xhtml" icon="fa fa-plus-square" title="Create new outlet" />
                 </h:form>
             </h:panelGroup>
-            
-            
+
+            <p:messages id="messagesCreateNewListing" redisplay="false" />
+
             <h:form>
                 <p:dataTable value="#{viewAllOutletsManagedBean.outletEntities}" var="outletEntity" style="width: 100%;">
 
@@ -30,12 +31,12 @@
                         <f:facet name="header">Outlet ID</f:facet>
                         <h:outputText value="#{outletEntity.outletId}" />
                     </p:column>
-                    
+
                     <p:column>
                         <f:facet name="header">Active Status</f:facet>
                         <h:outputText value="#{outletEntity.isActive}" />
                     </p:column>
-                    
+
                     <p:column>
                         <f:facet name="header">Opening Hour</f:facet>
                         <h:outputText value="#{outletEntity.openingHour}" >
@@ -49,12 +50,12 @@
                             <!--<f:convertDateTime pattern="ha" />-->
                         </h:outputText>
                     </p:column>
-                    
+
                     <p:column>
                         <f:facet name="header">Outlet Rating</f:facet>
                         <h:outputText value="#{outletEntity.outletRating} /5.0"></h:outputText>
                     </p:column>
-               
+
                     <p:column>    				
                         <f:facet name="header">Action</f:facet>
                         <p:menuButton value="Actions"> 
@@ -64,9 +65,12 @@
                             <p:menuitem value="View Outlet Listings" actionListener="#{viewAllOutletsManagedBean.viewOutletListings}" >
                                 <f:attribute name="outletId" value="#{outletEntity.outletId}" />
                             </p:menuitem>
+                            <p:menuitem value="Deactivate Outlet" actionListener="#{viewAllOutletsManagedBean.deleteOutlet}">
+                                <f:attribute name="outletId" value="#{outletEntity.outletId}" />
+                            </p:menuitem>
                         </p:menuButton>
                     </p:column>
-                   
+
                 </p:dataTable>
             </h:form>
         </div>   

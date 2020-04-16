@@ -17,10 +17,10 @@ public interface ListingSessionBeanLocal {
 
     public Listing retrieveListingById(Long listingId) throws ListingNotFoundException;
 
-    public void deleteListing(Long listingId) throws ListingNotFoundException;
-
     public List retrieveListingsByOutletId(Long outletId) throws OutletNotFoundException;
 
     public Listing createNewListing(Listing newListing, Long outletId) throws UnknownPersistenceException, InputDataValidationException;
-    
+
+    public String deleteListing(Long listingId) throws ListingNotFoundException;
+
 }
