@@ -30,11 +30,22 @@ iframe {
   border-radius: 5px;
 }
 
+.filter.mat-form-field.mat-form-field {
+  font-size: 14px;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0px;
+}
+
+.sort-by {
+  margin-left: auto;
+}
+
 .listing-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
   grid-gap: 1.5rem;
-  margin-top: 0.5rem;
 }
 
 .listing-card {
@@ -44,6 +55,7 @@ iframe {
 
 .listing-card:hover {
   border: 1px solid #4caf50;
+  cursor: pointer;
 }
 
 .listing-card:hover .add-button {
@@ -54,8 +66,9 @@ iframe {
   display: flex;
 }
 
-img {
+.listing-card img {
   flex-shrink: 0;
+  border-radius: 4px;
 }
 
 .name-group {

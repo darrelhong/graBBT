@@ -15,6 +15,7 @@ import { Outlet } from 'src/app/services/listing/outlet'
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser'
 import { Cart } from 'src/app/services/cart/cart'
 import { CartService } from 'src/app/services/cart/cart.service'
+import { MatSelectChange } from '@angular/material'
 
 @Component({
   selector: 'app-listings',
@@ -23,6 +24,7 @@ import { CartService } from 'src/app/services/cart/cart.service'
 })
 export class ListingsComponent implements OnInit {
   listings: Listing[]
+  filteredListings: Listing[]
   selectedListing: Listing
   outlet: Outlet
   mapSrc: SafeResourceUrl
@@ -47,6 +49,7 @@ export class ListingsComponent implements OnInit {
         .retrieveListingsByOutletId(params.get('id'))
         .subscribe(resp => {
           this.listings = resp.listings
+          this.filteredListings = resp.listings
           console.log(this.listings)
         })
     })
@@ -71,6 +74,30 @@ export class ListingsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('Dialog was closed')
+    })
+  }
+
+  sort(event: MatSelectChange) {
+    const sortBy = event.value
+
+    if (sortBy === 'name') {
+      this.listings.sort((a, b) => {
+        if (a.name > b.name) {
+          return 1
+        } else if (a.name < b.name) {
+          return -1
+        } else {
+          return 0
+        }
+      })
+    }
+  }
+
+  filter(event) {
+    // console.log(event.target.value)
+    const term = event.target.value.toLowerCase()
+    this.filteredListings = this.listings.filter(l => {
+      return l.name.toLowerCase().includes(term)
     })
   }
 }

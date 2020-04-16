@@ -18,8 +18,24 @@
     </iframe>
   </div>
   <mat-divider></mat-divider>
+
+  <div class="filter-bar" style="display: flex; margin-top: 0.5rem;">
+    <mat-form-field appearance="outline" class="filter">
+      <mat-label>Search</mat-label>
+      <input matInput (input)="filter($event)" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field class="sort-by">
+      <mat-label>Sort by</mat-label>
+      <mat-select (selectionChange)="sort($event)">
+        <mat-option value="name">Name</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <div class="listing-grid">
-    <mat-card class="listing-card">
+    <!-- <mat-card class="listing-card">
       <div class="card-content">
         <img
           mat-card-md-image
@@ -34,11 +50,11 @@
           </div>
         </div>
       </div>
-    </mat-card>
+    </mat-card> -->
 
     <mat-card
       class="listing-card"
-      *ngFor="let listing of listings; let i = index"
+      *ngFor="let listing of filteredListings; let i = index"
       (click)="openDialog(i)"
     >
       <div class="card-content">

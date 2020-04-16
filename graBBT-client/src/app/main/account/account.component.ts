@@ -61,7 +61,6 @@ export class AccountComponent implements OnInit {
   }
 
   ngOnInit() {
-
     //For account details tab
     this.currentCustomer = this.sessionService.getCurrentCustomer()
     console.log(this.currentCustomer.password)
@@ -82,8 +81,8 @@ export class AccountComponent implements OnInit {
         this.outletNames = resp.outletNames
 
         console.log(this.dates)
-        for(var i=0; i < this.dates.length; i++) {
-          this.dates[i] = this.dates[i].slice(0,-5)
+        for (var i = 0; i < this.dates.length; i++) {
+          this.dates[i] = this.dates[i].slice(0, -5)
         }
 
         console.log(this.orders)

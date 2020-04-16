@@ -40,6 +40,8 @@ public class ListingSessionBean implements ListingSessionBeanLocal {
 
             if (constraintViolations.isEmpty()) {
                 em.persist(newListing);
+                OutletEntity outlet = newListing.getOutletEntity();
+                outlet.addListing(newListing);
                 em.flush();
                 return newListing;
             } else {
