@@ -12,6 +12,10 @@
   margin: 0;
 }
 
+.title-group mat-form-field {
+  min-width: 140px;
+}
+
 .filter.mat-form-field.mat-form-field {
   margin-left: auto;
   font-size: 14px;
