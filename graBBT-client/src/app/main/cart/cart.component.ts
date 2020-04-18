@@ -33,8 +33,8 @@ export class CartComponent implements OnInit {
   }
 
   checkout() {
-    this.sidenavService.close()
     this.router.navigate(['main/checkout'])
+    this.sidenavService.close()
   }
   // testing only
   test() {

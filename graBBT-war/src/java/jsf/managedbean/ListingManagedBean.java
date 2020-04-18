@@ -46,6 +46,7 @@ public class ListingManagedBean implements Serializable {
 
     @PostConstruct
     public void postConstruct() {
+        System.out.println("LISTING MANAGED BEAN POST CONSTRUCT");
         listings = listingSessionBean.retrieveAllListings();
         outletId = 1L;
         newListing = new Listing();

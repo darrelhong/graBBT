@@ -180,7 +180,7 @@ public class OutletSessionBean implements OutletSessionBeanLocal {
         if (listings.isEmpty()) {
             outletEntityToDeactivate.setIsActive(false);
         } else {
-            throw new DeactivateOutletException("Outlet ID " + outletId + "is associated with existing listing item(s) and cannot be deleted!");
+            throw new DeactivateOutletException("Outlet ID " + outletId + " is associated with existing listing item(s) and cannot be deleted!");
         }
 
     }

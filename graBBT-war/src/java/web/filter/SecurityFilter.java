@@ -30,45 +30,32 @@ public class SecurityFilter implements Filter {
         this.filterConfig = filterConfig;
     }
 
-//    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
-//    {
-//        HttpServletRequest httpServletRequest = (HttpServletRequest)request;
-//        HttpServletResponse httpServletResponse = (HttpServletResponse)response;
+//    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+//        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
+//        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 //        HttpSession httpSession = httpServletRequest.getSession(true);
-//        String requestServletPath = httpServletRequest.getServletPath();        
-//        
-//        
+//        String requestServletPath = httpServletRequest.getServletPath();
 //
-//        if(httpSession.getAttribute("isLogin") == null)
-//        {
+//        if (httpSession.getAttribute("isLogin") == null) {
 //            httpSession.setAttribute("isLogin", false);
 //        }
 //
-//        Boolean isLogin = (Boolean)httpSession.getAttribute("isLogin");
-//    
-//        if(!excludeLoginCheck(requestServletPath))
-//        {
-//            if(isLogin == true)
-//            {
-//               //Staff Entity does not exist yet
-//               RetailerEntity currentRetailerEntity = (RetailerEntity)httpSession.getAttribute("currentRetailerEntity");
-//               
-//             if(checkAccessRight(requestServletPath))
-//                {
+//        Boolean isLogin = (Boolean) httpSession.getAttribute("isLogin");
+//
+//        if (!excludeLoginCheck(requestServletPath)) {
+//            if (isLogin == true) {
+//                //Staff Entity does not exist yet
+//                RetailerEntity currentRetailerEntity = (RetailerEntity) httpSession.getAttribute("currentRetailerEntity");
+//
+//                if (checkAccessRight(requestServletPath)) {
 //                    chain.doFilter(request, response);
-//                }
-//                else
-//                {
+//                } else {
 //                    httpServletResponse.sendRedirect(CONTEXT_ROOT + "/accessRightError.xhtml");
 //                }
-//            }
-//            else
-//            {
+//            } else {
 //                httpServletResponse.sendRedirect(CONTEXT_ROOT + "/accessRightError.xhtml");
 //            }
-//        }
-//        else
-//        {
+//        } else {
 //            chain.doFilter(request, response);
 //        }
 //    }
@@ -86,9 +73,9 @@ public class SecurityFilter implements Filter {
         if (!excludeLoginCheck(requestServletPath)) {
             if (isLogin == true) {
                 RetailerEntity curr = (RetailerEntity) httpSession.getAttribute("currentRetailerEntity");
-
                 chain.doFilter(request, response);
-
+            } else {
+                httpServletResponse.sendRedirect(CONTEXT_ROOT + "/accessRightError.xhtml");
             }
         } else {
             chain.doFilter(request, response);
@@ -96,7 +83,6 @@ public class SecurityFilter implements Filter {
     }
 
     public void destroy() {
-
     }
 
 //    //Check logged in user?

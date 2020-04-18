@@ -71,24 +71,28 @@ public class OrderSessionBean implements OrderSessionBeanLocal {
             throw new CheckoutError(ex.getMessage());
         }
     }
-    
+
     @Override
-    public List<OrderEntity> retrieveOrderHistoryByCustomerId(Long customerId)
-    {
+    public List<OrderEntity> retrieveOrderHistoryByCustomerId(Long customerId) {
         Query q = em.createQuery("SELECT o FROM OrderEntity o WHERE o.customer.customerId = :inCustomerId ORDER BY o.transactionDateTime DESC");
         q.setParameter("inCustomerId", customerId);
         return q.getResultList();
     }
-    
-    private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<OrderEntity>>constraintViolations)
-    {
+
+    @Override
+    public List<OrderEntity> retrieveOrdersByOuletId(Long outletId) {
+        Query q = em.createQuery("SELECT o FROM OrderEntity o WHERE o.outlet.outletId = :inOutletId ORDER BY o.transactionDateTime DESC");
+        q.setParameter("inOutletId", outletId);
+        return q.getResultList();
+    }
+
+    private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<OrderEntity>> constraintViolations) {
         String msg = "Input data validation error!:";
-            
-        for(ConstraintViolation constraintViolation:constraintViolations)
-        {
+
+        for (ConstraintViolation constraintViolation : constraintViolations) {
             msg += "\n\t" + constraintViolation.getPropertyPath() + " - " + constraintViolation.getInvalidValue() + "; " + constraintViolation.getMessage();
         }
-        
+
         return msg;
     }
 }

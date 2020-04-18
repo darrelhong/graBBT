@@ -17,7 +17,7 @@
                 </h:form>
             </h:panelGroup>
 
-            <p:messages id="messagesCreateNewListing" redisplay="false" />
+            <p:messages id="messages" redisplay="false" />
 
             <h:form>
                 <p:dataTable value="#{viewAllOutletsManagedBean.outletEntities}" var="outletEntity" style="width: 100%;">
@@ -65,7 +65,10 @@
                             <p:menuitem value="View Outlet Listings" actionListener="#{viewAllOutletsManagedBean.viewOutletListings}" >
                                 <f:attribute name="outletId" value="#{outletEntity.outletId}" />
                             </p:menuitem>
-                            <p:menuitem value="Deactivate Outlet" actionListener="#{viewAllOutletsManagedBean.deleteOutlet}">
+                            <p:menuitem value="View Outlet Orders" actionListener="#{viewAllOutletsManagedBean.viewOutletOrders}">
+                                <f:attribute name="outletId" value="#{outletEntity.outletId}" />
+                            </p:menuitem>
+                            <p:menuitem value="Deactivate Outlet" actionListener="#{viewAllOutletsManagedBean.deleteOutlet}" update="messages">
                                 <f:attribute name="outletId" value="#{outletEntity.outletId}" />
                             </p:menuitem>
                         </p:menuButton>

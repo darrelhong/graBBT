@@ -63,15 +63,20 @@ public class ViewAllOutletsManagedBean implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().redirect("viewListingsByOutlet.xhtml");
     }
 
+    public void viewOutletOrders(ActionEvent event) throws IOException {
+        Long outletId = (Long) event.getComponent().getAttributes().get("outletId");
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("outletId", outletId);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("viewOutletOrders.xhtml");
+    }
+
     public void deleteOutlet(ActionEvent event) throws IOException {
         Long outletId = (Long) event.getComponent().getAttributes().get("outletId");
         try {
             outletSessionBeanLocal.deactivateOutlet(outletId);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Outlet dactivated successfully", ""));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Outlet deactivated successfully", ""));
 
         } catch (DeactivateOutletException | OutletNotFoundException ex) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, ex.getMessage(), ""));
-
         }
     }
 
