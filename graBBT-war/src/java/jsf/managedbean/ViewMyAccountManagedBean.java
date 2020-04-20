@@ -1,6 +1,7 @@
 
 package jsf.managedbean;
 
+import ejb.session.stateless.OutletSessionBeanLocal;
 import ejb.session.stateless.RetailerSessionBeanLocal;
 import entity.OutletEntity;
 import entity.RetailerEntity;
@@ -16,12 +17,28 @@ import javax.faces.context.FacesContext;
 @RequestScoped
 public class ViewMyAccountManagedBean {
 
-    public RetailerEntity getLoggedInRetailer() {
-        return loggedInRetailer;
-    }
+    @EJB(name = "OutletSessionBeanLocal")
+    private OutletSessionBeanLocal outletSessionBeanLocal;
 
-    public void setLoggedInRetailer(RetailerEntity loggedInRetailer) {
-        this.loggedInRetailer = loggedInRetailer;
+    @EJB(name = "RetailerSessionBeanLocal")
+    private RetailerSessionBeanLocal retailerSessionBeanLocal;
+    
+    private List<OutletEntity> outletEntities;
+    
+    private RetailerEntity currentRetailerEntity;
+    
+    
+    public ViewMyAccountManagedBean() 
+    {
+    }
+    
+    @PostConstruct
+    public void postConstruct()
+    {
+        setCurrentRetailerEntity((RetailerEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentRetailerEntity"));
+        System.out.println("*********************POST CONSTRUCT OF VIEW RETAILER ACCOUNT********************" + getCurrentRetailerEntity().getRetailerId());
+        
+        setOutletEntities(outletSessionBeanLocal.retrieveAllOutletsByRetailerId(getCurrentRetailerEntity().getRetailerId()));
     }
 
     public List<OutletEntity> getOutletEntities() {
@@ -31,21 +48,12 @@ public class ViewMyAccountManagedBean {
     public void setOutletEntities(List<OutletEntity> outletEntities) {
         this.outletEntities = outletEntities;
     }
-
-    @EJB(name = "RetailerSessionBeanLocal")
-    private RetailerSessionBeanLocal retailerSessionBeanLocal;
-
-    private RetailerEntity loggedInRetailer;
-    private List<OutletEntity> outletEntities;
     
-    public ViewMyAccountManagedBean() 
-    {
+    public RetailerEntity getCurrentRetailerEntity() {
+        return currentRetailerEntity;
     }
     
-    @PostConstruct
-    public void postConstruct()
-    {
-        setLoggedInRetailer((RetailerEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("currentRetailerEntity"));
-        setOutletEntities(getLoggedInRetailer().getOutletEntities());
+    public void setCurrentRetailerEntity(RetailerEntity currentRetailerEntity) {
+        this.currentRetailerEntity = currentRetailerEntity;
     }
 }

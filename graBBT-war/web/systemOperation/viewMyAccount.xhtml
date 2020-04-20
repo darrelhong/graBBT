@@ -7,9 +7,55 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:p="http://primefaces.org/ui">  
     <ui:define name="content">
-        <h3>My Account</h3>
-        
-        <ui:repeat value="#{viewMyAccountManagedBean.outletEntities}" var="outletEntity">
+        <div>
+            <h:panelGroup rendered="#{sessionScope.isLogin == true}">
+                <h:outputText style="font-size: 20px" value="Retailer Account Details"/>
+                <p:graphicImage url="http://localhost:3000/images/#{viewMyAccountManagedBean.currentRetailerEntity.imageSrc}" rendered="#{not empty viewMyAccountManagedBean.currentRetailerEntity.imageSrc}" width="100px"/>
+            </h:panelGroup>
+            
+            <br/><br/>
+            
+            <p:dataTable value="#{viewMyAccountManagedBean.currentRetailerEntity}" style="width: 50%">
+                <p:column>
+                    <f:facet name="header">Retailer Name</f:facet>
+                    <h:outputText value="#{currentRetailerEntity.retailerName}"/>
+                </p:column>
+                
+                <p:column>
+                    <f:facet name="header">Retailer Id</f:facet>
+                    <h:outputText value="#{currentRetailerEntity.retailerId}"/>
+                </p:column>
+            </p:dataTable>
+            
+            
+            <br/><br/>
+            
+            <h:form>
+                <p:repeat value="#{viewMyAccountManagedBean.currentRetailerEntity.outletEntities}" var="outletEntity">
+                    <h:panelGrid columns="2" style="width:75%">
+                        
+                        <p:outputPanel>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputText value="Outlet Name:"/>
+                                <h:outputText value="#{outletEntity.outletName}" style="font-weight: bold"/>
+                                
+                                <h:outputText value="Outlet ID:"/>
+                                <h:outputText value="#{outletEntity.outletId}" style="font-weight: bold"/>
+                            </h:panelGrid>
+                        </p:outputPanel>
+                        
+                    </h:panelGrid>
+                </p:repeat>
+            </h:form>
+            
+            <br/><br/>
+            
+            <p:commandButton value="Back" onclick="window.history.back();" />
+        </div>
+    </ui:define>
+</ui:composition>
+
+<!-- <ui:repeat value="#{viewMyAccountManagedBean.outletEntities}" var="outletEntity">
             <p:graphicImage url="http://localhost:3000/images/#{outletEntity.imageSrc}" rendered="#{not empty outletEntity.imageSrc}" width="100px"/>
             <h:outputText value="Outlet Name: " />
             <h:outputText value ="#{outletEntity.outletName}" />
@@ -23,9 +69,4 @@
             </h:outputText>
             <br />  <br />
         
-        </ui:repeat>
-        
-        <p:commandButton value="BACK" onclick="window.history.back();" />
-        
-    </ui:define>
-</ui:composition>
+        </ui:repeat> --> 
