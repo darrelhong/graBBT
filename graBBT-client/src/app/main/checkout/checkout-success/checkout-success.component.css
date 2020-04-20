@@ -15,6 +15,19 @@
   font-size: 18px;
 }
 
+.status {
+  color: white;
+  border-radius: 16px;
+  padding: 3px 7px;
+}
+
+.status-green {
+  background-color: #43a047;
+}
+
+.status-red {
+  background-color: #f44336;
+}
 .cart-item-details {
   display: flex;
   padding: 1rem 0rem;

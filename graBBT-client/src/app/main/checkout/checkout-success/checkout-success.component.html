@@ -1,14 +1,22 @@
 <div class="page-container">
   <div class="center">
-    <h2>Order confirmed!</h2>
+    <h2>Order {{ orderEntity.cancelled ? 'cancelled' : 'confirmed' }}!</h2>
 
     <mat-card>
       <mat-card-title style="font-size: 18px;"
         >Your order from {{ orderEntity.outlet.outletName }}</mat-card-title
       >
-      <p><strong>Order ID:</strong> {{ orderEntity.id }}</p>
       <p>
-        <strong>Transaction Date:</strong>
+        <strong>Status: </strong>
+        <span
+          class="status"
+          [ngClass]="orderEntity.cancelled ? 'status-red' : 'status-green'"
+          >{{ orderEntity.cancelled ? 'Cancelled' : 'Confirmed' }}</span
+        >
+      </p>
+      <p><strong>Order ID: </strong>{{ orderEntity.id }}</p>
+      <p>
+        <strong>Transaction Date: </strong>
         {{ orderEntity.transactionDateTime | date: 'medium' }}
       </p>
 
@@ -57,6 +65,24 @@
       <p><strong>Address:</strong> {{ orderEntity.address }}</p>
       <p><strong>Address Details:</strong> {{ orderEntity.addressDetails }}</p>
       <p><strong>Notes:</strong> {{ orderEntity.deliveryNote }}</p>
+      <div class="action-row" style="display: flex;">
+        <button
+          *ngIf="!orderEntity.cancelled"
+          mat-stroked-button
+          color="warn"
+          (click)="cancelOrder()"
+        >
+          Cancel order
+        </button>
+        <button
+          mat-raised-button
+          color="primary"
+          style="margin-left: auto;"
+          routerLink="/main"
+        >
+          Home Page
+        </button>
+      </div>
     </mat-card>
   </div>
 </div>

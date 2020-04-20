@@ -11,12 +11,15 @@ import java.util.Set;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import util.exception.CancelOrderException;
 import util.exception.CheckoutError;
 import util.exception.CustomerNotFoundException;
 import util.exception.OutletNotFoundException;
@@ -84,6 +87,21 @@ public class OrderSessionBean implements OrderSessionBeanLocal {
         Query q = em.createQuery("SELECT o FROM OrderEntity o WHERE o.outlet.outletId = :inOutletId ORDER BY o.transactionDateTime DESC");
         q.setParameter("inOutletId", outletId);
         return q.getResultList();
+    }
+
+    @Override
+    public OrderEntity cancelOrder(Long orderId) throws CancelOrderException {
+        try {
+            Query q = em.createQuery("SELECT o FROM OrderEntity o WHERE o.orderId = :inOrderId");
+            q.setParameter("inOrderId", orderId);
+
+            OrderEntity oe = (OrderEntity) q.getSingleResult();
+            oe.setCancelled(true);
+            return oe;
+            
+        } catch (NonUniqueResultException | NoResultException ex) {
+            throw new CancelOrderException(ex.getMessage());
+        }
     }
 
     private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<OrderEntity>> constraintViolations) {

@@ -7,7 +7,6 @@ import entity.Customer;
 import entity.Listing;
 import entity.OrderEntity;
 import entity.OrderLineItem;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,11 +19,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import util.exception.CancelOrderException;
 import util.exception.CheckoutError;
 import util.exception.CustomerNotFoundException;
 import util.exception.InputDataValidationException;
@@ -34,7 +35,6 @@ import util.exception.UnknownPersistenceException;
 import util.exception.UpdateCustomerException;
 import ws.restful.model.CheckoutItem;
 import ws.restful.model.CheckoutReq;
-import ws.restful.model.CheckoutResp;
 import ws.restful.model.CreateCustomerReq;
 import ws.restful.model.CreateCustomerResp;
 import ws.restful.model.CustomerLoginResp;
@@ -50,7 +50,6 @@ public class CustomerResource {
     private ListingSessionBeanLocal listingSessionBean = lookupListingSessionBeanLocal();
 
     private CustomerSessionBeanLocal customerSessionBeanLocal = lookupCustomerSessionBeanLocal();
-    
 
     @Context
     private UriInfo context;
@@ -171,8 +170,7 @@ public class CustomerResource {
                     oli.getListing().setIceOptions(null);
                     oli.getListing().setToppingOptions(null);
                 }
-                
-                
+
                 return Response.status(Response.Status.OK).entity(oe).build();
 
 //                CheckoutResp checkoutResp = new CheckoutResp("true");
@@ -180,7 +178,6 @@ public class CustomerResource {
             } catch (ListingNotFoundException | CheckoutError ex) {
                 ErrorResp errorResp = new ErrorResp(ex.getMessage());
                 return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorResp).build();
-
             }
         } else {
             ErrorResp errorResp = new ErrorResp("Invalid Request");
@@ -192,29 +189,53 @@ public class CustomerResource {
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response retrieveOrdersByCustomerId(@QueryParam("customerId") Long customerId)
-    {
+    public Response retrieveOrdersByCustomerId(@QueryParam("customerId") Long customerId) {
         System.out.println("retrieveOrdersByCustomerId entered");
         List<OrderEntity> orders = orderSessionBean.retrieveOrderHistoryByCustomerId(customerId);
         List<String> outletNames = new ArrayList<>();
         List<String> dates = new ArrayList<>();
-        
-        for (OrderEntity order : orders)
-        {
+
+        for (OrderEntity order : orders) {
             order.setCustomer(null);
             order.getOrderLineItems().clear();
             outletNames.add(order.getOutlet().getOutletName());
             dates.add((order.getTransactionDateTime().toString()));
             order.setOutlet(null);
         }
-        
+
         OrdersResp ordersResp = new OrdersResp(orders, outletNames, dates);
-        
+
         System.out.println(ordersResp);
         return Response.status(Response.Status.OK).entity(ordersResp).build();
-        
     }
-    
+
+    @Path("cancelOrder")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response cancelOrder(@QueryParam("orderId") Long orderId) {
+        System.out.println("API cancel order called ID: " + orderId);
+        try {
+            OrderEntity oe = orderSessionBean.cancelOrder(orderId);
+
+            oe.setCustomer(null);
+            oe.getOutlet().setRetailerEntity(null);
+            oe.getOutlet().setListings(null);
+            for (OrderLineItem oli : oe.getOrderLineItems()) {
+                oli.getListing().setOutletEntity(null);
+                oli.getListing().setCategory(null);
+                oli.getListing().setSizeOptions(null);
+                oli.getListing().setSugarOptions(null);
+                oli.getListing().setIceOptions(null);
+                oli.getListing().setToppingOptions(null);
+            }
+            return Response.status(Response.Status.OK).entity(oe).build();
+
+        } catch (CancelOrderException ex) {
+            ErrorResp errorResp = new ErrorResp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorResp).build();
+        }
+    }
+
     private CustomerSessionBeanLocal lookupCustomerSessionBeanLocal() {
         try {
             javax.naming.Context c = new InitialContext();

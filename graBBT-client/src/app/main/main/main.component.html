@@ -7,7 +7,16 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
   >
     <div class="sidenav-toolbar">
-      <mat-toolbar class="mat-elevation-z3">Cart</mat-toolbar>
+      <mat-toolbar class="mat-elevation-z3">
+        <mat-icon
+          style="position: relative; top: 0px; left: -160px; cursor: pointer;"
+          (click)="sidenavService.close()"
+          >close</mat-icon
+        >
+        <div>
+          Cart
+        </div>
+      </mat-toolbar>
       <!-- <mat-divider style="background-color: #BDBDBD;"></mat-divider> -->
     </div>
     <app-cart></app-cart>

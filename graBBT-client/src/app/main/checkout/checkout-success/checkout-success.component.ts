@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
+import { CartService } from 'src/app/services/cart/cart.service'
 
 @Component({
   selector: 'app-checkout-success',
@@ -9,11 +10,15 @@ import { Router } from '@angular/router'
 export class CheckoutSuccessComponent implements OnInit {
   orderEntity: any
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private cartService: CartService) {}
 
   ngOnInit() {
     // this.orderEntity = this.returnTestData()
-    // this.orderEntity.transactionDateTime = this.orderEntity.transactionDateTime.slice(0, -3)
+    // this.orderEntity.transactionDateTime = this.orderEntity.transactionDateTime.slice(
+    //   0,
+    //   -5
+    // )
+
     if (window.history.state.orderEntity != null) {
       this.orderEntity = window.history.state.orderEntity
       this.orderEntity.transactionDateTime = this.orderEntity.transactionDateTime.slice(
@@ -21,7 +26,7 @@ export class CheckoutSuccessComponent implements OnInit {
         -5
       )
 
-      console.log("HELLLLLOOOOOOOOO" + this.orderEntity.transactionDateTime)
+      console.log('HELLLLLOOOOOOOOO' + this.orderEntity.transactionDateTime)
     } else {
       this.router.navigate(['/error'], {
         state: {
@@ -31,14 +36,32 @@ export class CheckoutSuccessComponent implements OnInit {
     }
   }
 
+  cancelOrder() {
+    this.cartService.cancelOrder(this.orderEntity.orderId).subscribe(
+      resp => {
+        console.log(resp)
+        resp.transactionDateTime = resp.transactionDateTime.slice(0, -5)
+        this.orderEntity = resp
+      },
+      error => {
+        console.log(error)
+        this.router.navigate(['main/checkout/error'], {
+          state: {
+            error,
+          },
+        })
+      }
+    )
+  }
+
   returnTestData() {
     return {
       address: 'College Ave E',
       addressDetails: 'UTR',
-      cancelled: false,
+      cancelled: true,
       ccNum: '2167582376238476',
       deliveryNote: 'Meet me at the lobby',
-      id: 11,
+      orderId: 11,
       orderLineItems: [
         {
           itemOptions: ['Large', '0%', 'No Ice'],

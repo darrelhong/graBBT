@@ -126,6 +126,12 @@ export class CartService {
       .pipe(catchError(this.handleError))
   }
 
+  cancelOrder(orderId: number): Observable<any> {
+    return this.httpClient
+      .put(this.baseUrl + '/cancelOrder?orderId=' + orderId, {}, httpOptions)
+      .pipe(catchError(this.handleError))
+  }
+
   calculateCart(cart: Cart): Cart {
     let totalLineItem = 0
     let totalQuantity = 0

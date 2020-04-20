@@ -5,6 +5,7 @@ import entity.OrderLineItem;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Local;
+import util.exception.CancelOrderException;
 import util.exception.CheckoutError;
 
 /**
@@ -19,4 +20,6 @@ public interface OrderSessionBeanLocal {
     public List<OrderEntity> retrieveOrderHistoryByCustomerId(Long customerId);
 
     public List<OrderEntity> retrieveOrdersByOuletId(Long outletId);
+
+    public OrderEntity cancelOrder(Long orderId) throws CancelOrderException;
 }
