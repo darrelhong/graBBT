@@ -128,7 +128,7 @@ public class ListingSessionBean implements ListingSessionBeanLocal {
 
     @Override
     public String deleteListing(Long listingId) throws ListingNotFoundException {
-        System.out.println("ejb delete called");
+        
         Listing toDelete = retrieveListingById(listingId);
 
         Query q = em.createQuery("SELECT oli FROM OrderLineItem oli WHERE oli.listing.listingId = :inListingId");

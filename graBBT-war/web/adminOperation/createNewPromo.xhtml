@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/template/defaultTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">   
+    <h:head>
+        <title>Create New Promo</title>
+    </h:head>
+    <ui:define name="content">
+        <div>
+            <h:form id="formCreateNewPromo">
+                <h:outputText style="font-size: 20px" value="Create New Promo"/>&nbsp;
+                <p:messages id="messagesCreateNewPromo" redisplay="false" />
+                <br></br>
+                <p:panelGrid>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="promoCode" value="Promocode: " style="font-weight: bold;" />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="promoCode" value="#{createNewPromoManagedBean.newPromo.promoCode}" placeholder="promo code" maxlength="10" required="true" requiredMessage="Promocode is required" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="promoCode" />
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="value" value="Value: " style="font-weight: bold;" />
+                        </p:column>
+                        <p:column>
+                            <p:inputNumber id="value" value="#{createNewPromoManagedBean.newPromo.value}" minValue="0.10" placeholder="1.00" required="true" requiredMessage="Value is required" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="value" />
+                        </p:column>
+                    </p:row>
+                    
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="maxLimit" value="Max Limit: " style="font-weight: bold;" />
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="maxLimit" value="#{createNewPromoManagedBean.newPromo.maxLimit}" type="number" placeholder="max limit" required="true" requiredMessage="Max Limit is required" />
+                        </p:column>
+                        <p:column>
+                            <p:message for="maxLimit" />
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="3">
+                            <p:commandButton type="reset" value="Clear" />&nbsp;
+                            <p:commandButton value="Create New Promo" actionListener="#{createNewPromoManagedBean.createNewPromo}" update="@form"/>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
+

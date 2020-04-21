@@ -24,3 +24,14 @@
 mat-form-field {
   width: 100%;
 }
+
+.promo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-gap: 1rem;
+}
+
+.open-chip {
+  margin-left: auto;
+}
+
