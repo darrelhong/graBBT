@@ -8,11 +8,13 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import ejb.session.stateless.OutletSessionBeanLocal;
+import ejb.session.stateless.PromoSessionBeanLocal;
 import ejb.session.stateless.RetailerSessionBeanLocal;
 import entity.Customer;
 import entity.OrderEntity;
 import entity.OrderLineItem;
 import entity.OutletEntity;
+import entity.PromoEntity;
 import entity.RetailerEntity;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,6 +51,8 @@ public class GraBBTDataInitSessionBean {
     private OutletSessionBeanLocal outletSessionBean;
     @EJB
     private OrderSessionBeanLocal orderSessionBeanLocal;
+    @EJB
+    private PromoSessionBeanLocal promoSessionBeanLocal;
 
     @PersistenceContext(unitName = "graBBT-ejbPU")
     private EntityManager em;
@@ -409,6 +413,13 @@ public class GraBBTDataInitSessionBean {
             Listing lhCheezHOJingSyuanTeaOG = new Listing("CheezHO Jing Syuan Tea", new BigDecimal(3.40), lihoOG, "lhchjstea.jpeg", lhSizeOptions, lhSugarOptions, lhIceOptions, lhToppingOptions);
             listingSessionBean.createNewListing(lhCheezHOJingSyuanTeaOG);
 
+            //Creating promos
+            PromoEntity newPromo = new PromoEntity("TEST001", new BigDecimal(2.00), 5);
+            promoSessionBeanLocal.createNewPromo(newPromo);
+            newPromo = new PromoEntity("TEST002", new BigDecimal(2.50), 10);
+            promoSessionBeanLocal.createNewPromo(newPromo);
+            
+            
             // customer side of things
             Customer customer = new Customer("Customer 1", "customer", "password", "87654321", "address",
                     "qwerty@gmail.com");

@@ -1,0 +1,94 @@
+.page-container {
+  padding: 1.5rem 2rem;
+}
+
+.title-group {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.title-group h1 {
+  margin: 0;
+}
+
+.title-group mat-form-field {
+  min-width: 140px;
+}
+
+.filter.mat-form-field.mat-form-field {
+  margin-left: auto;
+  font-size: 14px;
+}
+
+/* ::ng-deep .mat-form-field-label {
+  color: #43a047;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-label {
+  color: #43a047;
+} */
+
+.title-group mat-form-field {
+  margin-left: 1rem;
+}
+
+.promo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-gap: 1rem;
+}
+
+.card-container {
+  text-decoration: none;
+}
+
+.promo-card {
+  max-width: 270px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.promo-card:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.disabled-card {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.disabled-card:hover {
+  background-color: white;
+}
+
+mat-card-header {
+  margin-top: -16px;
+  margin-left: -16px;
+  margin-right: -16px;
+  flex-grow: 1;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+mat-card-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 16px;
+  margin-bottom: 0;
+}
+
+.rating-text {
+  margin-left: 3px;
+}
+
+.open-chip {
+  margin-left: auto;
+}

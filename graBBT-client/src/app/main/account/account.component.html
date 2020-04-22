@@ -50,8 +50,27 @@
 
       <div>
         <h2>My Promos</h2>
+        <div class="promo-grid">
+          <mat-card *ngFor="let promo of walletPromos; let i = index">
+            <mat-card-header>
+              <mat-card-title>{{ promo.promoCode }}</mat-card-title>
+              <mat-card-subtitle>SGD {{ promo.value }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-chip-list class="open-chip">
+                <mat-chip
+                  (click)="useMe()"
+                  [color]="usedStatus[i] ? 'warn' : 'primary'"
+                  selected
+                  >{{ usedStatus[i] ? 'Claimed' : 'Use Me!' }}</mat-chip
+                >
+              </mat-chip-list>
+            </mat-card-content>
+          </mat-card>
+        </div>
       </div>
     </mat-tab>
+
     <mat-tab label="Orders">
       <div class="ongoing-orders">
         <h2>My Ongoing Orders</h2>
@@ -72,21 +91,22 @@
               </h4>
             </mat-panel-title>
 
-            <mat-panel-description *ngIf="order.cancelled" >  
+            <mat-panel-description *ngIf="order.cancelled">
               <p style="color:red">Cancelled</p>
             </mat-panel-description>
 
-            <mat-panel-description>  
-              <p>{{ order.totalQuantity }} item(s)  |  {{ order.address }}</p>
+            <mat-panel-description *ngIf="!order.cancelled">
+              <p style="color:#4CAF50">Confirmed</p>
             </mat-panel-description>
 
-            <mat-panel-description>  
+            <mat-panel-description>
+              <p>{{ order.totalQuantity }} item(s) | {{ order.address }}</p>
+            </mat-panel-description>
+
+            <mat-panel-description>
               <p>{{ dates[i] }}</p>
             </mat-panel-description>
-
           </mat-expansion-panel-header>
-  
-          
         </mat-expansion-panel>
       </div>
     </mat-tab>

@@ -7,12 +7,18 @@ package entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapKeyColumn;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -42,17 +48,30 @@ public class PromoEntity implements Serializable {
     @NotNull
     private boolean isActive;
     
+    @Column (nullable = false)
+    @NotNull
+    @Min(1)
+    private Integer maxLimit;
+    
+    @ElementCollection
+    @CollectionTable(name = "customerId_isUsed_map")
+    @MapKeyColumn(name = "customerId")
+    @Column(name = "isUsed")
+    private Map<Long, Boolean> customerUsedStatus; //number of keyvalue pairs is the total claim number
     //to implement link to outlets that it applies to
     //refer to tagentity for implementation
     //private List<Integer> outletIds;
 
     public PromoEntity() {
+        this.customerUsedStatus = new HashMap<>();
     }
 
-    public PromoEntity(String promoCode, BigDecimal value) {
+    public PromoEntity(String promoCode, BigDecimal value, Integer maxLimit) {
+        this();
         this.isActive = true;
         this.promoCode = promoCode;
         this.value = value;
+        this.maxLimit = maxLimit;
     }
     
    
@@ -89,6 +108,22 @@ public class PromoEntity implements Serializable {
     @Override
     public String toString() {
         return "entity.PromoEntity[ id=" + promoId + " ]";
+    }
+
+    public Integer getMaxLimit() {
+        return maxLimit;
+    }
+
+    public void setMaxLimit(Integer maxLimit) {
+        this.maxLimit = maxLimit;
+    }
+
+    public Map<Long, Boolean> getCustomerUsedStatus() {
+        return customerUsedStatus;
+    }
+
+    public void setCustomerUsedStatus(Map<Long, Boolean> customerUsedStatus) {
+        this.customerUsedStatus = customerUsedStatus;
     }
 
     public String getPromoCode() {
