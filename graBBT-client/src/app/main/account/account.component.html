@@ -59,7 +59,7 @@
             <mat-card-content>
               <mat-chip-list class="open-chip">
                 <mat-chip
-                  (click) = useMe()
+                  (click)="useMe()"
                   [color]="usedStatus[i] ? 'warn' : 'primary'"
                   selected
                   >{{ usedStatus[i] ? 'Claimed' : 'Use Me!' }}</mat-chip
@@ -93,6 +93,10 @@
 
             <mat-panel-description *ngIf="order.cancelled">
               <p style="color:red">Cancelled</p>
+            </mat-panel-description>
+
+            <mat-panel-description *ngIf="!order.cancelled">
+              <p style="color:#4CAF50">Confirmed</p>
             </mat-panel-description>
 
             <mat-panel-description>
