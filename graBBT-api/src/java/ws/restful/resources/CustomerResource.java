@@ -31,6 +31,7 @@ import util.exception.CustomerNotFoundException;
 import util.exception.InputDataValidationException;
 import util.exception.InvalidLoginCredentialException;
 import util.exception.ListingNotFoundException;
+import util.exception.OrderNotFoundException;
 import util.exception.UnknownPersistenceException;
 import util.exception.UpdateCustomerException;
 import ws.restful.model.CheckoutItem;
@@ -255,6 +256,37 @@ public class CustomerResource {
         } catch (CancelOrderException ex) {
             ErrorResp errorResp = new ErrorResp(ex.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorResp).build();
+        }
+    }
+
+    @Path("retrieveOrderByOrderId")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response retrieveOrderByOrderId(@QueryParam("orderId") Long orderId,
+            @QueryParam("customerId") Long customerId) {
+        try {
+            OrderEntity oe = orderSessionBean.retrieveOrderByOrderId(orderId);
+            if (oe.getCustomer().getCustomerId().equals(customerId)) {
+                oe.setCustomer(null);
+                oe.getOutlet().setRetailerEntity(null);
+                oe.getOutlet().setListings(null);
+                for (OrderLineItem oli : oe.getOrderLineItems()) {
+                    oli.getListing().setOutletEntity(null);
+                    oli.getListing().setCategory(null);
+                    oli.getListing().setSizeOptions(null);
+                    oli.getListing().setSugarOptions(null);
+                    oli.getListing().setIceOptions(null);
+                    oli.getListing().setToppingOptions(null);
+                }
+                return Response.status(Response.Status.OK).entity(oe).build();
+
+            } else {
+                ErrorResp errorResp = new ErrorResp("Credential mismatch");
+                return Response.status(Status.UNAUTHORIZED).entity(errorResp).build();
+            }
+        } catch (OrderNotFoundException ex) {
+            ErrorResp errorResp = new ErrorResp(ex.getMessage());
+            return Response.status(Status.BAD_REQUEST).entity(errorResp).build();
         }
     }
 

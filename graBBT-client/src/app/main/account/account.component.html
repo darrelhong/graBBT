@@ -4,7 +4,7 @@
   <mat-tab-group mat-align-tabs="center">
     <mat-tab label="Account Details">
       <h2>My Account Details</h2>
-      <mat-card style="max-width: 600px;">
+      <mat-card style="max-width: 600px; margin-bottom: 10px;">
         <mat-list role="list">
           <mat-list-item role="listitem"
             ><strong>Name:</strong>&nbsp;
@@ -123,35 +123,37 @@
 
       <div class="order-history">
         <h2>My Order History</h2>
-
-        <mat-expansion-panel *ngFor="let order of orders; let i = index">
-          <mat-expansion-panel-header
-            [collapsedHeight]="'80px'"
-            [expandedHeight]="'300px'"
-          >
-            <mat-panel-title>
-              <h4>
-                <b>Delivery from {{ outletNames[i] }}</b>
+        <mat-card class="mat-elevation-z2" style="margin-bottom: 10px;">
+          <mat-nav-list style="background-color: white; padding-top: 0px;">
+            <a
+              [routerLink]="['/main/order-details', order.orderId]"
+              mat-list-item
+              *ngFor="let order of orders; let i = index; let last = last"
+              style="display: flex; min-height: 60px; height: auto;"
+            >
+              <h4 style="flex: 2 1 0;">
+                <b>Order from {{ outletNames[i] }}</b>
               </h4>
-            </mat-panel-title>
+              <div class="status" *ngIf="order.cancelled">
+                <p style="color:red">Cancelled</p>
+              </div>
 
-            <mat-panel-description *ngIf="order.cancelled">
-              <p style="color:red">Cancelled</p>
-            </mat-panel-description>
+              <div class="status" *ngIf="!order.cancelled">
+                <p style="color:#4CAF50">Confirmed</p>
+              </div>
 
-            <mat-panel-description *ngIf="!order.cancelled">
-              <p style="color:#4CAF50">Confirmed</p>
-            </mat-panel-description>
+              <div style="flex: 2 1 0;">
+                <p>{{ order.totalQuantity }} item(s) | {{ order.address }}</p>
+              </div>
 
-            <mat-panel-description>
-              <p>{{ order.totalQuantity }} item(s) | {{ order.address }}</p>
-            </mat-panel-description>
-
-            <mat-panel-description>
-              <p>{{ dates[i] }}</p>
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-        </mat-expansion-panel>
+              <div style="flex: 1 1 0;">
+                <p>{{ dates[i] }}</p>
+              </div>
+              <mat-icon class="material-icons-round">navigate_next</mat-icon>
+              <mat-divider *ngIf="!last"></mat-divider>
+            </a>
+          </mat-nav-list>
+        </mat-card>
       </div>
     </mat-tab>
   </mat-tab-group>

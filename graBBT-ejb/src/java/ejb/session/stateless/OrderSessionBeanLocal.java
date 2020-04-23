@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ejb.Local;
 import util.exception.CancelOrderException;
 import util.exception.CheckoutError;
+import util.exception.OrderNotFoundException;
 
 /**
  *
@@ -22,4 +23,6 @@ public interface OrderSessionBeanLocal {
     public List<OrderEntity> retrieveOrdersByOuletId(Long outletId);
 
     public OrderEntity cancelOrder(Long orderId) throws CancelOrderException;
+
+    public OrderEntity retrieveOrderByOrderId(Long orderId) throws OrderNotFoundException;
 }

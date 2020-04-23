@@ -8,6 +8,7 @@
             <web-module-libraries>
                 <library dirs="200">
                     <file>${libs.javaee-web-api-7.0.classpath}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${libs.PrimeFaces_7.0.classpath}</file>
@@ -15,7 +16,6 @@
                 </library>
                 <library dirs="100">
                     <file>${reference.graBBT-ejb.dist}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
             <web-module-additional-libraries/>

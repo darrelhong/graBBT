@@ -33,26 +33,26 @@ public class PromoEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long promoId;
-    
+
     @Column(nullable = false, length = 10)
     @NotNull
-    @Size(max = 10, min= 6)
+    @Size(max = 10, min = 6)
     private String promoCode;
-    
+
     @Column(nullable = false, precision = 11, scale = 2)
     @NotNull
     @DecimalMin("0.00")
     private BigDecimal value; //using single value for now. To expand into percentage value option etc.
-    
+
     @Column(nullable = false)
     @NotNull
     private boolean isActive;
-    
-    @Column (nullable = false)
+
+    @Column(nullable = false)
     @NotNull
     @Min(1)
     private Integer maxLimit;
-    
+
     @ElementCollection
     @CollectionTable(name = "customerId_isUsed_map")
     @MapKeyColumn(name = "customerId")
@@ -73,8 +73,7 @@ public class PromoEntity implements Serializable {
         this.value = value;
         this.maxLimit = maxLimit;
     }
-    
-   
+
     public Long getPromoId() {
         return promoId;
     }
@@ -82,9 +81,7 @@ public class PromoEntity implements Serializable {
     public void setPromoId(Long promoId) {
         this.promoId = promoId;
     }
-    
-    
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -149,5 +146,5 @@ public class PromoEntity implements Serializable {
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
     }
-    
+
 }

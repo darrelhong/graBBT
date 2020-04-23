@@ -18,9 +18,10 @@ import {
   ItemDialogComponent,
 } from './components/landingpage/landingpage.component'
 import { AccountSheetComponent } from './components/account-sheet/account-sheet.component'
-import { MainModule } from './main/main.module';
-import { ErrorComponent } from './components/error/error.component';
-import { PromoComponent } from './main/promo/promo.component';
+import { MainModule } from './main/main.module'
+import { ErrorComponent } from './components/error/error.component'
+import { PromoComponent } from './main/promo/promo.component'
+import { CancelDialogComponent } from './components/cancel-dialog/cancel-dialog.component'
 
 @NgModule({
   declarations: [

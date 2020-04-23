@@ -1,0 +1,93 @@
+.page-container {
+  padding: 1rem 1rem 1rem 1rem;
+  display: flex;
+}
+
+.center {
+  width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-card-title {
+  font-size: 18px;
+}
+
+.status {
+  color: white;
+  border-radius: 16px;
+  padding: 3px 7px;
+}
+
+.status-green {
+  background-color: #43a047;
+}
+
+.status-red {
+  background-color: #f44336;
+}
+.cart-item-details {
+  display: flex;
+  padding: 1rem 0rem;
+}
+
+.cart-item-details img {
+  max-width: 64px;
+  max-height: 64px;
+  border-radius: 5px;
+}
+
+.details-group {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.8rem;
+}
+
+.item-name {
+  font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+
+.option {
+  color: #757575;
+  font-size: 15px;
+}
+
+.price-group {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.quantity {
+  font-size: 0.9rem;
+  background-color: #673ab7;
+  color: white;
+  border-radius: 16px;
+  padding: 5px 10px;
+}
+
+.price {
+  margin-top: auto;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.total-group {
+  padding: 1rem 0rem;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.total-price {
+  margin-left: auto;
+}
+
+.payment-group {
+  padding: 1rem 0rem;
+  font-weight: 500;
+}

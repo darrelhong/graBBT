@@ -25,6 +25,8 @@ import {
 import { CheckoutComponent } from './checkout/checkout.component'
 import { CheckoutSuccessComponent } from './checkout/checkout-success/checkout-success.component'
 import { CheckoutErrorComponent } from './checkout/checkout-error/checkout-error.component'
+import { OrderDetailsComponent } from './account/order-details/order-details.component'
+import { CancelDialogComponent } from '../components/cancel-dialog/cancel-dialog.component'
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { CheckoutErrorComponent } from './checkout/checkout-error/checkout-error
     CheckoutComponent,
     CheckoutSuccessComponent,
     CheckoutErrorComponent,
+    OrderDetailsComponent,
+    CancelDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -51,6 +55,10 @@ import { CheckoutErrorComponent } from './checkout/checkout-error/checkout-error
     MatProgressBarModule,
     MatExpansionModule,
   ],
-  entryComponents: [DialogListingComponent, ConfirmDialogComponent],
+  entryComponents: [
+    DialogListingComponent,
+    ConfirmDialogComponent,
+    CancelDialogComponent,
+  ],
 })
 export class MainModule {}

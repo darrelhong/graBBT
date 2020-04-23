@@ -84,6 +84,19 @@ export class CustomerService {
       .pipe(catchError(this.handleError))
   }
 
+  retrieveOrderByOrderId(orderId: string): Observable<any> {
+    const customerId = this.sessionService.getCurrentCustomer().customerId
+    return this.httpClient
+      .get<any>(
+        this.baseUrl +
+          '/retrieveOrderByOrderId?orderId=' +
+          orderId +
+          '&customerId=' +
+          customerId
+      )
+      .pipe(catchError(this.handleError))
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = ''
 

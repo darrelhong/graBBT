@@ -2,7 +2,6 @@
   padding: 0rem 2rem;
 }
 
-
 .account-container button {
   margin-top: 1rem;
 }
@@ -11,14 +10,12 @@
   color: red;
 }
 
-.mat-expansion-panel-header-title,
-.mat-expansion-panel-header-description {
-  flex-basis: 200px;
+::ng-deep .mat-list-item-content {
+  width: 100%;
 }
 
-.mat-expansion-panel-header-description {
-  justify-content: space-between;
-  align-items: center;
+.status {
+  flex: 1 1 0;
 }
 
 mat-form-field {
@@ -34,4 +31,3 @@ mat-form-field {
 .open-chip {
   margin-left: auto;
 }
-

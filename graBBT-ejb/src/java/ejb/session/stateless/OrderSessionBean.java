@@ -22,6 +22,7 @@ import javax.validation.ValidatorFactory;
 import util.exception.CancelOrderException;
 import util.exception.CheckoutError;
 import util.exception.CustomerNotFoundException;
+import util.exception.OrderNotFoundException;
 import util.exception.OutletNotFoundException;
 
 @Stateless
@@ -83,6 +84,17 @@ public class OrderSessionBean implements OrderSessionBeanLocal {
     }
 
     @Override
+    public OrderEntity retrieveOrderByOrderId(Long orderId) throws OrderNotFoundException {
+        OrderEntity oe = em.find(OrderEntity.class, orderId);
+
+        if (oe != null) {
+            return oe;
+        } else {
+            throw new OrderNotFoundException("Order with ID " + orderId + " not found!");
+        }
+    }
+
+    @Override
     public List<OrderEntity> retrieveOrderHistoryByCustomerId(Long customerId) {
         Query q = em.createQuery("SELECT o FROM OrderEntity o WHERE o.customer.customerId = :inCustomerId ORDER BY o.transactionDateTime DESC");
         q.setParameter("inCustomerId", customerId);
@@ -105,7 +117,7 @@ public class OrderSessionBean implements OrderSessionBeanLocal {
             OrderEntity oe = (OrderEntity) q.getSingleResult();
             oe.setCancelled(true);
             return oe;
-            
+
         } catch (NonUniqueResultException | NoResultException ex) {
             throw new CancelOrderException(ex.getMessage());
         }
