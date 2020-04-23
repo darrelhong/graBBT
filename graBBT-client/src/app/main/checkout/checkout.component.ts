@@ -6,6 +6,7 @@ import { Router } from '@angular/router'
 import { map, catchError } from 'rxjs/operators'
 import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { throwError } from 'rxjs'
+import { CustomerService } from 'src/app/services/customer/customer.service'
 
 @Component({
   selector: 'app-checkout',
@@ -34,6 +35,7 @@ export class CheckoutComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
+    private customerService: CustomerService,
     private fb: FormBuilder,
     private router: Router,
     private httpClient: HttpClient
@@ -76,6 +78,8 @@ export class CheckoutComponent implements OnInit {
           console.log(resp)
           this.showCheckout = false
           this.cartService.clearCart()
+
+          this.customerService.refreshCustomer() //to update the customer in the model (reflect new bb points)
           this.router.navigate(['/main/checkout/success'], {
             state: {
               orderEntity: resp,

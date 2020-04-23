@@ -57,7 +57,14 @@ public class OrderSessionBean implements OrderSessionBeanLocal {
             Set<ConstraintViolation<OrderEntity>> constraintViolations = validator.validate(oe);
 
             if (constraintViolations.isEmpty()) {
-
+                
+                //add bb-points
+                int pointsConverted = (int) Math.floor(oe.getTotalAmount().doubleValue());
+                System.out.println("customer earned " + pointsConverted + "bb points from transaction");
+                
+                int currentPoints = oe.getCustomer().getBbPoints();
+                oe.getCustomer().setBbPoints(currentPoints + pointsConverted);
+                
                 em.persist(oe);
             } else {
                 throw new CheckoutError(prepareInputDataValidationErrorsMessage(constraintViolations));

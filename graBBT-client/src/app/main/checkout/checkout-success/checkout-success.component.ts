@@ -9,22 +9,18 @@ import { CartService } from 'src/app/services/cart/cart.service'
 })
 export class CheckoutSuccessComponent implements OnInit {
   orderEntity: any
+  bbPointsEarned: number
 
   constructor(private router: Router, private cartService: CartService) {}
 
   ngOnInit() {
-    // this.orderEntity = this.returnTestData()
-    // this.orderEntity.transactionDateTime = this.orderEntity.transactionDateTime.slice(
-    //   0,
-    //   -5
-    // )
-
     if (window.history.state.orderEntity != null) {
       this.orderEntity = window.history.state.orderEntity
       this.orderEntity.transactionDateTime = this.orderEntity.transactionDateTime.slice(
         0,
         -5
       )
+      this.bbPointsEarned = Math.floor(this.orderEntity.totalAmount)
 
       console.log('HELLLLLOOOOOOOOO' + this.orderEntity.transactionDateTime)
     } else {

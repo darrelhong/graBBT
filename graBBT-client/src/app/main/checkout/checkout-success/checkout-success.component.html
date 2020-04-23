@@ -65,6 +65,10 @@
       <p><strong>Address:</strong> {{ orderEntity.address }}</p>
       <p><strong>Address Details:</strong> {{ orderEntity.addressDetails }}</p>
       <p><strong>Notes:</strong> {{ orderEntity.deliveryNote }}</p>
+      
+      <p style="font-size: 18px;">
+        <strong>BB Points earned:</strong> {{bbPointsEarned}}
+      </p>
       <div class="action-row" style="display: flex;">
         <button
           *ngIf="!orderEntity.cancelled"

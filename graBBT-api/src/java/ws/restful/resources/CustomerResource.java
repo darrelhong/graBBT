@@ -40,6 +40,7 @@ import ws.restful.model.CreateCustomerResp;
 import ws.restful.model.CustomerLoginResp;
 import ws.restful.model.ErrorResp;
 import ws.restful.model.OrdersResp;
+import ws.restful.model.RefreshCustomerResp;
 import ws.restful.model.UpdatedCustomerReq;
 
 @Path("Customer")
@@ -207,6 +208,27 @@ public class CustomerResource {
 
         System.out.println(ordersResp);
         return Response.status(Response.Status.OK).entity(ordersResp).build();
+    }
+    
+    @Path("refreshCustomer")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response refreshCustomer(@QueryParam("customerId") Long customerId)
+    {
+        System.out.println("refreshCustomer entered");
+        
+        try {
+            Customer refreshedCustomer = customerSessionBeanLocal.retrieveCustomerById(customerId);
+            RefreshCustomerResp refreshCustomerResp = new RefreshCustomerResp(refreshedCustomer);
+            
+            return Response.status(Response.Status.OK).entity(refreshCustomerResp).build();
+        }
+        catch (CustomerNotFoundException ex){
+            ErrorResp errorResp = new ErrorResp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorResp).build();
+        }
+        
     }
 
     @Path("cancelOrder")

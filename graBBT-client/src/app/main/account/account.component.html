@@ -7,23 +7,38 @@
       <mat-card style="max-width: 600px;">
         <mat-list role="list">
           <mat-list-item role="listitem"
-            >Name: {{ currentCustomer.name }}</mat-list-item
+            ><strong>Name:</strong>&nbsp;
+            {{ currentCustomer.name }}</mat-list-item
           >
           <mat-list-item role="listitem"
-            >Username: {{ currentCustomer.username }}</mat-list-item
+            ><strong>Username:</strong>&nbsp;
+            {{ currentCustomer.username }}</mat-list-item
           >
           <mat-list-item role="listitem"
-            >Phone Number: {{ currentCustomer.phoneNumber }}</mat-list-item
+            ><strong>Phone Number:</strong>&nbsp;
+            {{ currentCustomer.phoneNumber }}</mat-list-item
           >
           <mat-list-item role="listitem"
-            >Address: {{ currentCustomer.address }}</mat-list-item
+            ><strong>Address:</strong>&nbsp;
+            {{ currentCustomer.address }}</mat-list-item
           >
           <mat-list-item role="listitem"
-            >Email: {{ currentCustomer.email }}</mat-list-item
+            ><strong>Email:</strong>&nbsp;
+            {{ currentCustomer.email }}</mat-list-item
           >
           <mat-list-item role="listitem"
-            >BB Points: {{ currentCustomer.bbPoints }}</mat-list-item
-          >
+            ><strong>BB Points:</strong>&nbsp; {{ currentCustomer.bbPoints }} |
+            tier:&nbsp;
+            <span *ngIf="tier == 'BB-Green'" style="color: green">
+              <i>{{ tier }}</i>
+            </span>
+            <span *ngIf="tier == 'BB-Silver'" style="color: darkgray">
+              <i>{{ tier }}</i>
+            </span>
+            <span *ngIf="tier == 'BB-Gold'" style="color: goldenrod">
+              <i>{{ tier }}</i> </span
+            >&nbsp;
+          </mat-list-item>
           <mat-list-item role="listitem">
             <mat-progress-bar
               mode="determinate"
@@ -46,11 +61,40 @@
     <mat-tab label="Wallet">
       <div>
         <h2>My BB Points</h2>
+        <div class="points-grid">
+          <mat-progress-bar
+            mode="determinate"
+            value="{{ currentCustomer.bbPoints }}"
+          ></mat-progress-bar>
+          <br />
+          <mat-card>
+          <p>
+            <strong>BB Points:</strong>&nbsp; {{currentCustomer.bbPoints}}
+          </p>
+          <p>
+            <strong>Tier:</strong>&nbsp;
+            <span *ngIf="tier == 'BB-Green'" style="color: green">
+              <i>{{ tier }}</i>
+            </span>
+            <span *ngIf="tier == 'BB-Silver'" style="color: darkgray">
+              <i>{{ tier }}</i>
+            </span>
+            <span *ngIf="tier == 'BB-Gold'" style="color: goldenrod">
+              <i>{{ tier }}</i> </span
+            >&nbsp;
+          </p>
+          <p>{{ tierMessage }}</p>
+          </mat-card>
+          
+        </div>
       </div>
+
+      <mat-divider></mat-divider>
 
       <div>
         <h2>My Promos</h2>
         <div class="promo-grid">
+          <p>{{promoMessage}}</p>
           <mat-card *ngFor="let promo of walletPromos; let i = index">
             <mat-card-header>
               <mat-card-title>{{ promo.promoCode }}</mat-card-title>

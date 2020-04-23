@@ -20,7 +20,10 @@ const httpOptions = {
 export class CustomerService {
   baseUrl = '/api/Customer'
 
-  constructor(private httpClient: HttpClient, private sessionService: SessionService) {}
+  constructor(
+    private httpClient: HttpClient,
+    private sessionService: SessionService
+  ) {}
 
   customerLogin(username: string, password: string): Observable<any> {
     return this.httpClient
@@ -32,25 +35,6 @@ export class CustomerService {
           password
       )
       .pipe(catchError(this.handleError))
-
-    // if (username === 'customer' && password === 'password') {
-    //   return of({
-    //     customer: JSON.stringify(
-    //       new Customer(
-    //         1,
-    //         'Customer 1',
-    //         'customer',
-    //         'password',
-    //         '87654321',
-    //         'Addeess 1',
-    //         'email@gmail.com',
-    //         0
-    //       )
-    //     ),
-    //   })
-    // } else {
-    //   return throwError('error')
-    // }
   }
 
   signUp(newCustomer: Customer): Observable<any> {
@@ -59,14 +43,32 @@ export class CustomerService {
     }
     // send post request
     return this.httpClient
-      .post<any>(this.baseUrl + '/createNewCustomer', createCustReq, httpOptions)
+      .post<any>(
+        this.baseUrl + '/createNewCustomer',
+        createCustReq,
+        httpOptions
+      )
       .pipe(catchError(this.handleError))
+  }
 
+  refreshCustomer(): void {
+    const customerId = this.sessionService.getCurrentCustomer().customerId
+    this.httpClient
+      .get<any>(this.baseUrl + '/refreshCustomer?customerId=' + customerId)
+      .pipe(catchError(this.handleError))
+      .subscribe(
+        resp => {
+          this.sessionService.setCurrentCustomer(resp.refreshedCustomer)
+        },
+        error => {
+          console.log('refreshCustomer() encountered an error')
+        }
+      )
   }
 
   updateCustomer(updatedCustomer: Customer): Observable<any> {
     const custUpdateReq = {
-      "updatedCustomer": updatedCustomer,
+      updatedCustomer: updatedCustomer,
     }
 
     return this.httpClient
