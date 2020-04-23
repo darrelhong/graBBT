@@ -20,7 +20,10 @@ const httpOptions = {
 export class CustomerService {
   baseUrl = '/api/Customer'
 
-  constructor(private httpClient: HttpClient, private sessionService: SessionService) {}
+  constructor(
+    private httpClient: HttpClient,
+    private sessionService: SessionService
+  ) {}
 
   customerLogin(username: string, password: string): Observable<any> {
     return this.httpClient
@@ -59,14 +62,17 @@ export class CustomerService {
     }
     // send post request
     return this.httpClient
-      .post<any>(this.baseUrl + '/createNewCustomer', createCustReq, httpOptions)
+      .post<any>(
+        this.baseUrl + '/createNewCustomer',
+        createCustReq,
+        httpOptions
+      )
       .pipe(catchError(this.handleError))
-
   }
 
   updateCustomer(updatedCustomer: Customer): Observable<any> {
     const custUpdateReq = {
-      "updatedCustomer": updatedCustomer,
+      updatedCustomer: updatedCustomer,
     }
 
     return this.httpClient
@@ -79,6 +85,19 @@ export class CustomerService {
 
     return this.httpClient
       .get<any>(this.baseUrl + '/retrieveOrders?customerId=' + customerId)
+      .pipe(catchError(this.handleError))
+  }
+
+  retrieveOrderByOrderId(orderId: string): Observable<any> {
+    const customerId = this.sessionService.getCurrentCustomer().customerId
+    return this.httpClient
+      .get<any>(
+        this.baseUrl +
+          '/retrieveOrderByOrderId?orderId=' +
+          orderId +
+          '&customerId=' +
+          customerId
+      )
       .pipe(catchError(this.handleError))
   }
 

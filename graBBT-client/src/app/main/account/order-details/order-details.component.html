@@ -1,8 +1,6 @@
 <div class="page-container">
   <div class="center">
-    <h2>Order {{ orderEntity.cancelled ? 'cancelled' : 'confirmed' }}!</h2>
-
-    <mat-card>
+    <mat-card *ngIf="orderEntity">
       <mat-card-title style="font-size: 18px;"
         >Your order from {{ orderEntity.outlet.outletName }}</mat-card-title
       >
@@ -70,7 +68,7 @@
           *ngIf="!orderEntity.cancelled"
           mat-stroked-button
           color="warn"
-          (click)="cancelOrder()"
+          (click)="cancelDialog()"
         >
           Cancel order
         </button>

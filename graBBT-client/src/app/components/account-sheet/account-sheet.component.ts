@@ -33,7 +33,6 @@ export class AccountSheetComponent implements OnInit {
     //this.closeSheetEvent.emit //goes to parent (main component)
     this.bottomSheetRef.dismiss()
     event.preventDefault()
-    this.router.navigate(['main/account'])
+    this.router.navigate(['/main/account'])
   }
-
 }

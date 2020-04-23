@@ -28,6 +28,7 @@ export class ListingsComponent implements OnInit {
   selectedListing: Listing
   outlet: Outlet
   mapSrc: SafeResourceUrl
+  searchTerm = ''
 
   constructor(
     private listingService: ListingService,
@@ -90,14 +91,27 @@ export class ListingsComponent implements OnInit {
           return 0
         }
       })
+    } else if (sortBy === 'price') {
+      this.listings.sort((a, b) => {
+        if (a.basePrice > b.basePrice) {
+          return 1
+        } else if (a.basePrice < b.basePrice) {
+          return -1
+        } else {
+          return 0
+        }
+      })
     }
+    this.filteredListings = this.listings.filter(l => {
+      return l.name.toLowerCase().includes(this.searchTerm)
+    })
   }
 
   filter(event) {
     // console.log(event.target.value)
-    const term = event.target.value.toLowerCase()
+    this.searchTerm = event.target.value.toLowerCase()
     this.filteredListings = this.listings.filter(l => {
-      return l.name.toLowerCase().includes(term)
+      return l.name.toLowerCase().includes(this.searchTerm)
     })
   }
 }
