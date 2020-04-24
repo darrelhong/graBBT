@@ -68,33 +68,32 @@
           ></mat-progress-bar>
           <br />
           <mat-card>
-          <p>
-            <strong>BB Points:</strong>&nbsp; {{currentCustomer.bbPoints}}
-          </p>
-          <p>
-            <strong>Tier:</strong>&nbsp;
-            <span *ngIf="tier == 'BB-Green'" style="color: green">
-              <i>{{ tier }}</i>
-            </span>
-            <span *ngIf="tier == 'BB-Silver'" style="color: darkgray">
-              <i>{{ tier }}</i>
-            </span>
-            <span *ngIf="tier == 'BB-Gold'" style="color: goldenrod">
-              <i>{{ tier }}</i> </span
-            >&nbsp;
-          </p>
-          <p>{{ tierMessage }}</p>
+            <p>
+              <strong>BB Points:</strong>&nbsp; {{ currentCustomer.bbPoints }}
+            </p>
+            <p>
+              <strong>Tier:</strong>&nbsp;
+              <span *ngIf="tier == 'BB-Green'" style="color: green">
+                <i>{{ tier }}</i>
+              </span>
+              <span *ngIf="tier == 'BB-Silver'" style="color: darkgray">
+                <i>{{ tier }}</i>
+              </span>
+              <span *ngIf="tier == 'BB-Gold'" style="color: goldenrod">
+                <i>{{ tier }}</i> </span
+              >&nbsp;
+            </p>
+            <p>{{ tierMessage }}</p>
           </mat-card>
-          
         </div>
       </div>
 
       <mat-divider></mat-divider>
 
-      <div>
+      <div style="margin-bottom: 5px;">
         <h2>My Promos</h2>
+        <p>{{ promoMessage }}</p>
         <div class="promo-grid">
-          <p>{{promoMessage}}</p>
           <mat-card *ngFor="let promo of walletPromos; let i = index">
             <mat-card-header>
               <mat-card-title>{{ promo.promoCode }}</mat-card-title>

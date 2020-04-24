@@ -59,22 +59,30 @@
         </span>
       </div>
 
+      <p>
+        <span
+          style="color: #ffffff; background-color: #43a047; padding: 2px 5px; border-radius: 3px;"
+          >BBPoints</span
+        >
+        earned:
+        <strong>
+          {{ bbPointsEarned }}
+        </strong>
+      </p>
+
       <p style="font-size: 18px;">
         <strong>Delivery details</strong>
       </p>
       <p><strong>Address:</strong> {{ orderEntity.address }}</p>
       <p><strong>Address Details:</strong> {{ orderEntity.addressDetails }}</p>
       <p><strong>Notes:</strong> {{ orderEntity.deliveryNote }}</p>
-      
-      <p style="font-size: 18px;">
-        <strong>BB Points earned:</strong> {{bbPointsEarned}}
-      </p>
+
       <div class="action-row" style="display: flex;">
         <button
           *ngIf="!orderEntity.cancelled"
           mat-stroked-button
           color="warn"
-          (click)="cancelOrder()"
+          (click)="cancelDialog()"
         >
           Cancel order
         </button>
