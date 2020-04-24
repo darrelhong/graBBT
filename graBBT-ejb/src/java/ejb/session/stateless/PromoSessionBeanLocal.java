@@ -21,9 +21,11 @@ import util.exception.UnknownPersistenceException;
 public interface PromoSessionBeanLocal {
     public PromoEntity createNewPromo(PromoEntity newPromoEntity) throws UnknownPersistenceException, InputDataValidationException;
     public List<PromoEntity> retrieveAllActivePromos(); 
+    public List<PromoEntity> retrieveAllPromos();
     public void deactivatePromo(Long promoId) throws PromoNotFoundException;
     public PromoEntity retrievePromoById(Long promoId) throws PromoNotFoundException;
     public void updatePromo(PromoEntity promo) throws InputDataValidationException, PromoNotFoundException;
     public void customerClaimsPromo(Long customerId, Long promoId) throws PromoNotFoundException, PromoClaimedByCustomerAlreadyException;
     public List<PromoEntity> retrievePromosInCustomerWallet(Long customerId);
+    
 }

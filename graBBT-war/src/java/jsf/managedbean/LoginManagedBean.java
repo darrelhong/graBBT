@@ -47,6 +47,10 @@ public class LoginManagedBean {
     public void accountRedirect (ActionEvent event) throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/systemOperation/viewMyAccount.xhtml");
     }
+    
+    public void homepageRedirect(ActionEvent event) throws IOException {
+        FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath() + "/index.xhtml");
+    }
     /**
      * @return the username
      */

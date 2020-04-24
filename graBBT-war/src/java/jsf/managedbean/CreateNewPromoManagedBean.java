@@ -38,6 +38,7 @@ public class CreateNewPromoManagedBean implements Serializable {
     {
         try
         {
+            newPromo.setIsActive(true);
             PromoEntity createdPromo = promoSessionBeanLocal.createNewPromo(newPromo);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "New promo created successfully (Promo ID: " + createdPromo.getPromoId() + ", Promo Code: " + createdPromo.getPromoCode() + " )", null));
         } 

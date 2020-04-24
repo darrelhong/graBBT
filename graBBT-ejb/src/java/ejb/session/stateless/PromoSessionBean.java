@@ -69,7 +69,14 @@ public class PromoSessionBean implements PromoSessionBeanLocal {
         //retrieve all available ones only
         Query q = em.createQuery("SELECT p FROM PromoEntity p WHERE p.isActive = TRUE");
         return q.getResultList();
-        
+    }
+    
+    @Override 
+    public List<PromoEntity> retrieveAllPromos()
+    {
+        //retrieve ALL 
+        Query q = em.createQuery("SELECT p FROM PromoEntity p");
+        return q.getResultList();
     }
     
     @Override
@@ -87,7 +94,7 @@ public class PromoSessionBean implements PromoSessionBeanLocal {
     {
        System.out.println("PromoSessionBean: RetrievePromosInCustomerWallet");
        
-       Query q = em.createQuery("SELECT p FROM PromoEntity p JOIN p.customerUsedStatus map WHERE KEY(map) = :inCustomerId");
+       Query q = em.createQuery("SELECT p FROM PromoEntity p JOIN p.customerUsedStatus map WHERE KEY(map) = :inCustomerId AND p.isActive = TRUE");
        q.setParameter("inCustomerId", customerId);
        
        return q.getResultList();

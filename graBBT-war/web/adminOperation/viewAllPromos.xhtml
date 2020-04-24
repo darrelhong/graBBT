@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/template/defaultTemplate.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui">   
+    <h:head>
+        <title>View All Promos</title>
+    </h:head>
+    <ui:define name="content">
+        <div>
+            <h:form id="viewAllPromosForm">
+                 
+                <h:outputText style="font-size: 20px" value="View All Promos"/>&nbsp;
+                <p:messages id="messagesViewAllPromos" redisplay="false" />
+                <br></br>
+                
+                <p:dataTable id="dataTableAllPromos" value="#{viewAllPromosManagedBean.promos}" var="promo" style="width: 100%;">
+                    <p:column>			
+                        <f:facet name="header">Promo ID</f:facet>
+                        <h:outputText value="#{promo.promoId}" />
+                    </p:column>
+
+                    <p:column>			
+                        <f:facet name="header">Promo Code</f:facet>
+                        <h:outputText value="#{promo.promoCode}" />
+                    </p:column>
+
+                    <p:column>			
+                        <f:facet name="header">Value</f:facet>
+                        <h:outputText value="#{promo.value}" >
+                            <f:convertNumber type="currency" currencySymbol="$" />
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column>			
+                        <f:facet name="header">Max Redemption Limit</f:facet>
+                        <h:outputText value="#{promo.maxLimit}" />
+                    </p:column>
+
+                    <p:column>			
+                        <f:facet name="header">Is Active</f:facet>
+                        <h:outputText value="#{promo.isActive}" />
+                    </p:column>
+
+                    <p:column>			
+                        <f:facet name="header">Deactivate Promo</f:facet>
+                        <p:commandButton value="Deactivate This Promo" disabled="#{!promo.isActive}" update="viewAllPromosForm:dataTableAllPromos viewAllPromosForm:messagesViewAllPromos" actionListener="#{viewAllPromosManagedBean.deactivatePromo}">
+                            <f:attribute name="promoId" value="#{promo.promoId}" />
+                            <p:confirm header="Confirmation" message="Are you sure you want to deactivate this promo?" icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                </p:confirmDialog>  
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
+

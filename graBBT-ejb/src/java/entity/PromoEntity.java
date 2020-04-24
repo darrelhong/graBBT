@@ -34,7 +34,7 @@ public class PromoEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long promoId;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, length = 10, unique = true)
     @NotNull
     @Size(max = 10, min = 6)
     private String promoCode;
