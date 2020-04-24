@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
 import { CartService } from 'src/app/services/cart/cart.service'
+import { MatDialog } from '@angular/material'
+import { CancelDialogComponent } from 'src/app/components/cancel-dialog/cancel-dialog.component'
 
 @Component({
   selector: 'app-checkout-success',
@@ -11,9 +13,19 @@ export class CheckoutSuccessComponent implements OnInit {
   orderEntity: any
   bbPointsEarned: number
 
-  constructor(private router: Router, private cartService: CartService) {}
+  constructor(
+    private router: Router,
+    private cartService: CartService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
+    // for testing
+    // this.orderEntity = this.returnTestData()
+    // this.orderEntity.transactionDateTime = this.orderEntity.transactionDateTime.slice(
+    //   0,
+    //   -5
+    // )
     if (window.history.state.orderEntity != null) {
       this.orderEntity = window.history.state.orderEntity
       this.orderEntity.transactionDateTime = this.orderEntity.transactionDateTime.slice(
@@ -50,11 +62,22 @@ export class CheckoutSuccessComponent implements OnInit {
     )
   }
 
+  cancelDialog(): void {
+    const dialogRef = this.dialog.open(CancelDialogComponent, {
+      width: '250px',
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.cancelOrder()
+      }
+    })
+  }
+
   returnTestData() {
     return {
       address: 'College Ave E',
       addressDetails: 'UTR',
-      cancelled: true,
+      cancelled: false,
       ccNum: '2167582376238476',
       deliveryNote: 'Meet me at the lobby',
       orderId: 11,

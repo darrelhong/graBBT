@@ -139,7 +139,7 @@
                             <p:outputLabel for="locationLongitude" value="Location Longitude: " style="font-weight: bold;" />
                         </p:column>
                         <p:column>
-                            <p:spinner id="locationLongitude" value="#{updateOutletManagedBean.outletEntityToUpdate.locationLongitude}" placeholder="000.0000" min="-180" max="80" stepFactor="0.0001" required="true" requiredMessage="Location Longitude is required" />
+                            <p:spinner id="locationLongitude" value="#{updateOutletManagedBean.outletEntityToUpdate.locationLongitude}" placeholder="000.0000" min="-180" max="180" stepFactor="0.0001" required="true" requiredMessage="Location Longitude is required" />
                         </p:column>
                         <p:column>
                             <p:message for="locationLongitude" />
