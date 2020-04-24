@@ -15,12 +15,11 @@
 ### Retailer
 
 - Retailer "my account page" - Include Profile details & simple overview details of outlets, listings and revenue - Each detail should be able to be clicked on --> redirect to the relevant page with their full details
-- Want to build a retailer Notifications tab (when order comes in, when payment completes)
+- Notifications tab (when order comes in, when payment completes)
 
 ### Client
 
-- Add order to cart
-- Checkout cart
+- Promo
 
 # Angular Client
 
