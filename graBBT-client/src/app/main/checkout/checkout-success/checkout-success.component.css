@@ -78,7 +78,15 @@
 }
 
 .total-group {
-  padding: 1rem 0rem;
+  display: flex;
+  padding: 1rem 0rem 0.6rem 0rem;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.total-aft-promo-group {
+  display: flex;
+  padding: 0rem 0rem 1rem 0rem;
   font-size: 18px;
   font-weight: 500;
 }

@@ -29,6 +29,7 @@
   color: #43a047;
 } */
 
+
 .title-group mat-form-field {
   margin-left: 1rem;
 }
@@ -52,6 +53,10 @@
 
 .promo-card:hover {
   background-color: rgba(0, 0, 0, 0.03);
+}
+
+.value {
+  font-size: 16px;
 }
 
 .disabled-card {

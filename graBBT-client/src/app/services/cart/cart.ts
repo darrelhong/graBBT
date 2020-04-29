@@ -1,5 +1,6 @@
 import { Outlet } from '../listing/outlet'
 import { CartItem } from './cart-item'
+import { Promo } from '../promo/promo'
 
 export class Cart {
   outlet: Outlet
@@ -7,4 +8,5 @@ export class Cart {
   totalQuantity: number
   totalAmount: number
   cartItems: CartItem[]
+  promo: Promo
 }

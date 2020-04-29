@@ -64,11 +64,11 @@ public class PromoEntity implements Serializable {
 
     public PromoEntity() {
         this.customerUsedStatus = new HashMap<>();
+        this.isActive = true;
     }
 
     public PromoEntity(String promoCode, BigDecimal value, Integer maxLimit) {
         this();
-        this.isActive = true;
         this.promoCode = promoCode;
         this.value = value;
         this.maxLimit = maxLimit;

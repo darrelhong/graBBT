@@ -7,6 +7,11 @@ import { map, catchError } from 'rxjs/operators'
 import { HttpClient, HttpErrorResponse } from '@angular/common/http'
 import { throwError } from 'rxjs'
 import { CustomerService } from 'src/app/services/customer/customer.service'
+import { PromoService } from 'src/app/services/promo/promo.service'
+import { SessionService } from 'src/app/services/session.service'
+import { Customer } from 'src/app/services/customer/customer'
+import { Promo } from 'src/app/services/promo/promo'
+import { MatSelectChange } from '@angular/material'
 
 @Component({
   selector: 'app-checkout',
@@ -17,8 +22,11 @@ export class CheckoutComponent implements OnInit {
   showCheckout: boolean
 
   options: string[]
+  currentCustomer: Customer
+  walletPromos: Promo[]
 
   cart: Cart
+  totalAfterDiscount: number
   checkoutForm = this.fb.group({
     address: ['', Validators.required],
     addressDetails: ['', Validators.required],
@@ -38,15 +46,28 @@ export class CheckoutComponent implements OnInit {
     private customerService: CustomerService,
     private fb: FormBuilder,
     private router: Router,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private promoService: PromoService,
+    private sessionService: SessionService
   ) {}
 
   ngOnInit() {
+    this.currentCustomer = this.sessionService.getCurrentCustomer()
+    this.walletPromos = []
     this.showCheckout = this.router.url === '/main/checkout'
 
     this.cartService.cart.subscribe(cart => {
       this.cart = cart
+      if (this.cart.promo) {
+        this.totalAfterDiscount = this.cart.totalAmount - this.cart.promo.value
+      } else {
+        this.totalAfterDiscount = this.cart.totalAmount
+      }
     })
+
+    // set promo to null on refresh
+    this.cart.promo = null
+    this.cartService.updateCart(this.cart)
 
     this.checkoutForm.get('address').valueChanges.subscribe(value => {
       if (value.length > 0) {
@@ -64,6 +85,26 @@ export class CheckoutComponent implements OnInit {
       }
       console.log(value)
     })
+
+    this.promoService
+      .retrievePromosInCustomerWallet(this.currentCustomer.customerId)
+      .subscribe(
+        resp => {
+          const usedStatus = resp.usedStatus
+          const customerCurrentPromos = resp.customerCurrentPromos
+          usedStatus.forEach((used, i) => {
+            if (!used) {
+              if (customerCurrentPromos[i].value < this.cart.totalAmount) {
+                this.walletPromos.push(customerCurrentPromos[i])
+              }
+            }
+          })
+          console.log(this.walletPromos)
+        },
+        error => {
+          console.log(error)
+        }
+      )
   }
 
   checkout() {
@@ -79,7 +120,7 @@ export class CheckoutComponent implements OnInit {
           this.showCheckout = false
           this.cartService.clearCart()
 
-          this.customerService.refreshCustomer() //to update the customer in the model (reflect new bb points)
+          this.customerService.refreshCustomer() // to update the customer in the model (reflect new bb points)
           this.router.navigate(['/main/checkout/success'], {
             state: {
               orderEntity: resp,
@@ -96,6 +137,14 @@ export class CheckoutComponent implements OnInit {
           })
         }
       )
+  }
+
+  selectPromo(event: MatSelectChange) {
+    console.log('Promo selected')
+    const selectedPromo = event.value
+    console.log(selectedPromo)
+    this.cart.promo = selectedPromo
+    this.cartService.updateCart(this.cart)
   }
 
   private handleError(error: HttpErrorResponse) {

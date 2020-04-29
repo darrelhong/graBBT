@@ -88,6 +88,27 @@
           </mat-card-content>
         </mat-card>
 
+        <mat-card class="promo-select">
+          <mat-card-title>Add promo</mat-card-title>
+          <mat-form-field>
+            <mat-label *ngIf="walletPromos.length == 0">
+              No available promos
+            </mat-label>
+            <mat-label *ngIf="walletPromos.length != 0">
+              Select promo
+            </mat-label>
+            <mat-select
+              (selectionChange)="selectPromo($event)"
+              [disabled]="walletPromos.length == 0"
+            >
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let p of walletPromos" [value]="p">
+                {{ p.promoCode }} | {{ p.value | currency: 'SGD ' }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card>
+
         <mat-card class="payment-details">
           <mat-card-title>Payment Details</mat-card-title>
           <mat-card-content>
@@ -114,7 +135,7 @@
   <div class="bottom-bar mat-elevation-z6">
     <div class="center">
       <div class="bottom-group">
-        <span class="total">Total: {{ cart.totalAmount | currency }}</span>
+        <span class="total">Total: {{ totalAfterDiscount | currency }}</span>
         <button
           class="place-order-btn"
           mat-raised-button

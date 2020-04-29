@@ -1,11 +1,23 @@
 <div class="page-container">
-  <h1>Promos For You!</h1>
+  <div style="display: flex; align-items: center;">
+    <h1>Promos For You!</h1>
+    <button
+      mat-stroked-button
+      color="accent"
+      style="margin-left: 1rem;"
+      [routerLink]="['/main/account']"
+    >
+      View claimed promos
+    </button>
+  </div>
   <div class="title-group">
     <div class="promo-grid">
       <mat-card class="outlet-card" *ngFor="let promo of promos; let i = index">
         <mat-card-header>
           <mat-card-title>{{ promo.promoCode }}</mat-card-title>
-          <mat-card-subtitle>SGD {{ promo.value }}</mat-card-subtitle>
+          <mat-card-subtitle class="value"
+            >Value: {{ promo.value | currency: 'SGD ' }}</mat-card-subtitle
+          >
         </mat-card-header>
         <mat-card-content>
           <mat-chip-list class="open-chip">

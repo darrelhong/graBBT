@@ -13,7 +13,7 @@ import javax.faces.view.ViewScoped;
 
 @Named(value = "viewOutletOrders")
 @ViewScoped
-public class viewOutletOrders implements Serializable {
+public class ViewOutletOrdersManagedBean implements Serializable {
 
     @EJB
     private OrderSessionBeanLocal orderSessionBean;
@@ -25,7 +25,7 @@ public class viewOutletOrders implements Serializable {
     /**
      * Creates a new instance of viewOutletOrders
      */
-    public viewOutletOrders() {
+    public ViewOutletOrdersManagedBean() {
     }
 
     @PostConstruct

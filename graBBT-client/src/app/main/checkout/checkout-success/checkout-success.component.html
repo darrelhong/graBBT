@@ -45,14 +45,20 @@
       </div>
       <!-- </mat-card> -->
 
-      <div class="total-group" style="display: flex;">
+      <div class="total-group">
         <span>Total:</span>
         <span class="total-price">
           {{ orderEntity.totalAmount | currency }}
         </span>
       </div>
+      <div class="total-aft-promo-group">
+        <span>Total after discount:</span>
+        <span class="total-price">
+          {{ orderEntity.totalAmountAftPromo | currency }}
+        </span>
+      </div>
       <div class="payment-group" style="display: flex;">
-        <span>Payment by:</span>
+        <span style="font-size: 18px;">Payment by:</span>
         <span class="total-price">
           <span style="font-weight: 400;">Card ending with</span>
           {{ orderEntity.ccNum.slice(-4) }}

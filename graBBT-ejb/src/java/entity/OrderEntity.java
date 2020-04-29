@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Min;
@@ -44,6 +43,12 @@ public class OrderEntity implements Serializable {
     @DecimalMin("0.00")
     @Digits(integer = 9, fraction = 2)
     private BigDecimal totalAmount;
+    
+    @Column(nullable = false, precision = 11, scale = 2)
+    @NotNull
+    @DecimalMin("0.00")
+    @Digits(integer = 9, fraction = 2)
+    private BigDecimal totalAmountAftPromo;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
@@ -305,6 +310,14 @@ public class OrderEntity implements Serializable {
      */
     public void setCcNum(String ccNum) {
         this.ccNum = ccNum;
+    }
+
+    public BigDecimal getTotalAmountAftPromo() {
+        return totalAmountAftPromo;
+    }
+
+    public void setTotalAmountAftPromo(BigDecimal totalAmountAftPromo) {
+        this.totalAmountAftPromo = totalAmountAftPromo;
     }
 
 }

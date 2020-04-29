@@ -158,7 +158,7 @@ public class CustomerResource {
                 OrderEntity oe = orderSessionBean.checkout(checkoutReq.getCustomerId(), checkoutReq.getOutletId(),
                         checkoutReq.getTotalLineItem(), checkoutReq.getTotalQuantity(), checkoutReq.getTotalAmount(),
                         checkoutReq.getAddress(), checkoutReq.getAddressDetails(), checkoutReq.getCcNum(),
-                        checkoutReq.getDeliveryNote(), orderLineItems);
+                        checkoutReq.getDeliveryNote(), orderLineItems, checkoutReq.getPromo());
 
                 System.out.println("SUCCESS");
                 oe.setCustomer(null);

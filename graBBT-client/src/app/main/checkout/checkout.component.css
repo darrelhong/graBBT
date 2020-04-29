@@ -21,6 +21,10 @@ mat-card {
   margin-bottom: 1rem;
 }
 
+mat-card-title {
+  font-size: 20px;
+}
+
 mat-form-field {
   width: 100%;
 }

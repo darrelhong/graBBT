@@ -73,6 +73,7 @@ export class CartService {
       totalQuantity: null,
       totalAmount: null,
       cartItems: [item],
+      promo: null,
     }
     this.updateCart(newCart)
   }
@@ -114,6 +115,7 @@ export class CartService {
       totalLineItem: currentCart.totalLineItem,
       totalQuantity: currentCart.totalQuantity,
       totalAmount: currentCart.totalAmount,
+      promo: currentCart.promo,
       checkoutItems,
       address,
       addressDetails,
@@ -163,6 +165,7 @@ export class CartService {
       totalLineItem: null,
       totalQuantity: null,
       totalAmount: null,
+      promo: null,
       cartItems: [
         {
           listing: {
@@ -223,6 +226,7 @@ export class CartService {
       totalAmount: null,
       totalLineItem: null,
       totalQuantity: null,
+      promo: null,
       cartItems: [
         {
           listing: {

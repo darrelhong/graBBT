@@ -1,5 +1,6 @@
 package ws.restful.model;
 
+import entity.PromoEntity;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -15,7 +16,8 @@ public class CheckoutReq {
     private String addressDetails;
     private String ccNum;
     private String deliveryNote;
-
+    private PromoEntity promo;
+    
     public CheckoutReq() {
     }
     
@@ -105,6 +107,14 @@ public class CheckoutReq {
 
     public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
+    }
+
+    public PromoEntity getPromo() {
+        return promo;
+    }
+
+    public void setPromo(PromoEntity promo) {
+        this.promo = promo;
     }
     
 }

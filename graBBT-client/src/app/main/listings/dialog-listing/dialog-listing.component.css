@@ -18,6 +18,10 @@ mat-card-title {
   font-weight: 400;
 }
 
+.option-label {
+  font-weight: 500;
+}
+
 .price-group {
   display: flex;
 }
@@ -29,6 +33,10 @@ mat-card-title {
 
 .choice-group {
   margin-top: 0.5rem;
+}
+
+.choice-group label {
+  font-weight: 500;
 }
 
 .hint-text {

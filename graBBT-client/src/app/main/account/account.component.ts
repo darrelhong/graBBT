@@ -83,17 +83,30 @@ export class AccountComponent implements OnInit {
     this.updateCustomer.email = this.currentCustomer.email
     this.updateCustomer.address = this.currentCustomer.address
 
-    if (this.currentCustomer.bbPoints >= 0 && this.currentCustomer.bbPoints < 30){
-      this.tier = "BB-Green"
-      this.tierMessage = "Earn " + (30-this.currentCustomer.bbPoints) + " more BB points to reach tier BB-Silver!"
-    } else if (this.currentCustomer.bbPoints >= 30 && this.currentCustomer.bbPoints < 100) {
-      this.tier = "BB-Silver"
-      this.tierMessage = "Earn " + (100-this.currentCustomer.bbPoints) + " more BB points to reach tier BB-Gold!"
+    if (
+      this.currentCustomer.bbPoints >= 0 &&
+      this.currentCustomer.bbPoints < 30
+    ) {
+      this.tier = 'BB-Green'
+      this.tierMessage =
+        'Earn ' +
+        (30 - this.currentCustomer.bbPoints) +
+        ' more BB points to reach tier BB-Silver!'
+    } else if (
+      this.currentCustomer.bbPoints >= 30 &&
+      this.currentCustomer.bbPoints < 100
+    ) {
+      this.tier = 'BB-Silver'
+      this.tierMessage =
+        'Earn ' +
+        (100 - this.currentCustomer.bbPoints) +
+        ' more BB points to reach tier BB-Gold!'
     } else {
-      this.tier = "BB-Gold"
-      this.tierMessage = "Congratulations! This is the highest tier you can reach!"
+      this.tier = 'BB-Gold'
+      this.tierMessage =
+        'Congratulations! This is the highest tier you can reach!'
     }
-    
+
     //For wallet tab
     this.promoService
       .retrievePromosInCustomerWallet(this.currentCustomer.customerId)
@@ -102,10 +115,10 @@ export class AccountComponent implements OnInit {
           this.walletPromos = resp.customerCurrentPromos
           this.usedStatus = resp.usedStatus
 
-          if (!this.walletPromos.length){
-            this.promoMessage = "You currently have no promos!"
+          if (!this.walletPromos.length) {
+            this.promoMessage = 'You currently have no promos!'
           } else {
-            this.promoMessage = "Make use of promos in your checkout!"
+            this.promoMessage = 'Make use of promos in your checkout!'
           }
         },
         error => {

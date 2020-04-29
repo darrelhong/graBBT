@@ -4,6 +4,7 @@ import entity.Customer;
 import entity.OrderEntity;
 import entity.OrderLineItem;
 import entity.OutletEntity;
+import entity.PromoEntity;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -24,9 +25,14 @@ import util.exception.CheckoutError;
 import util.exception.CustomerNotFoundException;
 import util.exception.OrderNotFoundException;
 import util.exception.OutletNotFoundException;
+import util.exception.PromoClaimedByCustomerAlreadyException;
+import util.exception.PromoNotFoundException;
 
 @Stateless
 public class OrderSessionBean implements OrderSessionBeanLocal {
+
+    @EJB
+    private PromoSessionBeanLocal promoSessionBean;
 
     @EJB
     private OutletSessionBeanLocal outletSessionBean;
@@ -48,12 +54,21 @@ public class OrderSessionBean implements OrderSessionBeanLocal {
     @Override
     public OrderEntity checkout(Long customerId, Long outletId, Integer totalLineItem,
             Integer totalQuantity, BigDecimal totalAmount, String address, String addressDetails,
-            String ccNum, String deliveryNote, List<OrderLineItem> orderLineItems) throws CheckoutError {
+            String ccNum, String deliveryNote, List<OrderLineItem> orderLineItems, PromoEntity promo) throws CheckoutError {
         try {
             Customer customer = customerSessionBean.retrieveCustomerById(customerId);
             OutletEntity outlet = outletSessionBean.retrieveOutletByOutletId(outletId);
             OrderEntity oe = new OrderEntity(totalLineItem, totalQuantity, totalAmount, new Date(),
                     customer, outlet, address, addressDetails, deliveryNote, ccNum);
+            PromoEntity pr = promoSessionBean.retrievePromoById(promo.getPromoId());
+            if (pr != null) {
+                /**
+                 * To add use promo code here
+                 */
+                oe.setTotalAmountAftPromo(oe.getTotalAmount().subtract(pr.getValue()));
+            } else {
+                oe.setTotalAmountAftPromo(oe.getTotalAmount());
+            }
 
             Set<ConstraintViolation<OrderEntity>> constraintViolations = validator.validate(oe);
 
@@ -78,7 +93,7 @@ public class OrderSessionBean implements OrderSessionBeanLocal {
             em.flush();
             return oe;
 
-        } catch (CustomerNotFoundException | OutletNotFoundException ex) {
+        } catch (CustomerNotFoundException | OutletNotFoundException | PromoNotFoundException ex) {
             throw new CheckoutError(ex.getMessage());
         }
     }

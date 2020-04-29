@@ -48,6 +48,7 @@
 
           <mat-list-item role="listitem">
             <button
+              class="edit"
               mat-stroked-button
               color="primary"
               (click)="editView = true"
@@ -91,7 +92,17 @@
       <mat-divider></mat-divider>
 
       <div style="margin-bottom: 5px;">
-        <h2>My Promos</h2>
+        <div style="display: flex; align-items: center;">
+          <h2>My Promos</h2>
+          <button
+            mat-stroked-button
+            color="accent"
+            style="margin-left: 1rem;"
+            [routerLink]="['/main/promo']"
+          >
+            View available promos
+          </button>
+        </div>
         <p>{{ promoMessage }}</p>
         <div class="promo-grid">
           <mat-card *ngFor="let promo of walletPromos; let i = index">
@@ -123,6 +134,7 @@
       <div class="order-history">
         <h2>My Order History</h2>
         <mat-card class="mat-elevation-z2" style="margin-bottom: 10px;">
+          <h3 *ngIf="orders && orders.length == 0">You have no orders</h3>
           <mat-nav-list style="background-color: white; padding-top: 0px;">
             <a
               [routerLink]="['/main/order-details', order.orderId]"

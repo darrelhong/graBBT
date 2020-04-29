@@ -11,16 +11,9 @@ import ejb.session.stateless.OutletSessionBeanLocal;
 import ejb.session.stateless.PromoSessionBeanLocal;
 import ejb.session.stateless.RetailerSessionBeanLocal;
 import entity.Customer;
-import entity.OrderEntity;
-import entity.OrderLineItem;
 import entity.OutletEntity;
 import entity.PromoEntity;
 import entity.RetailerEntity;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
@@ -28,7 +21,6 @@ import javax.ejb.LocalBean;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import util.exception.CheckoutError;
 import util.exception.InputDataValidationException;
 import util.exception.OutletNameExistsException;
 import util.exception.OutletNotFoundException;
@@ -418,8 +410,7 @@ public class GraBBTDataInitSessionBean {
             promoSessionBeanLocal.createNewPromo(newPromo);
             newPromo = new PromoEntity("TEST002", new BigDecimal(2.50), 10);
             promoSessionBeanLocal.createNewPromo(newPromo);
-            
-            
+
             // customer side of things
             Customer customer = new Customer("Customer 1", "customer", "password", "87654321", "address",
                     "qwerty@gmail.com");

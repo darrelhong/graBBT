@@ -16,6 +16,11 @@ import javax.faces.view.ViewScoped;
 import util.exception.InputDataValidationException;
 import util.exception.UnknownPersistenceException;
 
+/**
+ * FOR
+ * TESTING
+ * PURPOSES
+ */
 @Named(value = "listingManagedBean")
 @ViewScoped
 public class ListingManagedBean implements Serializable {
