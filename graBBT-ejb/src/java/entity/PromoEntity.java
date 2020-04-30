@@ -22,10 +22,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author Chloe Tanny
- */
+
 @Entity
 public class PromoEntity implements Serializable {
 
@@ -57,7 +54,9 @@ public class PromoEntity implements Serializable {
     @CollectionTable(name = "customerId_isUsed_map")
     @MapKeyColumn(name = "customerId")
     @Column(name = "isUsed")
-    private Map<Long, Boolean> customerUsedStatus; //number of keyvalue pairs is the total claim number
+    private Map<Long, Boolean> customerUsedStatus; //number of keyvalue pairs is the total CLAIM number
+    
+    /* maybe we don't have time for this */
     //to implement link to outlets that it applies to
     //refer to tagentity for implementation
     //private List<Integer> outletIds;

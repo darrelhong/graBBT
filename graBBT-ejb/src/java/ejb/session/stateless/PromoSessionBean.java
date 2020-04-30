@@ -22,7 +22,10 @@ import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import util.exception.InputDataValidationException;
 import util.exception.PromoClaimedByCustomerAlreadyException;
+import util.exception.PromoNoLongerActiveException;
+import util.exception.PromoNotClaimedByCustomer;
 import util.exception.PromoNotFoundException;
+import util.exception.PromoUsedAlreadyException;
 import util.exception.UnknownPersistenceException;
 
 /**
@@ -94,7 +97,7 @@ public class PromoSessionBean implements PromoSessionBeanLocal {
     {
        System.out.println("PromoSessionBean: RetrievePromosInCustomerWallet");
        
-       Query q = em.createQuery("SELECT p FROM PromoEntity p JOIN p.customerUsedStatus map WHERE KEY(map) = :inCustomerId AND p.isActive = TRUE");
+       Query q = em.createQuery("SELECT p FROM PromoEntity p JOIN p.customerUsedStatus map WHERE KEY(map) = :inCustomerId");
        q.setParameter("inCustomerId", customerId);
        
        return q.getResultList();
@@ -123,34 +126,81 @@ public class PromoSessionBean implements PromoSessionBeanLocal {
         }
     }
     
-    //adding promo to wallet event (claimes does not mean its used yet
+    //adding promo to wallet event (claimes does not mean its used yet)
     @Override
-    public void customerClaimsPromo (Long customerId, Long promoId) throws PromoNotFoundException, PromoClaimedByCustomerAlreadyException
+    public void customerClaimsPromo (Long customerId, Long promoId) throws PromoNotFoundException, PromoNoLongerActiveException, PromoClaimedByCustomerAlreadyException
     {
         PromoEntity claimedPromo = em.find(PromoEntity.class, promoId);
         Customer claimingCustomer = em.find(Customer.class, customerId);
         
         if (claimedPromo != null && claimingCustomer != null)
         {
-            Map<Long, Boolean> hm = claimedPromo.getCustomerUsedStatus();
+            if (claimedPromo.isIsActive())
+            {
+                Map<Long, Boolean> hm = claimedPromo.getCustomerUsedStatus();
             
-            if (!hm.containsKey(customerId)){
-                
-                hm.put(customerId, false);
-                claimedPromo.setCustomerUsedStatus(hm);
-                em.merge(claimedPromo);
-                
-                //check if no. of claims has hit max limit
-                if (claimedPromo.getMaxLimit() == hm.size())
-                {
-                    //max limit hit
-                    this.deactivatePromo(claimedPromo.getPromoId());
-                }             
-                
-            } else {
-                throw new PromoClaimedByCustomerAlreadyException("This Promo has been claimed by customer previously.");
+                if (!hm.containsKey(customerId)){
+
+                    hm.put(customerId, false);
+                    claimedPromo.setCustomerUsedStatus(hm);
+                    em.merge(claimedPromo);
+
+                    //check if no. of claims has hit max limit
+                    if (claimedPromo.getMaxLimit() == hm.size())
+                    {
+                        //max limit hit
+                        this.deactivatePromo(claimedPromo.getPromoId());
+                    }             
+
+                } else {
+                    throw new PromoClaimedByCustomerAlreadyException("This Promo has been claimed by customer previously.");
+                }
             }
+            else 
+            {
+                throw new PromoNoLongerActiveException("This promo is no longer active");
+            }  
             
+        } else {
+            throw new PromoNotFoundException("Promo ID not provided");
+        }
+    }
+    
+    @Override
+    public PromoEntity customerUsesPromo (Long customerId, Long promoId) throws PromoNotFoundException, PromoNotClaimedByCustomer, PromoUsedAlreadyException
+    {
+        System.out.println("************** PromoSessionBean: customerUsesPromo() entered ***********");
+        PromoEntity usingPromo = em.find(PromoEntity.class, promoId);
+        Customer usingCustomer = em.find(Customer.class, customerId);
+        
+        if (usingPromo != null && usingCustomer != null)
+        {
+            Map<Long, Boolean> hm = usingPromo.getCustomerUsedStatus();
+            
+            if (hm.containsKey(customerId))
+            {
+                //promo has been claimed by customer into their wallet
+
+                if (!hm.get(customerId))
+                {
+                   //promo has not been used by customer -> set to be used
+                    hm.put(customerId, true);
+                    usingPromo.setCustomerUsedStatus(hm);
+                    em.merge(usingPromo);
+                    System.out.println("************** PromoSessionBean: customerUsesPromo() - SUCCESSFUL USAGE ***********");
+                    return usingPromo;
+                }
+                else 
+                {
+                    //promo has been used by customer in another order
+                    throw new PromoUsedAlreadyException("This Promo has already been used by customer in a previous order");
+                }
+            }
+            else 
+            {
+                throw new PromoNotClaimedByCustomer("This Promo is not in customer's wallet");
+            }
+           
         } else {
             throw new PromoNotFoundException("Promo ID not provided");
         }

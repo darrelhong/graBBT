@@ -2,6 +2,12 @@ import { OrderLineItem } from './order-line-item'
 import { Customer } from '../customer/customer'
 import { Outlet } from '../listing/outlet'
 
+
+/*
+    CURRENTLY NOT IN USE
+*/
+
+
 export class Order {
 
     orderId: number

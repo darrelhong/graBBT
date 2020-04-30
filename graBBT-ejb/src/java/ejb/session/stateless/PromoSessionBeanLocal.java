@@ -10,7 +10,10 @@ import java.util.List;
 import javax.ejb.Local;
 import util.exception.InputDataValidationException;
 import util.exception.PromoClaimedByCustomerAlreadyException;
+import util.exception.PromoNoLongerActiveException;
+import util.exception.PromoNotClaimedByCustomer;
 import util.exception.PromoNotFoundException;
+import util.exception.PromoUsedAlreadyException;
 import util.exception.UnknownPersistenceException;
 
 /**
@@ -25,7 +28,8 @@ public interface PromoSessionBeanLocal {
     public void deactivatePromo(Long promoId) throws PromoNotFoundException;
     public PromoEntity retrievePromoById(Long promoId) throws PromoNotFoundException;
     public void updatePromo(PromoEntity promo) throws InputDataValidationException, PromoNotFoundException;
-    public void customerClaimsPromo(Long customerId, Long promoId) throws PromoNotFoundException, PromoClaimedByCustomerAlreadyException;
+    public void customerClaimsPromo(Long customerId, Long promoId) throws PromoNotFoundException, PromoNoLongerActiveException, PromoClaimedByCustomerAlreadyException;
     public List<PromoEntity> retrievePromosInCustomerWallet(Long customerId);
+    public PromoEntity customerUsesPromo(Long customerId, Long promoId) throws PromoNotFoundException, PromoNotClaimedByCustomer, PromoUsedAlreadyException;
     
 }

@@ -43,6 +43,7 @@ import ws.restful.model.ErrorResp;
 import ws.restful.model.OrdersResp;
 import ws.restful.model.RefreshCustomerResp;
 import ws.restful.model.UpdatedCustomerReq;
+import ws.restful.model.OrderDetailsResp;
 
 @Path("Customer")
 public class CustomerResource {
@@ -154,14 +155,16 @@ public class CustomerResource {
                     Listing listing = listingSessionBean.retrieveListingById(ci.getListingId());
                     orderLineItems.add(new OrderLineItem(listing, ci.getQty(), ci.getSubtotal(), ci.getSelectedOptions()));
                 }
-
+                
                 OrderEntity oe = orderSessionBean.checkout(checkoutReq.getCustomerId(), checkoutReq.getOutletId(),
                         checkoutReq.getTotalLineItem(), checkoutReq.getTotalQuantity(), checkoutReq.getTotalAmount(),
                         checkoutReq.getAddress(), checkoutReq.getAddressDetails(), checkoutReq.getCcNum(),
                         checkoutReq.getDeliveryNote(), orderLineItems, checkoutReq.getPromo());
 
-                System.out.println("SUCCESS");
+                System.out.println("CHECKOUT SUCCESS");
+                
                 oe.setCustomer(null);
+                oe.setPromo(null);
                 oe.getOutlet().setRetailerEntity(null);
                 oe.getOutlet().setListings(null);
                 for (OrderLineItem oli : oe.getOrderLineItems()) {
@@ -175,8 +178,6 @@ public class CustomerResource {
 
                 return Response.status(Response.Status.OK).entity(oe).build();
 
-//                CheckoutResp checkoutResp = new CheckoutResp("true");
-//                return Response.status(Response.Status.OK).entity(checkoutResp).build();
             } catch (ListingNotFoundException | CheckoutError ex) {
                 ErrorResp errorResp = new ErrorResp(ex.getMessage());
                 return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorResp).build();
@@ -266,10 +267,26 @@ public class CustomerResource {
             @QueryParam("customerId") Long customerId) {
         try {
             OrderEntity oe = orderSessionBean.retrieveOrderByOrderId(orderId);
+            OrderDetailsResp odr = new OrderDetailsResp();
+
             if (oe.getCustomer().getCustomerId().equals(customerId)) {
                 oe.setCustomer(null);
                 oe.getOutlet().setRetailerEntity(null);
                 oe.getOutlet().setListings(null);
+                
+                if (oe.getPromo() == null)
+                {
+                    odr.setPromoCode(null);
+                    odr.setPromoValue(null);
+                }
+                else 
+                {
+                    odr.setPromoCode(oe.getPromo().getPromoCode());
+                    odr.setPromoValue(oe.getPromo().getValue());
+                }
+               
+                oe.setPromo(null);
+                
                 for (OrderLineItem oli : oe.getOrderLineItems()) {
                     oli.getListing().setOutletEntity(null);
                     oli.getListing().setCategory(null);
@@ -278,7 +295,9 @@ public class CustomerResource {
                     oli.getListing().setIceOptions(null);
                     oli.getListing().setToppingOptions(null);
                 }
-                return Response.status(Response.Status.OK).entity(oe).build();
+                odr.setOrderEntity(oe);
+                
+                return Response.status(Response.Status.OK).entity(odr).build();
 
             } else {
                 ErrorResp errorResp = new ErrorResp("Credential mismatch");

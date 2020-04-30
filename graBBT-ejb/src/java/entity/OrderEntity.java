@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMin;
@@ -82,10 +83,16 @@ public class OrderEntity implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private OutletEntity outlet;
+    
+    @OneToOne(optional = true)
+    @JoinColumn(nullable = true)
+    private PromoEntity promo;
+
 
     public OrderEntity() {
         this.orderLineItems = new ArrayList<>();
-        cancelled = false;
+        this.cancelled = false;
+        this.promo = null;
     }
 
     public OrderEntity(Integer totalLineItem, Integer totalQuantity, BigDecimal totalAmount,
@@ -318,6 +325,14 @@ public class OrderEntity implements Serializable {
 
     public void setTotalAmountAftPromo(BigDecimal totalAmountAftPromo) {
         this.totalAmountAftPromo = totalAmountAftPromo;
+    }
+
+    public PromoEntity getPromo() {
+        return promo;
+    }
+
+    public void setPromo(PromoEntity promo) {
+        this.promo = promo;
     }
 
 }

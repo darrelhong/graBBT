@@ -77,6 +77,16 @@
   font-weight: 500;
 }
 
+
+.promo-group {
+  padding: 1rem 0rem;
+  font-weight: 500;
+}
+
+.promo-details {
+  margin-left: auto;
+}
+
 .total-group {
   display: flex;
   padding: 1rem 0rem 0.6rem 0rem;

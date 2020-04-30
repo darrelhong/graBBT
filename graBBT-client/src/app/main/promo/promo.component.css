@@ -2,12 +2,6 @@
   padding: 1.5rem 2rem;
 }
 
-.title-group {
-  display: flex;
-  align-items: center;
-  margin-top: 0.5rem;
-}
-
 .title-group h1 {
   margin: 0;
 }
@@ -96,4 +90,10 @@ mat-card-footer {
 
 .open-chip {
   margin-left: auto;
+}
+
+.promo-grid .points-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-gap: 1rem;
 }

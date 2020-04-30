@@ -43,6 +43,13 @@
       </div>
       <!-- </mat-card> -->
 
+
+      <div class="promo-group" style="display: flex;" *ngIf="promoCode"> 
+        <span style="font-size: 18px;">Promo used:</span>
+        <span class="promo-details" style="font-weight: 400;">
+          {{ promoCode }} | {{ promoValue }}
+        </span>
+      </div>
       <div class="total-group">
         <span>Total:</span>
         <span class="total-price">

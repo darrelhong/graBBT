@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import util.exception.PromoClaimedByCustomerAlreadyException;
+import util.exception.PromoNoLongerActiveException;
 import util.exception.PromoNotFoundException;
 import ws.restful.model.ErrorResp;
 import ws.restful.model.RetrieveAllPromosResp;
@@ -90,7 +91,7 @@ public class PromoResource {
             //return back new list of claimed promos
             return this.retrievePromosInCustomerWallet(customerId);
         }
-        catch (PromoNotFoundException | PromoClaimedByCustomerAlreadyException ex){
+        catch (PromoNotFoundException | PromoClaimedByCustomerAlreadyException | PromoNoLongerActiveException ex){
             ErrorResp errorResp = new ErrorResp(ex.getMessage());
             return Response.status(Status.BAD_REQUEST).entity(errorResp).build();
         }

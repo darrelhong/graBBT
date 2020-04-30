@@ -22,12 +22,6 @@ mat-form-field {
   width: 100%;
 }
 
-.promo-grid .points-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  grid-gap: 1rem;
-}
-
 .promo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));

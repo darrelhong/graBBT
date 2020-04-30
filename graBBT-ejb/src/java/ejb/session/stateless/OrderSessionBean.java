@@ -26,7 +26,10 @@ import util.exception.CustomerNotFoundException;
 import util.exception.OrderNotFoundException;
 import util.exception.OutletNotFoundException;
 import util.exception.PromoClaimedByCustomerAlreadyException;
+import util.exception.PromoNoLongerActiveException;
+import util.exception.PromoNotClaimedByCustomer;
 import util.exception.PromoNotFoundException;
+import util.exception.PromoUsedAlreadyException;
 
 @Stateless
 public class OrderSessionBean implements OrderSessionBeanLocal {
@@ -60,13 +63,19 @@ public class OrderSessionBean implements OrderSessionBeanLocal {
             OutletEntity outlet = outletSessionBean.retrieveOutletByOutletId(outletId);
             OrderEntity oe = new OrderEntity(totalLineItem, totalQuantity, totalAmount, new Date(),
                     customer, outlet, address, addressDetails, deliveryNote, ccNum);
-            PromoEntity pr = promoSessionBean.retrievePromoById(promo.getPromoId());
-            if (pr != null) {
-                /**
-                 * To add use promo code here
+    
+            if (promo != null) {
+                /*
+                 * darrel - To add use promo code here
+                 * chloe - done
                  */
-                oe.setTotalAmountAftPromo(oe.getTotalAmount().subtract(pr.getValue()));
+                PromoEntity pr = promoSessionBean.retrievePromoById(promo.getPromoId());
+                PromoEntity updatedPromoEntity = promoSessionBean.customerUsesPromo(customerId, pr.getPromoId());
+                oe.setPromo(updatedPromoEntity);
+                oe.setTotalAmountAftPromo(oe.getTotalAmount().subtract(updatedPromoEntity.getValue()));
+                
             } else {
+                oe.setPromo(null);
                 oe.setTotalAmountAftPromo(oe.getTotalAmount());
             }
 
@@ -75,7 +84,7 @@ public class OrderSessionBean implements OrderSessionBeanLocal {
             if (constraintViolations.isEmpty()) {
                 
                 //add bb-points
-                int pointsConverted = (int) Math.floor(oe.getTotalAmount().doubleValue());
+                int pointsConverted = (int) Math.floor(oe.getTotalAmountAftPromo().doubleValue());
                 System.out.println("customer earned " + pointsConverted + "bb points from transaction");
                 
                 int currentPoints = oe.getCustomer().getBbPoints();
@@ -93,7 +102,7 @@ public class OrderSessionBean implements OrderSessionBeanLocal {
             em.flush();
             return oe;
 
-        } catch (CustomerNotFoundException | OutletNotFoundException | PromoNotFoundException ex) {
+        } catch (CustomerNotFoundException | OutletNotFoundException | PromoNotFoundException | PromoNotClaimedByCustomer | PromoUsedAlreadyException ex) {
             throw new CheckoutError(ex.getMessage());
         }
     }

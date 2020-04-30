@@ -24,6 +24,7 @@ export class CheckoutComponent implements OnInit {
   options: string[]
   currentCustomer: Customer
   walletPromos: Promo[]
+  selectedPromo: Promo
 
   cart: Cart
   totalAfterDiscount: number
@@ -65,6 +66,7 @@ export class CheckoutComponent implements OnInit {
       }
     })
 
+    this.selectedPromo = null
     // set promo to null on refresh
     this.cart.promo = null
     this.cartService.updateCart(this.cart)
@@ -124,6 +126,7 @@ export class CheckoutComponent implements OnInit {
           this.router.navigate(['/main/checkout/success'], {
             state: {
               orderEntity: resp,
+              selectedPromo: this.selectedPromo,
             },
           })
         },
@@ -145,6 +148,7 @@ export class CheckoutComponent implements OnInit {
     console.log(selectedPromo)
     this.cart.promo = selectedPromo
     this.cartService.updateCart(this.cart)
+    this.selectedPromo = this.cart.promo
   }
 
   private handleError(error: HttpErrorResponse) {

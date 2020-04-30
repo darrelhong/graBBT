@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 import { CartService } from 'src/app/services/cart/cart.service'
 import { MatDialog } from '@angular/material'
 import { CancelDialogComponent } from 'src/app/components/cancel-dialog/cancel-dialog.component'
+import { Promo } from 'src/app/services/promo/promo'
 
 @Component({
   selector: 'app-checkout-success',
@@ -11,6 +12,7 @@ import { CancelDialogComponent } from 'src/app/components/cancel-dialog/cancel-d
 })
 export class CheckoutSuccessComponent implements OnInit {
   orderEntity: any
+  selectedPromo: Promo
   bbPointsEarned: number
 
   constructor(
@@ -20,19 +22,16 @@ export class CheckoutSuccessComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // for testing
-    // this.orderEntity = this.returnTestData()
-    // this.orderEntity.transactionDateTime = this.orderEntity.transactionDateTime.slice(
-    //   0,
-    //   -5
-    // )
+
+    this.selectedPromo = window.history.state.selectedPromo
+    
     if (window.history.state.orderEntity != null) {
       this.orderEntity = window.history.state.orderEntity
       this.orderEntity.transactionDateTime = this.orderEntity.transactionDateTime.slice(
         0,
         -5
       )
-      this.bbPointsEarned = Math.floor(this.orderEntity.totalAmount)
+      this.bbPointsEarned = Math.floor(this.orderEntity.totalAmountAftPromo) //credited based on totalAmountAfterPromo and no longer just totalAmount
 
       console.log('HELLLLLOOOOOOOOO' + this.orderEntity.transactionDateTime)
     } else {

@@ -12,6 +12,8 @@ import { CancelDialogComponent } from 'src/app/components/cancel-dialog/cancel-d
 })
 export class OrderDetailsComponent implements OnInit {
   orderEntity: any
+  promoCode: string //if any
+  promoValue: number //if any
 
   constructor(
     private route: ActivatedRoute,
@@ -22,18 +24,15 @@ export class OrderDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // testing
-    // this.orderEntity = this.returnTestData()
-    // this.orderEntity.transactionDateTime = this.orderEntity.transactionDateTime.slice(
-    //   0,
-    //   -5
-    // )
 
     this.route.paramMap.subscribe(params => {
       this.customerService.retrieveOrderByOrderId(params.get('id')).subscribe(
         resp => {
-          resp.transactionDateTime = resp.transactionDateTime.slice(0, -5)
-          this.orderEntity = resp
+          this.orderEntity = resp.orderEntity
+          this.orderEntity.transactionDateTime = resp.orderEntity.transactionDateTime.slice(0, -5)
+          this.promoCode = resp.promoCode
+          this.promoValue = resp.promoValue
+
           console.log(this.orderEntity)
         },
         error => {

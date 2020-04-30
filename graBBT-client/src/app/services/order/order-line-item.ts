@@ -1,5 +1,9 @@
 import { Listing } from '../listing/listing'
 
+/*
+    CURRENTLY NOT IN USE
+*/
+
 export class OrderLineItem {
     
     orderLineItemId: number

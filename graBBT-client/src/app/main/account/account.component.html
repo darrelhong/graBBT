@@ -59,10 +59,11 @@
         </mat-list>
       </mat-card>
     </mat-tab>
+    
     <mat-tab label="Wallet">
-      <div>
+      <div style="margin-bottom: 5px;">
         <h2>My BB Points</h2>
-        <div class="points-grid">
+        <div>
           <mat-progress-bar
             mode="determinate"
             value="{{ currentCustomer.bbPoints }}"
@@ -113,10 +114,10 @@
             <mat-card-content>
               <mat-chip-list class="open-chip">
                 <mat-chip
-                  (click)="useMe()"
+                  (click)="!usedStatus[i] ? useMe() : false"
                   [color]="usedStatus[i] ? 'warn' : 'primary'"
                   selected
-                  >{{ usedStatus[i] ? 'Claimed' : 'Use Me!' }}</mat-chip
+                  >{{ usedStatus[i] ? 'Used' : 'Use Me!' }}</mat-chip
                 >
               </mat-chip-list>
             </mat-card-content>

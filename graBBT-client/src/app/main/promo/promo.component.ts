@@ -49,26 +49,34 @@ export class PromoComponent implements OnInit {
     )
   }
 
-  claimPromo(index: number): void {
+  checkClaim(index: number): Boolean {
     let claimingPromo: Promo = this.promos[index]
 
     let alreadyClaimed = false
 
-    for (var p of this.customerCurrentPromos)
-    {
-      if (p.promoId == claimingPromo.promoId){
+    for (var p of this.customerCurrentPromos) {
+      if (p.promoId == claimingPromo.promoId) {
         alreadyClaimed = true
         break
       }
     }
 
+    console.log(alreadyClaimed)
+    return alreadyClaimed
+  }
+
+  claimPromo(index: number): void {
+    let claimingPromo: Promo = this.promos[index]
+
+    let alreadyClaimed = this.checkClaim(index)
+
     if (alreadyClaimed) {
-
       this.displaySnackBar('You already have this promo in your wallet!')
+    } else {
+      //can claim
 
-    } else { //can claim
-      
-      this.promoService.claimPromoIntoWallet(this.customerId, claimingPromo.promoId)
+      this.promoService
+        .claimPromoIntoWallet(this.customerId, claimingPromo.promoId)
         .subscribe(
           resp => {
             this.customerCurrentPromos = resp.customerCurrentPromos //updates
@@ -76,9 +84,7 @@ export class PromoComponent implements OnInit {
             this.displaySnackBar('Added to wallet!')
           },
           error => {
-            this.displaySnackBar(
-              'An error ocurred while claiming promo'
-            )
+            this.displaySnackBar('An error ocurred while claiming promo')
           }
         )
     }
