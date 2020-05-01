@@ -4,10 +4,10 @@
 
 ### Group number: 
 ### Team members:
-- Bryan Toh 
+- Bryan Jude Toh Wei Han, A0190282H
 - Chloe Tan Xin Ru, A0187980L
-- Darrel Hong 
-- Keith Ho 
+- Darrel Hong Cheng Kit, A0184367U
+- Ho Jun Cong Keith, A0184106L 
 
 # Setup Instructions
 
