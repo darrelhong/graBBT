@@ -4,10 +4,10 @@
 
 ### Group number: 
 ### Team members:
-	- Bryan Toh 
-	- Chloe Tan Xin Ru, A0187980L
-	- Darrel Hong 
-	- Keith Ho 
+- Bryan Toh 
+- Chloe Tan Xin Ru, A0187980L
+- Darrel Hong 
+- Keith Ho 
 
 # Setup Instructions
 
