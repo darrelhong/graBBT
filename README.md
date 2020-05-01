@@ -1,27 +1,23 @@
 ![logo](https://i.imgur.com/WtqFOwP.png)
 
-# Notes
+# Team Information
 
-## Darrel
+### Group number: 
+### Team members:
+	- Bryan Toh 
+	- Chloe Tan Xin Ru, A0187980L
+	- Darrel Hong 
+	- Keith Ho 
 
-- Can't figure out how to selectively process only certain form fields (for create new listing in jsf)
+# Setup Instructions
 
-- Super dodgy image upload for listing - the ui is weird cos gotta click upload separately, couldn't figure out how to upload together with submit button - files get uploaded to `C:/NetBeansProjects/proj/graBBT/graBBT-war/web/resources/image` so that it can be accessed through web resources (def not the right way, prolly need to consult on the best way to do it) - so either move your project folder accordingly OR adjust your `alternatedocroot_1` variable in `web.xml`
-- Still figuring out categories (CAN WE EVEN REACH HERE)
-- things to work on SORTING BY LOCATION? VIEW MAP?
+## Backend
 
-## Chloe
+Firstly, create a database on netbeans with the name 'grabbt'
 
-### Retailer
+Clean all project files and then deploy the enterprise application 'graBBT'
 
-- Retailer "my account page" - Include Profile details & simple overview details of outlets, listings and revenue - Each detail should be able to be clicked on --> redirect to the relevant page with their full details
-- Notifications tab (when order comes in, when payment completes)
-
-### Client
-
-- Promo
-
-# Angular Client
+## Angular Client
 
 Set up with
 
@@ -39,9 +35,9 @@ if using vscode, install Prettier for code formatting
 - this allows for another routler outlet with child paths
 - currently can view a list of outlets THATS ALL
 
-# Static image server
+## Static image server
 
-Make sure to run static image server in graBBT-imageServer if not images won't load
+Make sure to run static image server in graBBT-imageServer for images to load
 
 ```
 cd grabBBT-imageServer
