@@ -11,24 +11,29 @@
     <ui:define name="content">
         <h3>View orders for outlet</h3>
 
-        <p:dataTable var="order" value="#{viewOutletOrders.orders}">
-            <p:column headerText="Order ID">
+        <p:dataTable var="order" value="#{viewOutletOrders.orders}" paginator="true">
+            
+            <p:column headerText="Order ID" sortBy="#{order.orderId}" filterBy="#{order.orderId}">
                 <h:outputText value="#{order.orderId}" />
             </p:column>
+            
+            <p:column headerText="Customer Address" sortBy="#{order.address}" filterBy="#{order.address}">
+                <h:outputText value='#{order.address}' />
+            </p:column>
 
-            <p:column headerText="Amount">
+            <p:column headerText="Amount" sortBy="#{order.totalAmount}" filterBy="#{order.totalAmount}">
                 <h:outputText value="#{order.totalAmount}" />
             </p:column>
 
-            <p:column headerText="Total Line Item">
+            <p:column headerText="Total Line Item" sortBy="#{order.totalLineItem}" filterBy="#{order.totalLineItem}">
                 <h:outputText value="#{order.totalLineItem}" />
             </p:column>
 
-            <p:column headerText="Total Quantity">
+            <p:column headerText="Total Quantity" sortBy="#{order.totalQuantity}" filterBy="#{order.totalQuantity}">
                 <h:outputText value="#{order.totalQuantity}" />
             </p:column>
 
-            <p:column headerText="Transaction Time">
+            <p:column headerText="Transaction Time" sortBy="#{order.transactionDateTime}" filterBy="#{order.transactionDateTime}">
                 <h:outputText value="#{order.transactionDateTime}" >
                     <f:convertDateTime locale="us" timeStyle="short" type="both" dateStyle="full" />
                 </h:outputText>
@@ -38,7 +43,7 @@
                 <h:outputText value="#{order.cancelled ? 'Cancelled' : 'Confirmed'}"/>
             </p:column>
 
-            <p:column headerText="Details">
+            <p:column headerText="Order Details">
                 <p:commandButton update="viewOrderDetails" value="View" oncomplete="PF('orderDetails').show()" title="View">
                     <f:setPropertyActionListener value="#{order}" target="#{viewOutletOrders.orderEntityToView}" />
                 </p:commandButton>

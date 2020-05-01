@@ -1,27 +1,25 @@
 ![logo](https://i.imgur.com/WtqFOwP.png)
 
-# Notes
+# Team Information
 
-## Darrel
+### Group number: 
+### Team members:
+- Bryan Jude Toh Wei Han, A0190282H
+- Chloe Tan Xin Ru, A0187980L
+- Darrel Hong Cheng Kit, A0184367U
+- Ho Jun Cong Keith, A0184106L 
 
-- Can't figure out how to selectively process only certain form fields (for create new listing in jsf)
+# Setup Instructions
 
-- Super dodgy image upload for listing - the ui is weird cos gotta click upload separately, couldn't figure out how to upload together with submit button - files get uploaded to `C:/NetBeansProjects/proj/graBBT/graBBT-war/web/resources/image` so that it can be accessed through web resources (def not the right way, prolly need to consult on the best way to do it) - so either move your project folder accordingly OR adjust your `alternatedocroot_1` variable in `web.xml`
-- Still figuring out categories (CAN WE EVEN REACH HERE)
-- things to work on SORTING BY LOCATION? VIEW MAP?
+## Backend
 
-## Chloe
+Firstly, create a database on netbeans with the name 'grabbt'
 
-### Retailer
+Clean all project files and then deploy the enterprise application 'graBBT'
 
-- Retailer "my account page" - Include Profile details & simple overview details of outlets, listings and revenue - Each detail should be able to be clicked on --> redirect to the relevant page with their full details
-- Notifications tab (when order comes in, when payment completes)
+## Angular Client
 
-### Client
-
-- Promo
-
-# Angular Client
+### Main Client
 
 Set up with
 
@@ -31,17 +29,18 @@ npm i
 ng serve
 ```
 
-hopefully it works
-if using vscode, install Prettier for code formatting
+### Geolocation
 
-- Index, login and signup are three static pages
-- Onced logged in, redirected to Main module which is another NgModule
-- this allows for another routler outlet with child paths
-- currently can view a list of outlets THATS ALL
+The angular client also features geolocation via Google Maps API. For geolocation it to work, we must allow location and use `localhost`
 
-# Static image server
+If serving over LAN, use ng serve with https
+`ng serve --ssl=true`
+then access website through
+`https://<local ip>:4200`
 
-Make sure to run static image server in graBBT-imageServer if not images won't load
+## Static image server
+
+For images to load, please run the static image server in graBBT-imageServer
 
 ```
 cd grabBBT-imageServer
@@ -53,11 +52,4 @@ node app.js
 
 ## Others
 
-### Geolocation
 
-For geolocation to work, must allow location and use `localhost`
-
-If serving over LAN, use ng serve with https
-`ng serve --ssl=true`
-then access website through
-`https://<local ip>:4200`
