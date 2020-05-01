@@ -11,7 +11,11 @@
     <div class="cart-list">
       <div class="cart-item" *ngFor="let item of cart.cartItems; let i = index">
         <div class="cart-item-details">
-          <img src="/images/{{ item.listing.imageSrc }}" />
+          <img
+            *ngIf="item.listing.imageSrc"
+            src="/images/{{ item.listing.imageSrc }}"
+          />
+          <img *ngIf="!item.listing.imageSrc" src="/images/defaultimage.jpg" />
           <div class="details-group">
             <span class="item-name">{{ item.listing.name }}</span>
             <span class="option" *ngFor="let option of item.selectedOptions">{{
