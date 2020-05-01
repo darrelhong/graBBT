@@ -43,8 +43,7 @@
       </div>
       <!-- </mat-card> -->
 
-
-      <div class="promo-group" style="display: flex;" *ngIf="promoCode"> 
+      <div class="promo-group" style="display: flex;" *ngIf="promoCode">
         <span style="font-size: 18px;">Promo used:</span>
         <span class="promo-details" style="font-weight: 400;">
           {{ promoCode }} | {{ promoValue }}
@@ -93,6 +92,27 @@
         >
           Home Page
         </button>
+      </div>
+      <div class="rating-row" *ngIf="!orderEntity.outletRatingGiven">
+        <button
+          mat-stroked-button
+          color="accent"
+          (click)="showRatingSlider = !showRatingSlider"
+        >
+          Give outlet rating
+        </button>
+        <div class="rating-slider" *ngIf="showRatingSlider">
+          <mat-slider
+            style="margin: 8px;"
+            min="1"
+            max="5"
+            tickInterval="1"
+            step="1"
+            thumbLabel
+            [(ngModel)]="ratingValue"
+          ></mat-slider>
+          <button mat-button (click)="submitRating()">Submit</button>
+        </div>
       </div>
     </mat-card>
   </div>

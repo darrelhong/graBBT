@@ -108,3 +108,12 @@
 .promo-details {
   margin-left: auto;
 }
+
+.rating-row {
+  margin-top: 1.5rem;
+}
+
+.rating-slider {
+  display: flex;
+  align-items: center;
+}

@@ -97,7 +97,7 @@ public class OutletEntity implements Serializable {
 //    private List<CategoryEntity> categories;
     public OutletEntity() {
         this.outletRating = 5.0;
-        this.ratingCount = 0;
+        this.ratingCount = 1;
         this.outletRevenueDaily = 0.0;
         this.outletRevenueMonthly = 0.0;
         this.outletRevenueOverall = 0.0;

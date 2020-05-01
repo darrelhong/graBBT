@@ -97,6 +97,20 @@ export class CustomerService {
       .pipe(catchError(this.handleError))
   }
 
+  giveOutletRating(orderId: number, ratingValue: number): Observable<any> {
+    return this.httpClient
+      .put(
+        this.baseUrl +
+          '/giveOutletRating?orderId=' +
+          orderId +
+          '&ratingValue=' +
+          ratingValue,
+        {},
+        httpOptions
+      )
+      .pipe(catchError(this.handleError))
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage = ''
 

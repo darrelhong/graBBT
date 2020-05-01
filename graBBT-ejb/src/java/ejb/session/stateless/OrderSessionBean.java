@@ -23,10 +23,9 @@ import javax.validation.ValidatorFactory;
 import util.exception.CancelOrderException;
 import util.exception.CheckoutError;
 import util.exception.CustomerNotFoundException;
+import util.exception.GiveOutletRatingException;
 import util.exception.OrderNotFoundException;
 import util.exception.OutletNotFoundException;
-import util.exception.PromoClaimedByCustomerAlreadyException;
-import util.exception.PromoNoLongerActiveException;
 import util.exception.PromoNotClaimedByCustomer;
 import util.exception.PromoNotFoundException;
 import util.exception.PromoUsedAlreadyException;
@@ -144,6 +143,19 @@ public class OrderSessionBean implements OrderSessionBeanLocal {
 
         } catch (NonUniqueResultException | NoResultException ex) {
             throw new CancelOrderException(ex.getMessage());
+        }
+    }
+    
+    public void giveOutletRating(Long orderId, Long ratingValue) throws GiveOutletRatingException {
+        try {
+            OrderEntity oe = retrieveOrderByOrderId(orderId);
+            OutletEntity outlet = oe.getOutlet();
+            Double newOutletRating = (outlet.getOutletRating() * outlet.getRatingCount() + ratingValue) / (outlet.getRatingCount() + 1);
+            outlet.setOutletRating(newOutletRating);
+            outlet.setRatingCount(outlet.getRatingCount() + 1);
+            oe.setOutletRatingGiven(true);
+        } catch (OrderNotFoundException ex) {
+            throw new GiveOutletRatingException(ex.getMessage());
         }
     }
 

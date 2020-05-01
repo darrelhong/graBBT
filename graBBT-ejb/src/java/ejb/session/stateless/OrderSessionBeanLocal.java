@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ejb.Local;
 import util.exception.CancelOrderException;
 import util.exception.CheckoutError;
+import util.exception.GiveOutletRatingException;
 import util.exception.OrderNotFoundException;
 
 /**
@@ -26,4 +27,6 @@ public interface OrderSessionBeanLocal {
     public OrderEntity retrieveOrderByOrderId(Long orderId) throws OrderNotFoundException;
 
     public OrderEntity checkout(Long customerId, Long outletId, Integer totalLineItem, Integer totalQuantity, BigDecimal totalAmount, String address, String addressDetails, String ccNum, String deliveryNote, List<OrderLineItem> orderLineItems, PromoEntity promo) throws CheckoutError;
+
+    public void giveOutletRating(Long orderId, Long ratingValue) throws GiveOutletRatingException;
 }

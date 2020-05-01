@@ -39,7 +39,7 @@ export class OutletsComponent implements OnInit {
         const hour = date.getHours()
         for (const o of this.outlets) {
           // REMEMBER TO CHANGE TO FALSE
-          o.open = o.openingHour < hour && hour < o.closingHour ? true : true
+          o.open = o.openingHour < hour && hour < o.closingHour ? true : false
         }
         this.outlets.sort((a, b) => {
           // show open outlets first
