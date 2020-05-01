@@ -19,6 +19,8 @@ Clean all project files and then deploy the enterprise application 'graBBT'
 
 ## Angular Client
 
+### Main Client
+
 Set up with
 
 ```
