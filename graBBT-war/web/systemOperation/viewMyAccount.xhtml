@@ -10,12 +10,12 @@
         <div>
             <h:panelGroup rendered="#{sessionScope.isLogin == true}">
                 <h:outputText style="font-size: 20px" value="Retailer Account Details"/>
-                <p:graphicImage url="http://localhost:3000/images/#{viewMyAccountManagedBean.currentRetailerEntity.imageSrc}" rendered="#{not empty viewMyAccountManagedBean.currentRetailerEntity.imageSrc}" width="100px"/>
+                
             </h:panelGroup>
             
             <br/><br/>
             
-            <p:dataTable value="#{viewMyAccountManagedBean.currentRetailerEntity}" style="width: 50%">
+            <p:dataTable value="#{viewMyAccountManagedBean.currentRetailerEntity}" style="width: 30%">
                 <p:column>
                     <f:facet name="header">Retailer Name</f:facet>
                     <h:outputText value="#{currentRetailerEntity.retailerName}"/>

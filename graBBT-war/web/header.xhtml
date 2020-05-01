@@ -36,7 +36,7 @@
                 <p:commandLink style="float: left; font-size: x-large" actionListener="#{loginManagedBean.homepageRedirect}" value="graBBT Retailer Management System" />
                 <span style="float:right;">
                     <p:commandButton type="button" value="Notifications" icon="fa fa-bell-o" />&nbsp;
-                     <p:menuButton value="#{sessionScope.currentRetailerEntity.retailerName}" icon="fa fa-user-o" >
+                    <p:menuButton value="#{sessionScope.currentRetailerEntity.retailerName}" icon="fa fa-user-o" >
                         <p:menuitem value="My Account" actionListener="#{loginManagedBean.accountRedirect}" icon="fa fa-user-o" />
                         <p:menuitem value="Logout" actionListener="#{loginManagedBean.logout}" icon="fa fa-sign-out" />
                     </p:menuButton>
