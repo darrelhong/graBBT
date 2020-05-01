@@ -28,6 +28,7 @@ import javax.ws.rs.core.Response.Status;
 import util.exception.CancelOrderException;
 import util.exception.CheckoutError;
 import util.exception.CustomerNotFoundException;
+import util.exception.GiveOutletRatingException;
 import util.exception.InputDataValidationException;
 import util.exception.InvalidLoginCredentialException;
 import util.exception.ListingNotFoundException;
@@ -155,14 +156,14 @@ public class CustomerResource {
                     Listing listing = listingSessionBean.retrieveListingById(ci.getListingId());
                     orderLineItems.add(new OrderLineItem(listing, ci.getQty(), ci.getSubtotal(), ci.getSelectedOptions()));
                 }
-                
+
                 OrderEntity oe = orderSessionBean.checkout(checkoutReq.getCustomerId(), checkoutReq.getOutletId(),
                         checkoutReq.getTotalLineItem(), checkoutReq.getTotalQuantity(), checkoutReq.getTotalAmount(),
                         checkoutReq.getAddress(), checkoutReq.getAddressDetails(), checkoutReq.getCcNum(),
                         checkoutReq.getDeliveryNote(), orderLineItems, checkoutReq.getPromo());
 
                 System.out.println("CHECKOUT SUCCESS");
-                
+
                 oe.setCustomer(null);
                 oe.setPromo(null);
                 oe.getOutlet().setRetailerEntity(null);
@@ -211,26 +212,24 @@ public class CustomerResource {
         System.out.println(ordersResp);
         return Response.status(Response.Status.OK).entity(ordersResp).build();
     }
-    
+
     @Path("refreshCustomer")
     @GET
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response refreshCustomer(@QueryParam("customerId") Long customerId)
-    {
+    public Response refreshCustomer(@QueryParam("customerId") Long customerId) {
         System.out.println("refreshCustomer entered");
-        
+
         try {
             Customer refreshedCustomer = customerSessionBeanLocal.retrieveCustomerById(customerId);
             RefreshCustomerResp refreshCustomerResp = new RefreshCustomerResp(refreshedCustomer);
-            
+
             return Response.status(Response.Status.OK).entity(refreshCustomerResp).build();
-        }
-        catch (CustomerNotFoundException ex){
+        } catch (CustomerNotFoundException ex) {
             ErrorResp errorResp = new ErrorResp(ex.getMessage());
             return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorResp).build();
         }
-        
+
     }
 
     @Path("cancelOrder")
@@ -260,6 +259,23 @@ public class CustomerResource {
         }
     }
 
+    @Path("giveOutletRating")
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response giveOutletRating(@QueryParam("orderId") Long orderId,
+            @QueryParam("ratingValue") Long ratingValue) {
+        System.out.println(orderId);
+        System.out.println(ratingValue);
+        try {
+            orderSessionBean.giveOutletRating(orderId, ratingValue);
+            
+            return Response.status(Response.Status.OK).build();
+        } catch (GiveOutletRatingException ex) {
+            ErrorResp errorResp = new ErrorResp(ex.getMessage());
+            return Response.status(Status.INTERNAL_SERVER_ERROR).entity(errorResp).build();
+        }
+    }
+
     @Path("retrieveOrderByOrderId")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -273,20 +289,17 @@ public class CustomerResource {
                 oe.setCustomer(null);
                 oe.getOutlet().setRetailerEntity(null);
                 oe.getOutlet().setListings(null);
-                
-                if (oe.getPromo() == null)
-                {
+
+                if (oe.getPromo() == null) {
                     odr.setPromoCode(null);
                     odr.setPromoValue(null);
-                }
-                else 
-                {
+                } else {
                     odr.setPromoCode(oe.getPromo().getPromoCode());
                     odr.setPromoValue(oe.getPromo().getValue());
                 }
-               
+
                 oe.setPromo(null);
-                
+
                 for (OrderLineItem oli : oe.getOrderLineItems()) {
                     oli.getListing().setOutletEntity(null);
                     oli.getListing().setCategory(null);
@@ -296,7 +309,7 @@ public class CustomerResource {
                     oli.getListing().setToppingOptions(null);
                 }
                 odr.setOrderEntity(oe);
-                
+
                 return Response.status(Response.Status.OK).entity(odr).build();
 
             } else {

@@ -44,7 +44,7 @@ public class OrderEntity implements Serializable {
     @DecimalMin("0.00")
     @Digits(integer = 9, fraction = 2)
     private BigDecimal totalAmount;
-    
+
     @Column(nullable = false, precision = 11, scale = 2)
     @NotNull
     @DecimalMin("0.00")
@@ -62,37 +62,41 @@ public class OrderEntity implements Serializable {
     @Column(nullable = false)
     @NotNull
     private Boolean cancelled;
-    
+
     // nullable for now
     @Column(nullable = true)
     private String address;
-    
+
     @Column(nullable = true)
     private String addressDetails;
-    
+
     @Column(nullable = true)
     private String deliveryNote;
-    
+
     @Column(nullable = true)
     private String ccNum;
-    
+
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private Customer customer;
-    
+
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private OutletEntity outlet;
-    
+
     @OneToOne(optional = true)
     @JoinColumn(nullable = true)
     private PromoEntity promo;
 
+    @Column(nullable = false)
+    @NotNull
+    private Boolean outletRatingGiven;
 
     public OrderEntity() {
         this.orderLineItems = new ArrayList<>();
         this.cancelled = false;
         this.promo = null;
+        this.outletRatingGiven = false;
     }
 
     public OrderEntity(Integer totalLineItem, Integer totalQuantity, BigDecimal totalAmount,
@@ -333,6 +337,14 @@ public class OrderEntity implements Serializable {
 
     public void setPromo(PromoEntity promo) {
         this.promo = promo;
+    }
+
+    public Boolean getOutletRatingGiven() {
+        return outletRatingGiven;
+    }
+
+    public void setOutletRatingGiven(Boolean outletRatingGiven) {
+        this.outletRatingGiven = outletRatingGiven;
     }
 
 }

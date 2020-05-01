@@ -85,7 +85,9 @@
         />
         <mat-card-content>
           <mat-icon color="accent">star</mat-icon>
-          <span class="rating-text">{{ outlet.outletRating }}</span>
+          <span class="rating-text">{{
+            outlet.outletRating | number: '1.0-2'
+          }}</span>
           <mat-chip-list class="open-chip">
             <mat-chip [color]="outlet.open ? 'primary' : 'warn'" selected>{{
               outlet.open ? 'Open' : ' Closed'

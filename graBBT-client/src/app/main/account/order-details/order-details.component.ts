@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { CustomerService } from 'src/app/services/customer/customer.service'
 import { CartService } from 'src/app/services/cart/cart.service'
-import { MatDialog } from '@angular/material'
+import { MatDialog, MatSnackBar } from '@angular/material'
 import { CancelDialogComponent } from 'src/app/components/cancel-dialog/cancel-dialog.component'
 
 @Component({
@@ -14,22 +14,27 @@ export class OrderDetailsComponent implements OnInit {
   orderEntity: any
   promoCode: string //if any
   promoValue: number //if any
+  showRatingSlider = false
+  ratingValue = 5
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private customerService: CustomerService,
     private cartService: CartService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
-
     this.route.paramMap.subscribe(params => {
       this.customerService.retrieveOrderByOrderId(params.get('id')).subscribe(
         resp => {
           this.orderEntity = resp.orderEntity
-          this.orderEntity.transactionDateTime = resp.orderEntity.transactionDateTime.slice(0, -5)
+          this.orderEntity.transactionDateTime = resp.orderEntity.transactionDateTime.slice(
+            0,
+            -5
+          )
           this.promoCode = resp.promoCode
           this.promoValue = resp.promoValue
 
@@ -75,6 +80,25 @@ export class OrderDetailsComponent implements OnInit {
     })
   }
 
+  submitRating() {
+    console.log(this.ratingValue)
+    this.customerService
+      .giveOutletRating(this.orderEntity.orderId, this.ratingValue)
+      .subscribe(
+        resp => {
+          console.log(resp)
+          this.displaySnackBar('Successfully submitted rating!')
+          this.ngOnInit()
+        },
+        error => {
+          console.log(error)
+        }
+      )
+  }
+
+  displaySnackBar(message: string) {
+    this.snackBar.open(message, 'Dismiss', { duration: 5000 })
+  }
   // testing
   returnTestData() {
     return {
