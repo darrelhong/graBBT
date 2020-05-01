@@ -18,14 +18,14 @@ export class OutletsComponent implements OnInit {
   searchTerm = ''
   slides = [
     {
-      url: '/images/carousel/test-carousel-image-1.jpg',
+      url: '/images/carousel/carousel-image-1.PNG',
     },
     {
-      url: '/images/carousel/test-carousel-image-2.jpeg',
+      url: '/images/carousel/carousel-image-2.jpg',
     },
     {
-      url: '/images/carousel/test-carousel-image-3.jpg',
-    },
+      url: '/images/carousel/carousel-image-4.jpg',
+    }
   ]
 
   constructor(private listingService: ListingService, private router: Router) {}
