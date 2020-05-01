@@ -27,17 +27,18 @@ npm i
 ng serve
 ```
 
-hopefully it works
-if using vscode, install Prettier for code formatting
+### Geolocation
 
-- Index, login and signup are three static pages
-- Onced logged in, redirected to Main module which is another NgModule
-- this allows for another routler outlet with child paths
-- currently can view a list of outlets THATS ALL
+The angular client also features geolocation via Google Maps API. For geolocation it to work, we must allow location and use `localhost`
+
+If serving over LAN, use ng serve with https
+`ng serve --ssl=true`
+then access website through
+`https://<local ip>:4200`
 
 ## Static image server
 
-Make sure to run static image server in graBBT-imageServer for images to load
+For images to load, please run the static image server in graBBT-imageServer
 
 ```
 cd grabBBT-imageServer
@@ -49,11 +50,4 @@ node app.js
 
 ## Others
 
-### Geolocation
 
-For geolocation to work, must allow location and use `localhost`
-
-If serving over LAN, use ng serve with https
-`ng serve --ssl=true`
-then access website through
-`https://<local ip>:4200`
