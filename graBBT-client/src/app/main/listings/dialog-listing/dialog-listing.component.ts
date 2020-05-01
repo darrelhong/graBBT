@@ -81,10 +81,66 @@ export class DialogListingComponent implements OnInit {
 
     if (this.cart.outlet) {
       if (this.cart.outlet.outletId === this.data.outlet.outletId) {
-        this.cart.cartItems.push(item)
-        this.cartService.updateCart(this.cart)
-        this.dialogRef.close()
-        this.sidenavService.open()
+
+        //check for exactly the same order
+        let hasSame = false
+
+        for (var c of this.cart.cartItems)
+        {
+          // console.log("Comparing listing id")
+          // console.log(item.listing.listingId)
+          // console.log(c.listing.listingId)
+
+          if (item.listing.listingId == c.listing.listingId)
+          {
+            // console.log("Comparing selected options length")
+            // console.log(item.selectedOptions.length)
+            // console.log(c.selectedOptions.length)
+
+            if (item.selectedOptions.length == c.selectedOptions.length)
+            {
+              // console.log("Comparing selected options")
+              // console.log(JSON.stringify(item.selectedOptions))
+              // console.log(JSON.stringify(c.selectedOptions))
+
+              if (JSON.stringify(item.selectedOptions) == JSON.stringify(c.selectedOptions))
+              {
+                //update cart item instead 
+                // console.log("They are the same!")
+                hasSame = true
+                c.qty += item.qty
+                c.subtotal += item.subtotal
+                
+                this.cartService.updateCart(this.cart)
+                this.dialogRef.close()
+                this.sidenavService.open()
+                break
+
+              } else 
+              {
+                hasSame = false
+              }
+            }
+            else 
+            {
+              hasSame = false
+            }
+          }
+          else
+          {
+            hasSame = false
+          }
+        }
+        
+        //adding to cart
+        if (!hasSame)
+        {
+          this.cart.cartItems.push(item)
+          this.cartService.updateCart(this.cart)
+          this.dialogRef.close()
+          this.sidenavService.open()
+        }
+
       } else {
         const dialogRef = this.cfmDialog.open(ConfirmDialogComponent, {
           width: '400px',
