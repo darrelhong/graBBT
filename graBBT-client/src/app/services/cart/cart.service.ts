@@ -114,7 +114,7 @@ export class CartService {
       outletId: currentCart.outlet.outletId,
       totalLineItem: currentCart.totalLineItem,
       totalQuantity: currentCart.totalQuantity,
-      totalAmount: currentCart.totalAmount,
+      totalAmount: +currentCart.totalAmount.toFixed(2),
       promo: currentCart.promo,
       checkoutItems,
       address,
@@ -143,9 +143,9 @@ export class CartService {
       totalQuantity += item.qty
       totalAmount += item.subtotal
     })
-    cart.totalLineItem = totalLineItem
-    cart.totalQuantity = totalQuantity
-    cart.totalAmount = totalAmount
+    cart.totalLineItem = +totalLineItem.toFixed(2)
+    cart.totalQuantity = +totalQuantity.toFixed(2)
+    cart.totalAmount = +totalAmount.toFixed(2)
     return cart
   }
 
