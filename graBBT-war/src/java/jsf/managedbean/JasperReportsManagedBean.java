@@ -12,11 +12,12 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Resource;
-import javax.faces.bean.RequestScoped;
-import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 import javax.sql.DataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperRunManager;
@@ -25,31 +26,32 @@ import net.sf.jasperreports.engine.JasperRunManager;
  *
  * @author Bryan
  */
-@Named(value = "jasperReportManagedBean")
-@RequestScoped
-public class JasperReportManagedBean implements Serializable 
+@Named(value = "jasperReportsManagedBean")
+@ViewScoped
+public class JasperReportsManagedBean implements Serializable
 {
 
     @Resource(name = "graBBTDataSource")
     private DataSource graBBTDataSource;
 
     /**
-     * Creates a new instance of JasperReportManagedBean
+     * Creates a new instance of JasperReportsManagedBean
      */
-    public JasperReportManagedBean() {
+    public JasperReportsManagedBean() 
+    {
     }
     
     public void generateReport(ActionEvent event)
     {
-        System.out.println("*****GENERATING REPORT*******");
         try {
             InputStream reportStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/jasperreports/Retailer_Sales_Reports.jasper");
             OutputStream outputStream = FacesContext.getCurrentInstance().getExternalContext().getResponseOutputStream();
-            
+        
             JasperRunManager.runReportToPdfStream(reportStream, outputStream, new HashMap<>(), graBBTDataSource.getConnection());
         } catch (IOException | JRException | SQLException ex) {
-            java.util.logging.Logger.getLogger(JasperReportManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JasperReportsManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         
     }
 }
