@@ -83,6 +83,11 @@ public class GraBBTDataInitSessionBean {
             Long lihoOrchardGatewayOutletId = outletSessionBean.createNewOutlet(
                     new OutletEntity("LiHO Orchard Gateway", 8, 20, 1.300763, 103.839079, "liho.jpeg"), lihoRetailerId);
 
+            Long playmadeRetailerId = retailerSessionBean
+                    .createNewRetailer(new RetailerEntity("Playmade", "manager4", "password"));
+            Long playmadeWaterwayId = outletSessionBean.createNewOutlet(
+                    new OutletEntity("Playmade Waterway Point", 0, 24, 1.406769, 103.902272, "playmade.jpeg"), playmadeRetailerId);
+
             // Creating options hashmaps
             Map<String, Double> sizeOptions = new HashMap<>();
             sizeOptions.put("Medium", 0.00);
@@ -404,6 +409,45 @@ public class GraBBTDataInitSessionBean {
             listingSessionBean.createNewListing(lhCheezHOGreenTeaOG);
             Listing lhCheezHOJingSyuanTeaOG = new Listing("CheezHO Jing Syuan Tea", new BigDecimal(3.40), lihoOG, "lhchjstea.jpeg", lhSizeOptions, lhSugarOptions, lhIceOptions, lhToppingOptions);
             listingSessionBean.createNewListing(lhCheezHOJingSyuanTeaOG);
+
+            // playmade
+            Map<String, Double> pmSizeOptions = new HashMap<>();
+            pmSizeOptions.put("Medium", 0.00);
+            pmSizeOptions.put("Large", 1.20);
+            Map<String, Double> pmSugarOptions = new HashMap<>();
+            pmSugarOptions.put("0%", 0.00);
+            pmSugarOptions.put("25%", 0.00);
+            pmSugarOptions.put("50%", 0.00);
+            pmSugarOptions.put("70%", 0.00);
+            pmSugarOptions.put("100%", 0.00);
+            Map<String, Double> pmIceOptions = new HashMap<>();
+            pmIceOptions.put("Normal Ice", 0.00);
+            pmIceOptions.put("Less Ice", 0.00);
+            pmIceOptions.put("No Ice", 0.00);
+            Map<String, Double> pmToppingOptions = new HashMap<>();
+            pmToppingOptions.put("Pink Cactus Pearls", 0.80);
+            pmToppingOptions.put("Black Sesame Pearls", 0.80);
+            pmToppingOptions.put("Burnt Caramel Pearls", 0.80);
+            pmToppingOptions.put("Chrysanthemum Pearls", 1.20);
+            pmToppingOptions.put("3 Pearls", 1.20);
+            pmToppingOptions.put("Aloe Vera", 1.20);
+            pmToppingOptions.put("Kanten Jelly", 1.20);
+
+            OutletEntity playmadeWaterway = outletSessionBean.retrieveOutletByOutletId(playmadeWaterwayId);
+            Listing taiwanMilkTea = new Listing("Taiwan Milk Tea", new BigDecimal(2.90), playmadeWaterway, "pmtaiwanmilktea.jpeg", pmSizeOptions, pmSugarOptions, pmIceOptions, pmToppingOptions);
+            listingSessionBean.createNewListing(taiwanMilkTea);
+            Listing orangePulpGreenTea = new Listing("Orange Pulp Green Tea", new BigDecimal(4.60), playmadeWaterway, "opgreentea.jpeg", pmSizeOptions, pmSugarOptions, pmIceOptions, pmToppingOptions);
+            listingSessionBean.createNewListing(orangePulpGreenTea);
+            Listing cocoaLatte = new Listing("Cocoa Latte", new BigDecimal(4.20), playmadeWaterway, "cocoalatte.jpeg", pmSizeOptions, pmSugarOptions, pmIceOptions, pmToppingOptions);
+            listingSessionBean.createNewListing(cocoaLatte);
+            Listing matchaLatte = new Listing("Matcha Latte", new BigDecimal(4.20), playmadeWaterway, "matchalatte.jpeg", pmSizeOptions, pmSugarOptions, pmIceOptions, pmToppingOptions);
+            listingSessionBean.createNewListing(matchaLatte);
+            Listing brownRiceLatte = new Listing("Brown Rice Latte", new BigDecimal(4.30), playmadeWaterway, "brownricelatte.jpeg", pmSizeOptions, pmSugarOptions, pmIceOptions, pmToppingOptions);
+            listingSessionBean.createNewListing(brownRiceLatte);
+            Listing gfYakGreenTea = new Listing("Grapefruit Yakult Green Tea", new BigDecimal(6.60), playmadeWaterway, "grapefuityakultgreentea.jpeg", pmSizeOptions, pmSugarOptions, pmIceOptions, pmToppingOptions);
+            listingSessionBean.createNewListing(gfYakGreenTea);
+            
+            
 
             //Creating promos
             PromoEntity newPromo = new PromoEntity("TEST001", new BigDecimal(2.00), 5);

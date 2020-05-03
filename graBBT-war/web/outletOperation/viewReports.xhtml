@@ -6,15 +6,15 @@
                 template="/template/defaultTemplate.xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns="http://www.w3.org/1999/xhtml"> 
-    
-    <ui:define name="content">
-        <h:head>
+
+    <h:head>
         <title>Jasper Report</title>
-        </h:head>
+    </h:head>
+    <ui:define name="content">
         <h3>
             <h:outputText value="#{sessionScope.currentRetailerEntity.retailerName}: Reports"/>
         </h3>
-        
+
         <p:panelGrid>
             <h:form>
                 <p:commandButton ajax="false" value="Generate Sales Report" actionListener="#{jasperReportsManagedBean.generateReport}" />
