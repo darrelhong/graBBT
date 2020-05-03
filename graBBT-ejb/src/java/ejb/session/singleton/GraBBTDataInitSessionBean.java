@@ -60,7 +60,7 @@ public class GraBBTDataInitSessionBean {
 
     private void initialiseData() {
         try {
-            // hgjgjh
+            // Creating retailers
             Long retailerId = retailerSessionBean
                     .createNewRetailer(new RetailerEntity("KOI Thé", "manager", "password"));
             Long koiPayaOutletId = outletSessionBean.createNewOutlet(
@@ -83,6 +83,10 @@ public class GraBBTDataInitSessionBean {
             Long lihoOrchardGatewayOutletId = outletSessionBean.createNewOutlet(
                     new OutletEntity("LiHO Orchard Gateway", 8, 20, 1.300763, 103.839079, "liho.jpeg"), lihoRetailerId);
 
+            // Creating admin account
+            Long adminRetailerId = retailerSessionBean
+                    .createNewRetailer(new RetailerEntity("Admin", "admin", "password", true));
+            
             // Creating options hashmaps
             Map<String, Double> sizeOptions = new HashMap<>();
             sizeOptions.put("Medium", 0.00);

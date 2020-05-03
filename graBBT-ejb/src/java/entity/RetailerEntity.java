@@ -41,20 +41,26 @@ public class RetailerEntity implements Serializable {
 
     @Column(columnDefinition = "CHAR(32) NOT NULL")
     private String salt;
+    
+    @Column(nullable = false)
+    @NotNull
+    private Boolean isAdmin;
 
     @OneToMany(mappedBy = "retailerEntity")
     private List<OutletEntity> outletEntities;
 
     public RetailerEntity() {
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
-        outletEntities = new ArrayList<>();
+        this.outletEntities = new ArrayList<>();
+        this.isAdmin = false;
     }
 
     public RetailerEntity(String retailerName, String username, String password) {
         this();
         this.retailerName = retailerName;
         this.username = username;
-
+        this.isAdmin = false;
+        
         setPassword(password);
     }
 
@@ -63,9 +69,23 @@ public class RetailerEntity implements Serializable {
         this.retailerName = retailerName;
         this.imageSrc = imageSrc;
         this.username = username;
+        this.isAdmin = false;
 
         setPassword(password);
     }
+    
+    
+    //Creating admin account
+    public RetailerEntity(String retailerName, String username, String password, Boolean isAdmin) {
+        this();
+        this.retailerName = retailerName;
+        this.username = username;
+        this.isAdmin = isAdmin;
+        
+        setPassword(password);
+    }
+    
+
 
     /**
      * @param password the password to set
@@ -186,6 +206,14 @@ public class RetailerEntity implements Serializable {
      */
     public void setImageSrc(String imageSrc) {
         this.imageSrc = imageSrc;
+    }
+
+    public Boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
 }

@@ -11,6 +11,11 @@
         <nav>
             <h:form>
                     
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                </p:confirmDialog> 
+                    
                 <p:panelMenu style="width:200px;">
 
                     <p:submenu label="System" expanded="true">
@@ -27,16 +32,13 @@
                         <p:menuitem value="View Reports" outcome="/outletOperation/viewReports.xhtml" icon="fa fa-th-list" />
                     </p:submenu>                   
 
-                    <p:submenu label="Admin Management" rendered="#{sessionScope.isLogin == true}" expanded="true">
+                    <p:submenu label="Admin Management" rendered="#{sessionScope.isLogin == true &amp;&amp; sessionScope.currentRetailerEntity.isAdmin == true}" expanded="true">
                         <p:menuitem value="Create New Promo" outcome="/adminOperation/createNewPromo.xhtml" icon="fa fa-plus" />
                         <p:menuitem value="View All Promos" outcome="/adminOperation/viewAllPromos.xhtml" icon="fa fa-list" />
                     </p:submenu>
                 </p:panelMenu>
                 
-                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
-                </p:confirmDialog>  
+                 
             </h:form>
         </nav>
     </section>

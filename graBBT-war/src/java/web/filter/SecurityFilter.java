@@ -72,8 +72,23 @@ public class SecurityFilter implements Filter {
 
         if (!excludeLoginCheck(requestServletPath)) {
             if (isLogin == true) {
+                
                 RetailerEntity curr = (RetailerEntity) httpSession.getAttribute("currentRetailerEntity");
+                
+                if (requestServletPath.equals("/adminOperation/createNewPromo.xhtml") || requestServletPath.equals("/adminOperation/viewAllPromos.xhtml"))
+                {
+                    if (curr.getIsAdmin())
+                    {
+                        chain.doFilter(request, response);
+                    }
+                    else
+                    {
+                        httpServletResponse.sendRedirect(CONTEXT_ROOT + "/accessRightError.xhtml");
+                    }
+                }
+
                 chain.doFilter(request, response);
+                
             } else {
                 httpServletResponse.sendRedirect(CONTEXT_ROOT + "/accessRightError.xhtml");
             }
