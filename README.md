@@ -2,7 +2,7 @@
 
 # Team Information
 
-### Group number: 
+### Group number: GP12 
 ### Team members:
 - Bryan Jude Toh Wei Han, A0190282H
 - Chloe Tan Xin Ru, A0187980L
