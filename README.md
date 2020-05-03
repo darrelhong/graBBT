@@ -11,13 +11,13 @@
 
 # Setup Instructions
 
-## Backend
+## (A) JavaEE Backend
 
 Firstly, create a database on netbeans with the name 'grabbt'
 
 Clean all project files and then deploy the enterprise application 'graBBT'
 
-## Static image server
+## (B) Static Image Server
 
 For images on the Angular Client to load, please run the static image server in graBBT-imageServer first in a separate cmd window.
 
@@ -31,9 +31,9 @@ node app.js
 # listening on 3000
 ```
 
-## Angular Client
+## (C) Angular Client
 
-### Main Customer Client
+### (1) Main Customer Client
 
 Start the customer client with
 
@@ -43,7 +43,7 @@ npm i
 ng serve
 ```
 
-### Geolocation
+### (2) Geolocation
 
 The angular client also features geolocation via Google Maps API. 
 For geolocation to work, we must allow location and use `localhost`
