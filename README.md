@@ -20,6 +20,7 @@ Clean all project files and then deploy the enterprise application 'graBBT'
 ## Static image server
 
 For images on the Angular Client to load, please run the static image server in graBBT-imageServer first on a separate cmd window.
+Please do not close or terminate the window while the application is running.
 
 ```
 cd grabBBT-imageServer
