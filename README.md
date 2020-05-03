@@ -31,7 +31,7 @@ ng serve
 
 ### Geolocation
 
-The angular client also features geolocation via Google Maps API. For geolocation it to work, we must allow location and use `localhost`
+The angular client also features geolocation via Google Maps API. For geolocation to work, we must allow location and use `localhost`
 
 If serving over LAN, use ng serve with https
 `ng serve --ssl=true`
