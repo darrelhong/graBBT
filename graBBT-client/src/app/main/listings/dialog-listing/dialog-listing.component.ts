@@ -66,8 +66,8 @@ export class DialogListingComponent implements OnInit {
     newSelectedOptions.push(this.orderForm.get('sizeChoice').value)
     newSelectedOptions.push(this.orderForm.get('sugarChoice').value)
     newSelectedOptions.push(this.orderForm.get('iceChoice').value)
-    this.toppingFormArray.controls.forEach((c, i) => {
-      if (c.value) {
+    this.toppingFormArray.controls.forEach((control, i) => {
+      if (control.value) {
         newSelectedOptions.push(this.toppingArr[i][0])
       }
     })
@@ -81,66 +81,56 @@ export class DialogListingComponent implements OnInit {
 
     if (this.cart.outlet) {
       if (this.cart.outlet.outletId === this.data.outlet.outletId) {
-
-        //check for exactly the same order
+        // check for exactly the same order
         let hasSame = false
 
-        for (var c of this.cart.cartItems)
-        {
+        for (var c of this.cart.cartItems) {
           // console.log("Comparing listing id")
           // console.log(item.listing.listingId)
           // console.log(c.listing.listingId)
 
-          if (item.listing.listingId == c.listing.listingId)
-          {
+          if (item.listing.listingId == c.listing.listingId) {
             // console.log("Comparing selected options length")
             // console.log(item.selectedOptions.length)
             // console.log(c.selectedOptions.length)
 
-            if (item.selectedOptions.length == c.selectedOptions.length)
-            {
+            if (item.selectedOptions.length == c.selectedOptions.length) {
               // console.log("Comparing selected options")
               // console.log(JSON.stringify(item.selectedOptions))
               // console.log(JSON.stringify(c.selectedOptions))
 
-              if (JSON.stringify(item.selectedOptions) == JSON.stringify(c.selectedOptions))
-              {
-                //update cart item instead 
+              if (
+                JSON.stringify(item.selectedOptions) ==
+                JSON.stringify(c.selectedOptions)
+              ) {
+                // update cart item instead
                 // console.log("They are the same!")
                 hasSame = true
                 c.qty += item.qty
                 c.subtotal += item.subtotal
-                
+
                 this.cartService.updateCart(this.cart)
                 this.dialogRef.close()
                 this.sidenavService.open()
                 break
-
-              } else 
-              {
+              } else {
                 hasSame = false
               }
-            }
-            else 
-            {
+            } else {
               hasSame = false
             }
-          }
-          else
-          {
+          } else {
             hasSame = false
           }
         }
-        
-        //adding to cart
-        if (!hasSame)
-        {
+
+        // adding to cart
+        if (!hasSame) {
           this.cart.cartItems.push(item)
           this.cartService.updateCart(this.cart)
           this.dialogRef.close()
           this.sidenavService.open()
         }
-
       } else {
         const dialogRef = this.cfmDialog.open(ConfirmDialogComponent, {
           width: '400px',
@@ -207,41 +197,43 @@ export class DialogListingComponent implements OnInit {
   // calculate new orderPrice on form change
   onFormChanges(): void {
     this.orderForm.valueChanges.subscribe(form => {
-      let newPrice = this.data.listing.basePrice
-      // console.log(newPrice)
+      let newPrice = +this.data.listing.basePrice
+      console.log(newPrice)
       console.log('form changed!')
       if (form.sizeChoice) {
-        // console.log(
-        //   form.sizeChoice + ' ' + this.data.listing.sizeOptions[form.sizeChoice]
-        // )
+        console.log(
+          form.sizeChoice + ' ' + this.data.listing.sizeOptions[form.sizeChoice]
+        )
         newPrice += this.data.listing.sizeOptions[form.sizeChoice]
-        // console.log(newPrice)
+        console.log(newPrice)
       }
       if (form.sugarChoice) {
-        // console.log(
-        //   form.sugarChoice +
-        //     ' ' +
-        //     this.data.listing.sugarOptions[form.sugarChoice]
-        // )
+        console.log(
+          form.sugarChoice +
+            ' ' +
+            this.data.listing.sugarOptions[form.sugarChoice]
+        )
         newPrice += this.data.listing.sugarOptions[form.sugarChoice]
-        // console.log(newPrice)
+        console.log(newPrice)
       }
       if (form.iceChoice) {
-        // console.log(
-        //   form.iceChoice + ' ' + this.data.listing.iceOptions[form.iceChoice]
-        // )
+        console.log(
+          form.iceChoice + ' ' + this.data.listing.iceOptions[form.iceChoice]
+        )
         newPrice += this.data.listing.iceOptions[form.iceChoice]
-        // console.log(newPrice)
+        console.log(newPrice)
       }
-      // console.log(form.toppingFormArray)
+      console.log(form.toppingFormArray)
+      console.log(newPrice)
       form.toppingFormArray.forEach((selected, index) => {
         if (selected) {
           newPrice += this.toppingArr[index][1]
-          // console.log(newPrice)
+          console.log(newPrice)
         }
       })
-      // console.log(form.quantity)
-      newPrice *= form.quantity
+      console.log(newPrice)
+      console.log(form.quantity)
+      newPrice = form.quantity * newPrice
       // to fix decimal place errors
       newPrice = +newPrice.toFixed(2)
       console.log(newPrice)
