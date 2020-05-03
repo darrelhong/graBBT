@@ -54,6 +54,8 @@ then access website through
 `https://<local ip>:4200`
 
 
-## Others
+# Project Information
+This project constitutes the group project component of the NUS module, IS3106.
 
+For more information on the project, please refer to our .docx report.
 
