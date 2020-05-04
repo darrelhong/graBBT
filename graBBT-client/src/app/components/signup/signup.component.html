@@ -44,9 +44,14 @@
             Username is <strong>required</strong>
           </mat-error>
           <mat-error
+            *ngIf="signupForm.controls['username'].hasError('minlength')"
+          >
+            Username must be at least <strong>4 characters</strong>
+          </mat-error>
+          <mat-error
             *ngIf="signupForm.controls['username'].hasError('maxlength')"
           >
-            Name must be less than <strong>32 characters</strong>
+            Username must be less than <strong>32 characters</strong>
           </mat-error>
         </mat-form-field>
       </div>
@@ -135,6 +140,11 @@
             *ngIf="signupForm.controls['address'].hasError('required')"
           >
             Address is <strong>required</strong>
+          </mat-error>
+          <mat-error
+            *ngIf="signupForm.controls['address'].hasError('maxlength')"
+          >
+            Address must be less than <strong>128 characters</strong>
           </mat-error>
         </mat-form-field>
       </div>

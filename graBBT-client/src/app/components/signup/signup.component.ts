@@ -22,7 +22,11 @@ export class SignupComponent implements OnInit {
     ],
     username: [
       null,
-      Validators.compose([Validators.required, Validators.maxLength(32)]),
+      Validators.compose([
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(32),
+      ]),
     ],
     password: [null, Validators.required],
     email: [null, Validators.compose([Validators.required, Validators.email])],
@@ -35,7 +39,10 @@ export class SignupComponent implements OnInit {
         Validators.maxLength(8),
       ]),
     ],
-    address: [null, Validators.required],
+    address: [
+      null,
+      Validators.compose([Validators.required, Validators.maxLength(64)]),
+    ],
   })
 
   constructor(
@@ -68,16 +75,16 @@ export class SignupComponent implements OnInit {
           this.sessionService.setCurrentCustomer(customer)
         }
 
-        this.router.navigate(['/landing'])
+        this.router.navigate(['/main'])
       },
       error => {
         console.log(error)
-        this.displayErrorSnackBar('An error occured')
+        this.displayErrorSnackBar(error)
       }
     )
   }
 
   displayErrorSnackBar(message: string) {
-    this.snackBar.open(message, 'Dismiss', { duration: 5000 })
+    this.snackBar.open(message, 'Dismiss')
   }
 }
