@@ -33,6 +33,8 @@ public class JasperReportsManagedBean implements Serializable
 
     @Resource(name = "graBBTDataSource")
     private DataSource graBBTDataSource;
+    
+    private String outlet;
 
     /**
      * Creates a new instance of JasperReportsManagedBean
@@ -44,14 +46,33 @@ public class JasperReportsManagedBean implements Serializable
     public void generateReport(ActionEvent event)
     {
         try {
+            HashMap parameters = new HashMap();
+            parameters.put("OUTLET", getOutlet());
+            
             InputStream reportStream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/jasperreports/Retailer_Sales_Reports.jasper");
             OutputStream outputStream = FacesContext.getCurrentInstance().getExternalContext().getResponseOutputStream();
         
-            JasperRunManager.runReportToPdfStream(reportStream, outputStream, new HashMap<>(), graBBTDataSource.getConnection());
+            JasperRunManager.runReportToPdfStream(reportStream, outputStream, parameters, graBBTDataSource.getConnection());
         } catch (IOException | JRException | SQLException ex) {
             Logger.getLogger(JasperReportsManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
     }
+
+    /**
+     * @return the outlet
+     */
+    public String getOutlet() {
+        return outlet;
+    }
+
+    /**
+     * @param outlet the outlet to set
+     */
+    public void setOutlet(String outlet) {
+        this.outlet = outlet;
+    }
+    
+    
 }

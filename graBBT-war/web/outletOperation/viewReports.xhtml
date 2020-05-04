@@ -15,11 +15,17 @@
             <h:outputText value="#{sessionScope.currentRetailerEntity.retailerName}: Reports"/>
         </h3>
 
-        <p:panelGrid>
-            <h:form>
+        <h:form>            
+            <p:panel header="Select an outlet">
+                <p:outputLabel for="outlet" value="Outlet: " />
+                <p:selectOneMenu id="outlet" value="#{jasperReportsManagedBean.outlet}" style="width: 100%">
+                    <f:selectItem itemLabel="Select Outlet" itemValue="" noSelectionOption="true"/>
+                    <f:selectItems value="#{viewAllOutletsManagedBean.outletEntities}" var="outlet" itemLabel="#{outlet.outletName}" itemValue="#{outlet.outletName}"/>
+                </p:selectOneMenu>
+                <p:separator/>
                 <p:commandButton ajax="false" value="Generate Sales Report" actionListener="#{jasperReportsManagedBean.generateReport}" />
-            </h:form>
-        </p:panelGrid>
+            </p:panel>
+        </h:form>
     </ui:define>
 </ui:composition>
 
