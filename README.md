@@ -1,4 +1,4 @@
-![logo](/resources/logo.png)
+<img src="/resources/logo.png" height=200>
 
 # Team Information
 
