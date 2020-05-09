@@ -1,4 +1,4 @@
-![logo](https://i.imgur.com/WtqFOwP.png)
+![logo](/resources/logo.png)
 
 # Team Information
 
