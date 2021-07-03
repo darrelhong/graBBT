@@ -11,6 +11,27 @@
 - Darrel Hong Cheng Kit, A0184367U
 - Ho Jun Cong Keith, A0184106L
 
+## Screenshots
+<figure>
+   <figcaption>Listings</figcaption>
+  <img src="https://user-images.githubusercontent.com/39296145/124345677-f4d12e80-dc0c-11eb-91c4-ee60765301b9.png" width="576">
+</figure>
+
+<figure>
+  <figcaption>Options</figcaption>
+  <img src="https://user-images.githubusercontent.com/39296145/124345678-f69af200-dc0c-11eb-9909-64f80d04db18.png" width="576">
+</figure>
+
+<figure>
+  <figcaption>Cart</figcaption>
+  <img src="https://user-images.githubusercontent.com/39296145/124345683-f864b580-dc0c-11eb-9372-6ad9bda1c7b0.png" width="576">
+</figure>
+
+<figure>
+  <figcaption>Checkout</figcaption>
+  <img src="https://user-images.githubusercontent.com/39296145/124345685-f995e280-dc0c-11eb-846f-92263c5d300a.png" width="576">
+</figure>
+
 # Setup Instructions
 
 ## (A) JavaEE Backend
